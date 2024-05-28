@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1671954298866568195}
   - component: {fileID: 4197299875861883782}
-  - component: {fileID: 7123818317038816422}
   - component: {fileID: 7385523684125820714}
   - component: {fileID: -3241737064800949245}
-  m_Layer: 0
+  - component: {fileID: 7123818317038816422}
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,18 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7123818317038816422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2285328053563287540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f99ee93a8a11e0042b7f6483d26f6ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &7385523684125820714
 Rigidbody2D:
   serializedVersion: 4
@@ -155,9 +143,21 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &7123818317038816422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2285328053563287540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f99ee93a8a11e0042b7f6483d26f6ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
