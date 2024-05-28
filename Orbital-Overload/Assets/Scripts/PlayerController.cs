@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
             BulletController bulletController = bullet.GetComponent<BulletController>();
             if (bulletController != null)
             {
-                bulletController.SetBullet(shootPoint.up, bulletSpeed);
+                bulletController.ShootBullet(shootPoint.up, bulletSpeed);
             }
         }
     }
