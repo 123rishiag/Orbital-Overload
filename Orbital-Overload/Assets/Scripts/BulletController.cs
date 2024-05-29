@@ -13,8 +13,28 @@ public class BulletController : MonoBehaviour
     {
         rb.velocity = bulletDirection * bulletSpeed * Time.fixedDeltaTime;
     }
-    void OnBecameInvisible()
+    private void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+            Application.Quit();
+
+        }
+        else if(collider.CompareTag("Enemy"))
+        {
+            Destroy(collider.gameObject);
+            Destroy(gameObject);
+        }
+        else if (collider.CompareTag("Bullet"))
+        {
+            Destroy(collider.gameObject);
+            Destroy(gameObject);
+        }
     }
 }

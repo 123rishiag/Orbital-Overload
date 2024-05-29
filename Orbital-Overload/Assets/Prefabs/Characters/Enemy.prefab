@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 3562850447822539870}
   m_Layer: 7
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -293,10 +293,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c650db908d0444341a0e7f8373a75fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 8
   bulletPrefab: {fileID: 2285328053563287540, guid: 2007e1f5e9c32424fa8e129bff2c084e, type: 3}
   shootPoint: {fileID: 4830572363492128675}
-  bulletSpeed: 500
+  bulletSpeed: 700
+  awayFromPlayerDistance: 2
   shootCooldown: 1
 --- !u!1 &6922597243742180474
 GameObject:

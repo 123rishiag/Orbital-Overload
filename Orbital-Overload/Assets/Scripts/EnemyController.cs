@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform shootPoint;
     public float bulletSpeed = 1f;
+    public float awayFromPlayerDistance = 1f;
     public float shootCooldown = 0.1f;
     private float lastShootTime = 0f;
     private Vector2 mouseDirection = Vector2.zero;
@@ -30,14 +31,25 @@ public class EnemyController : MonoBehaviour
         Shoot();
         Rotate();
     }
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
     private void MovementTowardsPlayer()
     {
-        if (player != null)
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+        if (player != null && distanceToPlayer > awayFromPlayerDistance)
         {
             Vector2 direction = (player.transform.position - transform.position).normalized;
             moveX = direction.x;
             moveY = direction.y;
         }
+        else 
+        {
+            moveX = 0.0f;
+            moveY = 0.0f;
+        }
+
     }
     private void Move()
     {

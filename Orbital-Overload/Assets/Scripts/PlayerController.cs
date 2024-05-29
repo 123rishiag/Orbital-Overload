@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public float casualMoveSpeed = 0.0f;
     public float moveSpeed = 1f;
     private float moveX = 0f;
     private float moveY = 0f;
@@ -14,6 +15,10 @@ public class PlayerController : MonoBehaviour
     private bool isShooting = false;
     private float lastShootTime = 0f;
     private Vector2 mouseDirection = Vector2.zero;
+
+    public Transform mainCamera;
+    public float cameraFollowSpeed = 2f;
+    public float cameraRightMoveSpeed = 1f;
 
     private void Update()
     {
@@ -27,10 +32,57 @@ public class PlayerController : MonoBehaviour
         Shoot();
         Rotate();
     }
+    private void LateUpdate()
+    {
+        MoveCamera();
+    }
+    private void MoveCamera()
+    {
+        if (mainCamera != null)
+        {
+            Vector3 playerPosition = transform.position;
+            Vector3 cameraPosition = mainCamera.position;
+
+            float verticalExtent = Camera.main.orthographicSize - 1f;
+            float horizontalExtent = (verticalExtent * Screen.width / Screen.height) - 1f;
+
+            float cameraLeftEdge = cameraPosition.x - horizontalExtent;
+            float cameraRightEdge = cameraPosition.x + horizontalExtent;
+            float cameraTopEdge = cameraPosition.y + verticalExtent;
+            float cameraBottomEdge = cameraPosition.y - verticalExtent;
+
+            Vector3 newCameraPosition = cameraPosition;
+
+            if (playerPosition.x > cameraRightEdge)
+            {
+                newCameraPosition.x = playerPosition.x - horizontalExtent;
+            }
+            else if (playerPosition.x < cameraLeftEdge)
+            {
+                newCameraPosition.x = playerPosition.x + horizontalExtent;
+            }
+
+            if (playerPosition.y > cameraTopEdge)
+            {
+                newCameraPosition.y = playerPosition.y - verticalExtent;
+            }
+            else if (playerPosition.y < cameraBottomEdge)
+            {
+                newCameraPosition.y = playerPosition.y + verticalExtent;
+            }
+
+            mainCamera.position = Vector3.Lerp(cameraPosition, newCameraPosition, cameraFollowSpeed * Time.deltaTime);
+        }
+    }
+
     private void MovementInput()
     {
         moveX = Input.GetAxis("Horizontal");
         moveY = Input.GetAxis("Vertical");
+        if(moveX == 0f)
+        {
+            moveX = casualMoveSpeed;
+        }
     }
     private void Move()
     {
