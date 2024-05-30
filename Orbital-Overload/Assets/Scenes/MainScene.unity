@@ -215,6 +215,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &565248098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 565248100}
+  - component: {fileID: 565248099}
+  m_Layer: 0
+  m_Name: PowerUpManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &565248099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565248098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89fe34edf5cffb6498a94faa2ef05fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpPrefabs:
+  - {fileID: 2889606260969706577, guid: bbafb9d3b132ead46933912f23fe2e95, type: 3}
+  - {fileID: 5057806121148705158, guid: d303335b014058048bcdf0c10903407a, type: 3}
+  - {fileID: 8840832795247159358, guid: d37b63245cda16344910716f67574b7a, type: 3}
+  - {fileID: 2149307574189460102, guid: 922afa2445c22dd4e8876bbb84412e05, type: 3}
+  - {fileID: 4226852702416002922, guid: e7389b6b6c71e18479b4c5c071faf019, type: 3}
+  spawnInterval: 10
+  spawnRadius: 2
+  awayFromPlayerSpawnDistance: 2
+--- !u!4 &565248100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565248098}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &802494511
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4264170587383386023, guid: cd646cbb1651ad846acd7d42f61d5ad7, type: 3}
-  spawnInterval: 10
+  spawnInterval: 2
   spawnRadius: 2
   awayFromPlayerSpawnDistance: 5
 --- !u!50 &107480129944175075
@@ -311,6 +364,9 @@ MonoBehaviour:
   mainCamera: {fileID: 519420032}
   cameraFollowSpeed: 2
   cameraRightMoveSpeed: 1
+  isHoming: 0
+  homingSpeed: 500
+  isShieldActive: 0
 --- !u!212 &1288052354671081331
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -603,3 +659,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 6214087183113072957}
   - {fileID: 802494512}
+  - {fileID: 565248100}

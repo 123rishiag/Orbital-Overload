@@ -1,23 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class PowerUpSpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public float spawnInterval = 2f;
+    public GameObject[] powerUpPrefabs; // Array of power-up prefabs
+    public float spawnInterval = 5f;
     public float spawnRadius = 10f;
     public float awayFromPlayerSpawnDistance = 1f;
-    private GameObject player;
-    
 
-    void Start()
+    private float timer;
+
+    private GameObject player;
+
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        InvokeRepeating("SpawnEnemy", spawnInterval, spawnInterval);
     }
 
-    void SpawnEnemy()
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer >= spawnInterval)
+        {
+            SpawnPowerUp();
+            timer = 0f;
+        }
+    }
+
+    void SpawnPowerUp()
     {
         if (player != null)
         {
@@ -25,10 +34,11 @@ public class EnemyManager : MonoBehaviour
                 Random.Range(0, 2) == 0 ? -1 : 1,
                 Random.Range(0, 2) == 0 ? -1 : 1
             );
+            int index = Random.Range(0, powerUpPrefabs.Length);
             Vector2 awayFromPlayerOffset = randomDirection * awayFromPlayerSpawnDistance;
             Vector2 playerPosition = player.transform.position;
             Vector2 spawnPosition = playerPosition + awayFromPlayerOffset + Random.insideUnitCircle * spawnRadius;
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(powerUpPrefabs[index], spawnPosition, Quaternion.identity);
         }
     }
 }

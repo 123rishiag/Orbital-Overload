@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -19,6 +20,10 @@ public class PlayerController : MonoBehaviour
     public Transform mainCamera;
     public float cameraFollowSpeed = 2f;
     public float cameraRightMoveSpeed = 1f;
+
+    public bool isHoming = false;
+    public float homingSpeed = 500f;
+    public bool isShieldActive = false;
 
     private void Update()
     {
@@ -109,6 +114,10 @@ public class PlayerController : MonoBehaviour
             BulletController bulletController = bullet.GetComponent<BulletController>();
             if (bulletController != null)
             {
+                if (isHoming)
+                {
+                    bulletController.SetHoming(isHoming, homingSpeed);
+                }
                 bulletController.ShootBullet(shootPoint.up, bulletSpeed);
             }
         }
@@ -124,4 +133,22 @@ public class PlayerController : MonoBehaviour
         float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
     }
+
+    public void Teleport(float minDistance)
+    {
+        float maxDistance = minDistance + 3f;
+
+        float angle = Random.Range(0f, Mathf.PI * 2);
+
+        float distance = Random.Range(minDistance, maxDistance);
+
+        Vector3 offset = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * distance;
+        Vector3 newPosition = transform.position + offset;
+
+        newPosition.x = Mathf.Clamp(newPosition.x, -8f, 8f);
+        newPosition.y = Mathf.Clamp(newPosition.y, -4f, 4f);
+
+        transform.position = newPosition;
+    }
+
 }

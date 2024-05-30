@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
-        MovementTowardsPlayer();
+        MoveTowardsPlayerDirection();
         RotateInput();
     }
     private void FixedUpdate()
@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    private void MovementTowardsPlayer()
+    private void MoveTowardsPlayerDirection()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         if (player != null && distanceToPlayer > awayFromPlayerDistance)
