@@ -17,44 +17,16 @@ public class PowerUpController : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            StartCoroutine(ActivatePowerUp(collider));
+            PlayerController playerController = collider.GetComponent<PlayerController>();
+            playerController.ActivatePowerUp(powerUpType, powerUpDuration, powerUpValue);
+            Destroy(gameObject);
         }
     }
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
     }
-    IEnumerator ActivatePowerUp(Collider2D collider)
-    {
-        Destroy(gameObject);
-        PlayerController playerController = collider.GetComponent<PlayerController>();
-        switch (powerUpType)
-        {
-            case PowerUpType.HomingOrbs:
-                playerController.isHoming = true;
-                yield return new WaitForSeconds(powerUpDuration);
-                playerController.isHoming = false;
-                break;
-            case PowerUpType.RapidFire:
-                playerController.shootCooldown /= powerUpValue;
-                yield return new WaitForSeconds(powerUpDuration);
-                playerController.shootCooldown *= powerUpValue;
-                break;
-            case PowerUpType.Shield:
-                playerController.isShieldActive = true;
-                yield return new WaitForSeconds(powerUpDuration);
-                playerController.isShieldActive = false;
-                break;
-            case PowerUpType.SlowMotion:
-                Time.timeScale = powerUpValue;
-                yield return new WaitForSeconds(powerUpDuration);
-                Time.timeScale = 1f;
-                break;
-            case PowerUpType.Teleport:
-                playerController.Teleport(powerUpValue);
-                break;
-        }
-    }
+
 }
 
 public enum PowerUpType

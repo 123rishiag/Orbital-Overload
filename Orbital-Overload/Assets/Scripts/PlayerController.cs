@@ -22,9 +22,10 @@ public class PlayerController : MonoBehaviour
     public float cameraFollowSpeed = 2f;
     public float cameraRightMoveSpeed = 1f;
 
-    public bool isHoming = false;
-    public float homingSpeed = 500f;
+    private bool isHoming = false;
+    private float homingSpeed = 500f;
     public bool isShieldActive = false;
+    public TextMeshProUGUI powerUpText;
 
     private int score = 0;
     public int increaseScoreValue = 10;
@@ -153,9 +154,62 @@ public class PlayerController : MonoBehaviour
         UpdateScoreText();
     }
 
-    void UpdateScoreText()
+    private void UpdateScoreText()
     {
         scoreText.text = "Score: " + score;
+    }
+    public void UpdatePowerUpText(string text)
+    {
+        powerUpText.text = text;
+    }
+
+    public void ActivatePowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
+    {
+        StartCoroutine(PowerUp(powerUpType, powerUpDuration, powerUpValue));
+    }
+    private IEnumerator PowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
+    {
+        string powerUpText;
+        if (powerUpType != PowerUpType.Teleport)
+        {
+            powerUpText = powerUpType.ToString() + " activated for " + powerUpDuration.ToString() + " seconds.";
+        }
+        else
+        {
+            powerUpText = powerUpType.ToString() + "ed.";
+        }
+        UpdatePowerUpText(powerUpText);
+        switch (powerUpType)
+        {
+            case PowerUpType.HomingOrbs:
+                isHoming = true;
+                yield return new WaitForSeconds(powerUpDuration);
+                isHoming = false;
+                break;
+            case PowerUpType.RapidFire:
+                shootCooldown /= powerUpValue;
+                yield return new WaitForSeconds(powerUpDuration);
+                shootCooldown *= powerUpValue;
+                break;
+            case PowerUpType.Shield:
+                isShieldActive = true;
+                yield return new WaitForSeconds(powerUpDuration);
+                isShieldActive = false;
+                break;
+            case PowerUpType.SlowMotion:
+                Time.timeScale = powerUpValue;
+                yield return new WaitForSeconds(powerUpDuration);
+                Time.timeScale = 1f;
+                break;
+            case PowerUpType.Teleport:
+                Teleport(powerUpValue);
+                yield return new WaitForSeconds(powerUpDuration);
+                break;
+            default:
+                yield return new WaitForSeconds(1);
+                break;
+        }
+        UpdatePowerUpText(null);
     }
     public void Teleport(float minDistance)
     {
