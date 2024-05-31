@@ -31,6 +31,7 @@ public class PowerUpController : MonoBehaviour
 
 public enum PowerUpType
 {
+    HealthPick,
     HomingOrbs,
     RapidFire,
     Shield,
