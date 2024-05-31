@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
             BulletController bulletController = bullet.GetComponent<BulletController>();
             if (bulletController != null)
             {
+                bulletController.SetOwnerTag(gameObject.tag);
                 if (isHoming)
                 {
                     bulletController.SetHoming(isHoming, homingSpeed);
