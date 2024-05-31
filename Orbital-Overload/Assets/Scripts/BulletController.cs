@@ -40,6 +40,8 @@ public class BulletController : MonoBehaviour
         }
         else if (collider.CompareTag("Enemy"))
         {
+            PlayerController playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            playerController.AddScore();
             Destroy(collider.gameObject);
             Destroy(gameObject);
         }
