@@ -19,6 +19,7 @@ public class PowerUpController : MonoBehaviour
         {
             PlayerController playerController = collider.GetComponent<PlayerController>();
             playerController.ActivatePowerUp(powerUpType, powerUpDuration, powerUpValue);
+            SoundManager.Instance.PlayEffect(SoundType.PowerUpPickup);
             Destroy(gameObject);
         }
     }
