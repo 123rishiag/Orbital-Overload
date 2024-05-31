@@ -35,12 +35,12 @@ public class BulletController : MonoBehaviour
         }
         else if (collider.CompareTag("Player"))
         {
-            Destroy(gameObject);
             PlayerController playerController = collider.GetComponent<PlayerController>();
             if (playerController.isShieldActive != true)
             {
-                playerController.PlayerDie();
+                playerController.DecreaseHealth();
             }
+            Destroy(gameObject);
         }
         else if (collider.CompareTag("Enemy"))
         {

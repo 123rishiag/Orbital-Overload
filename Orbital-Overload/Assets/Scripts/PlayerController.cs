@@ -34,9 +34,19 @@ public class PlayerController : MonoBehaviour
     public GameObject gameManager;
     private GameManager gameController;
 
+    public int maxHealth = 3;
+    private int health = 0;
+    public TextMeshProUGUI healthText;
+
     private void Awake()
     {
         gameController = gameManager.GetComponent<GameManager>();
+    }
+
+    private void Start()
+    {
+        health = maxHealth;
+        UpdateHealthText();
     }
 
     private void Update()
@@ -163,6 +173,10 @@ public class PlayerController : MonoBehaviour
     {
         powerUpText.text = text;
     }
+    private void UpdateHealthText()
+    {
+        healthText.text = "Health: " + health;
+    }
 
     public void ActivatePowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
     {
@@ -171,17 +185,21 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
     {
         string powerUpText;
-        if (powerUpType != PowerUpType.Teleport)
+        if (powerUpType == PowerUpType.HealthPick || powerUpType == PowerUpType.Teleport)
         {
-            powerUpText = powerUpType.ToString() + " activated for " + powerUpDuration.ToString() + " seconds.";
+            powerUpText = powerUpType.ToString() + "ed.";
         }
         else
         {
-            powerUpText = powerUpType.ToString() + "ed.";
+            powerUpText = powerUpType.ToString() + " activated for " + powerUpDuration.ToString() + " seconds.";
         }
         UpdatePowerUpText(powerUpText);
         switch (powerUpType)
         {
+            case PowerUpType.HealthPick:
+                IncreaseHealth((int)powerUpValue);
+                yield return new WaitForSeconds(powerUpDuration);
+                break;
             case PowerUpType.HomingOrbs:
                 isHoming = true;
                 yield return new WaitForSeconds(powerUpDuration);
@@ -228,7 +246,29 @@ public class PlayerController : MonoBehaviour
 
         transform.position = newPosition;
     }
-    public void PlayerDie()
+    public void DecreaseHealth()
+    {
+        health -= 1;
+        if (health < 0)
+        {
+            health = 0;
+        }
+        if(health == 0)
+        {
+            PlayerDie();
+        }
+        UpdateHealthText();
+    }
+    private void IncreaseHealth(int increaseHealth)
+    {
+        health += increaseHealth;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        UpdateHealthText();
+    }
+    private void PlayerDie()
     {
         gameController.GameOver();
     }
