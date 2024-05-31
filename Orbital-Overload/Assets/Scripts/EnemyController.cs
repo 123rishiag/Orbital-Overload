@@ -65,6 +65,7 @@ public class EnemyController : MonoBehaviour
             BulletController bulletController = bullet.GetComponent<BulletController>();
             if (bulletController != null)
             {
+                bulletController.SetOwnerTag(gameObject.tag);
                 bulletController.ShootBullet(shootPoint.up, bulletSpeed);
             }
         }

@@ -10,6 +10,7 @@ public class BulletController : MonoBehaviour
     private bool isHoming = false;
     private float homingSpeed = 0f;
     private Vector2 enemyDirection = Vector2.zero;
+    private string bulletOwnerTag;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,7 +29,11 @@ public class BulletController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag(bulletOwnerTag))
+        {
+            return;
+        }
+        else if (collider.CompareTag("Player"))
         {
             Destroy(gameObject);
             PlayerController playerController = collider.GetComponent<PlayerController>();
@@ -88,5 +93,9 @@ public class BulletController : MonoBehaviour
     {
         isHoming = _isHoming;
         homingSpeed = _homingSpeed;
+    }
+    public void SetOwnerTag(string ownerTag)
+    {
+        bulletOwnerTag = ownerTag;
     }
 }

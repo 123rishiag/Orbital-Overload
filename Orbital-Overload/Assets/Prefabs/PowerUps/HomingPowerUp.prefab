@@ -134,5 +134,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpType: 0
-  duration: 5
+  powerUpDuration: 10
   powerUpValue: 0
+  powerUpLifetime: 10
