@@ -266,6 +266,10 @@ public class PlayerController : MonoBehaviour
         {
             health = maxHealth;
         }
+        else
+        {
+            SoundManager.Instance.PlayEffect(SoundType.PlayerHeal);
+        }
         UpdateHealthText();
     }
     private void PlayerDie()

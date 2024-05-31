@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
             pauseMenuUI.SetActive(true);
             isPaused = true;
+            SoundManager.Instance.PlayEffect(SoundType.GamePause);
         }
     }
     private void ResumeGame()
@@ -57,21 +58,25 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         pauseMenuUI.SetActive(false);
         isPaused = false;
+        SoundManager.Instance.PlayEffect(SoundType.GamePause);
     }
     public void GameOver()
     {
         canPause = false;
         Time.timeScale = 0f;
         gameOverMenuUI.SetActive(true);
+        SoundManager.Instance.PlayEffect(SoundType.GameOver);
     }
     private void RestartGame()
     {
         canPause = true;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SoundManager.Instance.PlayEffect(SoundType.GameStart);
     }
     private void LobbyScreen()
     {
         SceneManager.LoadScene(0);
+        SoundManager.Instance.PlayEffect(SoundType.ButtonQuit);
     }
 }

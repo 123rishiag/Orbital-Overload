@@ -39,6 +39,7 @@ public class BulletController : MonoBehaviour
             if (playerController.isShieldActive != true)
             {
                 playerController.DecreaseHealth();
+                SoundManager.Instance.PlayEffect(SoundType.PlayerHurt);
             }
             Destroy(gameObject);
         }
@@ -46,11 +47,13 @@ public class BulletController : MonoBehaviour
         {
             PlayerController playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             playerController.AddScore();
+            SoundManager.Instance.PlayEffect(SoundType.PlayerHurt);
             Destroy(collider.gameObject);
             Destroy(gameObject);
         }
         else if (collider.CompareTag("Bullet"))
         {
+            SoundManager.Instance.PlayEffect(SoundType.BulletShoot);
             Destroy(collider.gameObject);
             Destroy(gameObject);
         }
@@ -87,6 +90,7 @@ public class BulletController : MonoBehaviour
     public void ShootBullet(Vector2 bulletDirection, float bulletSpeed)
     {
         rb.velocity = bulletDirection * bulletSpeed * Time.fixedDeltaTime;
+        SoundManager.Instance.PlayEffect(SoundType.BulletShoot);
     }
     
     public void SetHoming(bool _isHoming, float _homingSpeed)
