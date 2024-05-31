@@ -26,6 +26,7 @@ public class PowerUpController : MonoBehaviour
     }
     IEnumerator ActivatePowerUp(Collider2D collider)
     {
+        Destroy(gameObject);
         PlayerController playerController = collider.GetComponent<PlayerController>();
         switch (powerUpType)
         {
@@ -53,7 +54,6 @@ public class PowerUpController : MonoBehaviour
                 playerController.Teleport(powerUpValue);
                 break;
         }
-        Destroy(gameObject);
     }
 }
 
