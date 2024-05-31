@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,6 +25,10 @@ public class PlayerController : MonoBehaviour
     public bool isHoming = false;
     public float homingSpeed = 500f;
     public bool isShieldActive = false;
+
+    private int score = 0;
+    public int increaseScoreValue = 10;
+    public TextMeshProUGUI scoreText;
 
     private void Update()
     {
@@ -134,6 +139,16 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
     }
 
+    public void AddScore()
+    {
+        score += increaseScoreValue;
+        UpdateScoreText();
+    }
+
+    void UpdateScoreText()
+    {
+        scoreText.text = "Score: " + score;
+    }
     public void Teleport(float minDistance)
     {
         float maxDistance = minDistance + 3f;
