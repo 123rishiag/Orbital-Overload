@@ -30,6 +30,14 @@ public class PlayerController : MonoBehaviour
     public int increaseScoreValue = 10;
     public TextMeshProUGUI scoreText;
 
+    public GameObject gameManager;
+    private GameManager gameController;
+
+    private void Awake()
+    {
+        gameController = gameManager.GetComponent<GameManager>();
+    }
+
     private void Update()
     {
         MovementInput();
@@ -164,6 +172,10 @@ public class PlayerController : MonoBehaviour
         newPosition.y = Mathf.Clamp(newPosition.y, -4f, 4f);
 
         transform.position = newPosition;
+    }
+    public void PlayerDie()
+    {
+        gameController.GameOver();
     }
 
 }

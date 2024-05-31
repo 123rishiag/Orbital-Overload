@@ -34,8 +34,7 @@ public class BulletController : MonoBehaviour
             PlayerController playerController = collider.GetComponent<PlayerController>();
             if (playerController.isShieldActive != true)
             {
-                UnityEditor.EditorApplication.isPlaying = false;
-                Application.Quit();
+                playerController.PlayerDie();
             }
         }
         else if (collider.CompareTag("Enemy"))
