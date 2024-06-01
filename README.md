@@ -20,6 +20,10 @@
   - **SlowMotion**: Slows down time for better maneuvering.
   - **Teleport**: Teleports the player to a random location.
 
+## Theme
+### Chosen Theme: Controlling Many
+The theme "Controlling Many" is reflected in the gameplay of "Orbital Overload" by allowing the player to control a central orb that can shoot multiple smaller orbs to defeat incoming enemies. The player manages the movement and direction of these orbs to survive and score points. The diverse power-ups further enhance the theme by providing various ways to control and influence the orbs' behavior and effectiveness in combat.
+
 ## Game Loop
 - **Start**: Begin the game from the main menu.
 - **Pause**: Pause the game using the escape key.
@@ -62,16 +66,9 @@ Handles all sound effects and background music, including muting functionality.
 
 ## Setting Up the Project
 1. Clone the repository.
+```bash
+   git clone https://github.com/123rishiag/Orbital-Overload.git 
+```
 2. Open the project in Unity.
 3. Ensure all scripts are correctly attached to their respective game objects.
 4. Set up the UI elements as described in the provided code.
-
-## License
-This project is licensed under the MIT License.
-
-## Acknowledgements
-Special thanks to all the contributors and asset creators whose resources were utilized in this project.
-
----
-
-Feel free to reach out for any queries or contributions.
