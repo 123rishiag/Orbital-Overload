@@ -6,37 +6,36 @@ public class SoundManager : MonoBehaviour
     private static SoundManager instance;
     public static SoundManager Instance { get { return instance; } }
 
-    public bool isMute = false;
+    [HideInInspector] public bool isMute = false;
 
-    public AudioSource soundEffect;
-    public AudioSource soundMusic;
-    public Sound[] sounds;
+    [SerializeField] private AudioSource soundEffect; // Audio source for sound effects
+    [SerializeField] private AudioSource soundMusic; // Audio source for background music
+    [SerializeField] private Sound[] sounds; // Array of sound clips
 
     private float currentVolume;
-    
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // Persist SoundManager across scenes
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Ensure only one instance exists
         }
     }
 
     private void Start()
     {
-        PlayMusic(SoundType.BackgroundMusic);
+        PlayMusic(SoundType.BackgroundMusic); // Play background music
         currentVolume = soundMusic.volume;
     }
 
     public void MuteGame()
     {
-        isMute = !isMute;
+        isMute = !isMute; // Toggle mute
         SetVolume(isMute ? 0.0f : currentVolume);
     }
 

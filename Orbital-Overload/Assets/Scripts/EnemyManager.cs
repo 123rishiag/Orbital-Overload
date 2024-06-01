@@ -1,23 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public float spawnInterval = 2f;
-    public float spawnRadius = 10f;
-    public float awayFromPlayerSpawnDistance = 1f;
-    private GameObject player;
-    
+    [SerializeField] private GameObject enemyPrefab; // Enemy prefab to spawn
+    [SerializeField] private float spawnInterval = 2f; // Time interval between spawns
+    [SerializeField] private float spawnRadius = 10f; // Radius within which enemies spawn
+    [SerializeField] private float awayFromPlayerSpawnDistance = 1f; // Minimum distance from player to spawn
 
-    void Start()
+    private GameObject player; // Reference to the player
+
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        InvokeRepeating("SpawnEnemy", spawnInterval, spawnInterval);
+        InvokeRepeating("SpawnEnemy", spawnInterval, spawnInterval); // Repeat enemy spawning at intervals
     }
 
-    void SpawnEnemy()
+    private void SpawnEnemy()
     {
         if (player != null)
         {
@@ -28,7 +26,7 @@ public class EnemyManager : MonoBehaviour
             Vector2 awayFromPlayerOffset = randomDirection * awayFromPlayerSpawnDistance;
             Vector2 playerPosition = player.transform.position;
             Vector2 spawnPosition = playerPosition + awayFromPlayerOffset + Random.insideUnitCircle * spawnRadius;
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity); // Spawn enemy
         }
     }
 }

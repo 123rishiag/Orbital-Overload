@@ -1,33 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerUpController : MonoBehaviour
 {
-    public PowerUpType powerUpType;
-    public float powerUpDuration = 5f;
-    public float powerUpValue = 0;
-    public float powerUpLifetime = 10f;
+    [SerializeField] private PowerUpType powerUpType; // Type of power-up
+    [SerializeField] private float powerUpDuration = 5f; // Duration of the power-up effect
+    [SerializeField] private float powerUpValue = 0; // Value of the power-up effect
+    [SerializeField] private float powerUpLifetime = 10f; // Lifetime of the power-up before it expires
 
     private void Start()
     {
-        Destroy(gameObject, powerUpLifetime);
+        Destroy(gameObject, powerUpLifetime); // Destroy the power-up after its lifetime
     }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Player"))
         {
             PlayerController playerController = collider.GetComponent<PlayerController>();
-            playerController.ActivatePowerUp(powerUpType, powerUpDuration, powerUpValue);
+            playerController.ActivatePowerUp(powerUpType, powerUpDuration, powerUpValue); // Activate power-up effect
             SoundManager.Instance.PlayEffect(SoundType.PowerUpPickup);
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy the power-up after activation
         }
     }
+
     private void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        Destroy(gameObject); // Destroy the power-up if it goes off screen
     }
-
 }
 
 public enum PowerUpType

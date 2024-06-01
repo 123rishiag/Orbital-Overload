@@ -2,31 +2,20 @@ using UnityEngine;
 
 public class PowerUpSpawner : MonoBehaviour
 {
-    public GameObject[] powerUpPrefabs; // Array of power-up prefabs
-    public float spawnInterval = 5f;
-    public float spawnRadius = 10f;
-    public float awayFromPlayerSpawnDistance = 1f;
+    [SerializeField] private GameObject[] powerUpPrefabs; // Array of power-up prefabs
+    [SerializeField] private float spawnInterval = 5f; // Time interval between spawns
+    [SerializeField] private float spawnRadius = 10f; // Radius within which power-ups spawn
+    [SerializeField] private float awayFromPlayerSpawnDistance = 1f; // Minimum distance from player to spawn
 
-    private float timer;
-
-    private GameObject player;
+    private GameObject player; // Reference to the player
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        InvokeRepeating("SpawnPowerUp", spawnInterval, spawnInterval); // Repeat Powerup spawning at intervals
     }
 
-    void Update()
-    {
-        timer += Time.deltaTime;
-        if (timer >= spawnInterval)
-        {
-            SpawnPowerUp();
-            timer = 0f;
-        }
-    }
-
-    void SpawnPowerUp()
+    private void SpawnPowerUp()
     {
         if (player != null)
         {
@@ -38,7 +27,7 @@ public class PowerUpSpawner : MonoBehaviour
             Vector2 awayFromPlayerOffset = randomDirection * awayFromPlayerSpawnDistance;
             Vector2 playerPosition = player.transform.position;
             Vector2 spawnPosition = playerPosition + awayFromPlayerOffset + Random.insideUnitCircle * spawnRadius;
-            Instantiate(powerUpPrefabs[index], spawnPosition, Quaternion.identity);
+            Instantiate(powerUpPrefabs[index], spawnPosition, Quaternion.identity); // Spawn power-up
         }
     }
 }
