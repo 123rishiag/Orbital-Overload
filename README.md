@@ -1,6 +1,6 @@
 # Orbital Overload
 
-## Game Description
+## Overview
 "Orbital Overload" is an exciting 2D arcade game where players control an orb that can shoot smaller orbs to destroy incoming enemies. The objective is to survive as long as possible, utilizing various power-ups to enhance gameplay.
 
 ## Controls
