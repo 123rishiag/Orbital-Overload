@@ -79,3 +79,7 @@ Handles all sound effects and background music, including muting functionality.
 ## Video Demo
 
 [Watch the Video Demo](https://www.loom.com/share/196ce76c10e4471f8994ede99576c10e?sid=2a4ed09a-ced2-4e90-a977-f30deaa45d51)
+
+## Play Link
+
+[Play the Game](https://outscal.com/narishabhgarg/game/play-orbital-overload-game)
