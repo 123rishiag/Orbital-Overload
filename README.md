@@ -36,9 +36,6 @@ The theme "Controlling Many" is reflected in the gameplay of "Orbital Overload" 
 - **Pause Screen**: Allows players to resume or restart the game or return to the main menu.
 - **Game Over Screen**: Provides options to restart the game or go back to the main menu.
 
-## Gameplay Video
-[Watch the gameplay video](https://www.loom.com/share/196ce76c10e4471f8994ede99576c10e?sid=32d74d87-1782-4ec6-a59b-aa1b743b5aba)
-
 ## Code Structure
 ### BulletController.cs
 Manages the behavior of the bullets, including movement, collision, and homing functionality.
