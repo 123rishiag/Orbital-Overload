@@ -1,6 +1,6 @@
 # Orbital Overload
 
-## Game Description
+## Overview
 "Orbital Overload" is an exciting 2D arcade game where players control an orb that can shoot smaller orbs to destroy incoming enemies. The objective is to survive as long as possible, utilizing various power-ups to enhance gameplay.
 
 ## Controls
@@ -75,3 +75,11 @@ Handles all sound effects and background music, including muting functionality.
 2. Open the project in Unity.
 3. Ensure all scripts are correctly attached to their respective game objects.
 4. Set up the UI elements as described in the provided code.
+
+## Video Demo
+
+[Watch the Video Demo](https://www.loom.com/share/196ce76c10e4471f8994ede99576c10e?sid=2a4ed09a-ced2-4e90-a977-f30deaa45d51)
+
+## Play Link
+
+[Play the Game](https://outscal.com/narishabhgarg/game/play-orbital-overload-game)
