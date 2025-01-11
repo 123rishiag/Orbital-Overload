@@ -20,5 +20,7 @@ namespace ServiceLocator.Player
             // Setting Elements
             playerController.Init(_playerConfig, _soundService, _uiService, _bulletService);
         }
+
+        public PlayerController GetPlayerController() => playerController;
     }
 }
