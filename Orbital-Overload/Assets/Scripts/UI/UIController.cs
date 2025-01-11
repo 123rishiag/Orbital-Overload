@@ -2,7 +2,6 @@ using ServiceLocator.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 namespace ServiceLocator.UI
@@ -12,6 +11,7 @@ namespace ServiceLocator.UI
         [Header("UI Elements")]
         [SerializeField] private TMP_Text healthText; // Text for displaying health
         [SerializeField] private TMP_Text scoreText; // Text for displaying score
+        [SerializeField] private GameObject powerUpBar; // Power Up Bar
         [SerializeField] private TMP_Text powerUpText; // Text for displaying power-up status
 
         [Header("Main Menu Elements")]
@@ -146,7 +146,13 @@ namespace ServiceLocator.UI
 
         public void UpdatePowerUpText(string _text)
         {
+            powerUpBar.SetActive(true);
             powerUpText.text = _text; // Display power-up text
+        }
+
+        public void HidePowerUpText()
+        {
+            powerUpBar.SetActive(false);
         }
 
         public void UpdateHealthText(int _health)

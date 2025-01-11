@@ -12,7 +12,7 @@ namespace ServiceLocator.Player
         [SerializeField] private float cameraFollowSpeed = 2f; // Speed at which the camera follows the player
 
         // Private Variables
-        private PlayerConfig playerConfig;
+        private PlayerData playerData;
 
         private float moveX = 0f; // X-axis movement input
         private float moveY = 0f; // Y-axis movement input
@@ -31,11 +31,11 @@ namespace ServiceLocator.Player
         private UIService uiService;
         private BulletService bulletService;
 
-        public void Init(PlayerConfig _playerConfig, SoundService _soundService, UIService _uiService,
+        public void Init(PlayerData _playerData, SoundService _soundService, UIService _uiService,
             BulletService _bulletService)
         {
             // Setting Variables
-            playerConfig = _playerConfig;
+            playerData = _playerData;
 
             // Setting Services
             soundService = _soundService;
@@ -43,8 +43,8 @@ namespace ServiceLocator.Player
             bulletService = _bulletService;
 
             // Setting Elements
-            health = playerConfig.playerData.maxHealth; // Initialize health
-            shootCooldown = playerConfig.playerData.shootCooldown;
+            health = playerData.maxHealth; // Initialize health
+            shootCooldown = playerData.shootCooldown;
             uiService.GetUIController().UpdateHealthText(health); // Update health text
         }
 
@@ -113,13 +113,13 @@ namespace ServiceLocator.Player
             moveY = Input.GetAxis("Vertical"); // Get vertical input
             if (moveX == 0f)
             {
-                moveX = playerConfig.playerData.casualMoveSpeed; // Default move speed
+                moveX = playerData.casualMoveSpeed; // Default move speed
             }
         }
 
         private void Move()
         {
-            Vector2 moveVector = new Vector2(moveX, moveY) * playerConfig.playerData.moveSpeed * Time.fixedDeltaTime;
+            Vector2 moveVector = new Vector2(moveX, moveY) * playerData.moveSpeed * Time.fixedDeltaTime;
             transform.Translate(moveVector, Space.World); // Move player
         }
 
@@ -140,7 +140,7 @@ namespace ServiceLocator.Player
             if (isShooting && Time.time >= lastShootTime + shootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
-                bulletService.Shoot(gameObject.tag, shootPoint, playerConfig.playerData.shootSpeed, isHoming);
+                bulletService.Shoot(gameObject.tag, shootPoint, playerData.shootSpeed, isHoming);
             }
         }
 
@@ -181,7 +181,7 @@ namespace ServiceLocator.Player
 
         public void AddScore()
         {
-            score += playerConfig.playerData.increaseScoreValue; // Increase score
+            score += playerData.increaseScoreValue; // Increase score
             uiService.GetUIController().UpdateScoreText(score); // Update score text
         }
 
@@ -202,9 +202,9 @@ namespace ServiceLocator.Player
         public void IncreaseHealth(int increaseHealth)
         {
             health += increaseHealth; // Increase health
-            if (health > playerConfig.playerData.maxHealth)
+            if (health > playerData.maxHealth)
             {
-                health = playerConfig.playerData.maxHealth; // Clamp health to max
+                health = playerData.maxHealth; // Clamp health to max
             }
             else
             {

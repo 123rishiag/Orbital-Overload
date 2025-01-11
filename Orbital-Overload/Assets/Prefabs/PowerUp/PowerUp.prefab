@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 819764925531171450}
   - component: {fileID: 5751291512192284799}
   - component: {fileID: 5749624612092376074}
+  - component: {fileID: 6486759601701213925}
   m_Layer: 9
   m_Name: PowerUp
   m_TagString: PowerUp
@@ -27,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 2889606260969706577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.7, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -120,3 +121,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
+--- !u!114 &6486759601701213925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889606260969706577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c5c2d4bc364db4390e3e79e6ea8021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpSprite: {fileID: 5751291512192284799}
+  powerUpCollider: {fileID: 5749624612092376074}

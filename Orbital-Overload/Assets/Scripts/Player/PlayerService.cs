@@ -18,7 +18,7 @@ namespace ServiceLocator.Player
             playerController = _player.GetComponent<PlayerController>();
 
             // Setting Elements
-            playerController.Init(_playerConfig, _soundService, _uiService, _bulletService);
+            playerController.Init(_playerConfig.playerData, _soundService, _uiService, _bulletService);
         }
 
         public PlayerController GetPlayerController() => playerController;
