@@ -1662,6 +1662,8 @@ MonoBehaviour:
   sfxSource: {fileID: 654300007}
   bgSource: {fileID: 835171782}
   uiCanvas: {fileID: 1161684383}
+  player: {fileID: 1920444316}
+  playerConfig: {fileID: 11400000, guid: ebe10e5de0786894f9fa685e8488b95f, type: 2}
 --- !u!1 &755282042
 GameObject:
   m_ObjectHideFlags: 0
@@ -4458,6 +4460,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1920444316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4086121986005359668, guid: 049dc3ab0545a4545ba2b0facc50500c, type: 3}
+  m_PrefabInstance: {fileID: 8548556409078141274}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0744710b865cbed46a9bf5498cc452f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1987725274
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using ServiceLocator.Player;
+using ServiceLocator.Sound;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
@@ -8,6 +10,9 @@ public class BulletController : MonoBehaviour
     private float homingSpeed = 0f; // Speed of homing
     private Vector2 enemyDirection = Vector2.zero; // Direction towards the enemy
     private string bulletOwnerTag; // Tag of the bullet's owner
+
+    // Private Services
+    private SoundService soundService;
 
     private void Awake()
     {
@@ -40,7 +45,7 @@ public class BulletController : MonoBehaviour
             if (!playerController.ShieldActive())
             {
                 playerController.DecreaseHealth(); // Decrease player's health on hit
-                SoundManager.Instance.PlayEffect(SoundType.PlayerHurt);
+                soundService.PlaySoundEffect(SoundType.PlayerHurt);
             }
             Destroy(gameObject); // Destroy bullet on hit
         }
@@ -48,13 +53,13 @@ public class BulletController : MonoBehaviour
         {
             PlayerController playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             playerController.AddScore(); // Increase player score on hit
-            SoundManager.Instance.PlayEffect(SoundType.PlayerHurt);
+            soundService.PlaySoundEffect(SoundType.PlayerHurt);
             Destroy(collider.gameObject); // Destroy enemy on hit
             Destroy(gameObject); // Destroy bullet on hit
         }
         else if (collider.CompareTag("Bullet"))
         {
-            SoundManager.Instance.PlayEffect(SoundType.BulletShoot);
+            soundService.PlaySoundEffect(SoundType.BulletShoot);
             Destroy(collider.gameObject); // Destroy other bullet on collision
             Destroy(gameObject); // Destroy bullet on hit
         }
@@ -95,7 +100,7 @@ public class BulletController : MonoBehaviour
     public void ShootBullet(Vector2 bulletDirection, float bulletSpeed)
     {
         rb.velocity = bulletDirection * bulletSpeed * Time.fixedDeltaTime; // Set bullet velocity
-        SoundManager.Instance.PlayEffect(SoundType.BulletShoot);
+        soundService.PlaySoundEffect(SoundType.BulletShoot);
     }
 
     public void SetHoming(bool _isHoming, float _homingSpeed)

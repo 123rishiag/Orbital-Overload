@@ -16,7 +16,7 @@ namespace ServiceLocator.UI
         }
 
         // Getters
-        private UIController GetUIController()
+        public UIController GetUIController()
         {
             return uiController;
         }
