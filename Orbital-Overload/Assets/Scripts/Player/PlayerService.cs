@@ -1,3 +1,4 @@
+using ServiceLocator.Bullet;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 
@@ -11,13 +12,13 @@ namespace ServiceLocator.Player
         // Private Services
 
         public PlayerService(PlayerConfig _playerConfig, SoundService _soundService, UIService _uiService,
-            PlayerController _player)
+            PlayerController _player, BulletService _bulletService)
         {
             // Setting Variables
             playerController = _player.GetComponent<PlayerController>();
 
             // Setting Elements
-            playerController.Init(_playerConfig, _soundService, _uiService);
+            playerController.Init(_playerConfig, _soundService, _uiService, _bulletService);
         }
     }
 }
