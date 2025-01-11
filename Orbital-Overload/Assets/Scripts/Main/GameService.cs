@@ -1,3 +1,4 @@
+using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using UnityEngine;
 
@@ -7,9 +8,13 @@ namespace ServiceLocator.Main
     {
         // Private Variables
         [Header("Core Components")]
+        [SerializeField] private SoundConfig soundConfig;
+        [SerializeField] private AudioSource sfxSource;
+        [SerializeField] private AudioSource bgSource;
         [SerializeField] private UIController uiCanvas;
 
         // Private Services
+        private SoundService soundService;
         private UIService uiService;
 
 
@@ -20,7 +25,8 @@ namespace ServiceLocator.Main
 
         private void CreateServices()
         {
-            uiService = new UIService(uiCanvas);
+            soundService = new SoundService(soundConfig, sfxSource, bgSource);
+            uiService = new UIService(uiCanvas, soundService);
         }
     }
 }
