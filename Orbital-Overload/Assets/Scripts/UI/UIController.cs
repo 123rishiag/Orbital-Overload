@@ -2,6 +2,7 @@ using ServiceLocator.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 namespace ServiceLocator.UI
@@ -136,6 +137,21 @@ namespace ServiceLocator.UI
             mainMenuMuteButtonText.text = isMute ? "Mute: Off" : "Mute: On"; // Toggle mute text
             soundService.MuteGame(); // Mute/unmute the game
             soundService.PlaySoundEffect(SoundType.ButtonClick); // Play button click sound effect
+        }
+
+        public void UpdateScoreText(int _score)
+        {
+            scoreText.text = "Score: " + _score;
+        }
+
+        public void UpdatePowerUpText(string _text)
+        {
+            powerUpText.text = _text; // Display power-up text
+        }
+
+        public void UpdateHealthText(int _health)
+        {
+            healthText.text = "Health: " + _health; // Display health
         }
     }
 }
