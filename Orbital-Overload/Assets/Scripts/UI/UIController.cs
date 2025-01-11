@@ -1,3 +1,4 @@
+using ServiceLocator.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -32,6 +33,14 @@ namespace ServiceLocator.UI
         // Private Variables
         private bool isPaused = false; // Whether the game is paused
         private bool canPause = true; // Whether the game can be paused
+
+        // Private Services
+        private SoundService soundService;
+
+        public void Init(SoundService _soundService)
+        {
+            soundService = _soundService;
+        }
 
         private void Start()
         {
@@ -68,7 +77,7 @@ namespace ServiceLocator.UI
                 Time.timeScale = 0f; // Pause the game
                 pauseMenuPanel.SetActive(true); // Show Pause Menu
                 isPaused = true;
-                SoundManager.Instance.PlayEffect(SoundType.GamePause); // Play pause sound effect
+                soundService.PlaySoundEffect(SoundType.GamePause); // Play pause sound effect
             }
         }
 
@@ -77,7 +86,7 @@ namespace ServiceLocator.UI
             Time.timeScale = 1f; // Resume the game
             pauseMenuPanel.SetActive(false); // Hide Pause Menu
             isPaused = false;
-            SoundManager.Instance.PlayEffect(SoundType.GamePause); // Play resume sound effect
+            soundService.PlaySoundEffect(SoundType.GamePause); // Play resume sound effect
         }
 
         public void GameOver()
@@ -85,7 +94,7 @@ namespace ServiceLocator.UI
             canPause = false; // Disable pausing
             Time.timeScale = 0f; // Stop time
             gameOverMenuPanel.SetActive(true); // Show Game Over Menu
-            SoundManager.Instance.PlayEffect(SoundType.GameOver); // Play game over sound effect
+            soundService.PlaySoundEffect(SoundType.GameOver); // Play game over sound effect
         }
 
         private void RestartGame()
@@ -93,7 +102,7 @@ namespace ServiceLocator.UI
             canPause = true;
             Time.timeScale = 1f; // Restart time
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
-            SoundManager.Instance.PlayEffect(SoundType.GameStart); // Play game start sound effect
+            soundService.PlaySoundEffect(SoundType.GameStart); // Play game start sound effect
         }
 
         private void MainMenu()
@@ -101,14 +110,14 @@ namespace ServiceLocator.UI
             mainMenuPanel.SetActive(true); // Show Main Menu
             pauseMenuPanel.SetActive(false); // Hide Pause Menu
             gameOverMenuPanel.SetActive(false); // Hide Game Over Menu
-            SoundManager.Instance.PlayEffect(SoundType.ButtonQuit); // Play quit sound effect
+            soundService.PlaySoundEffect(SoundType.ButtonQuit); // Play quit sound effect
         }
 
         public void PlayGame()
         {
             Time.timeScale = 1f; // Ensure game time is running
             mainMenuPanel.SetActive(false); // Hide Main Menu
-            SoundManager.Instance.PlayEffect(SoundType.GameStart); // Play game start sound effect
+            soundService.PlaySoundEffect(SoundType.GameStart); // Play game start sound effect
         }
 
         public void QuitGame()
@@ -125,8 +134,8 @@ namespace ServiceLocator.UI
         {
             bool isMute = mainMenuMuteButtonText.text == "Mute: On";
             mainMenuMuteButtonText.text = isMute ? "Mute: Off" : "Mute: On"; // Toggle mute text
-            SoundManager.Instance.MuteGame(); // Mute/unmute the game
-            SoundManager.Instance.PlayEffect(SoundType.ButtonClick); // Play button click sound effect
+            soundService.MuteGame(); // Mute/unmute the game
+            soundService.PlaySoundEffect(SoundType.ButtonClick); // Play button click sound effect
         }
     }
 }
