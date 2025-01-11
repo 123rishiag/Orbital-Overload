@@ -1,3 +1,4 @@
+using ServiceLocator.Main;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -30,12 +31,7 @@ public class PlayerController : MonoBehaviour
     
     private int score = 0; // Player score
     private int health = 0; // Player health
-    private GameManager gameController; // Game manager controller
-
-    private void Awake()
-    {
-        gameController = gameManager.GetComponent<GameManager>(); // Get game manager component
-    }
+    private GameService gameController; // Game manager controller
 
     private void Start()
     {
@@ -288,6 +284,6 @@ public class PlayerController : MonoBehaviour
     }
     private void PlayerDie()
     {
-        gameController.GameOver(); // Trigger game over
+        //gameController.GameOver(); // Trigger game over
     }
 }
