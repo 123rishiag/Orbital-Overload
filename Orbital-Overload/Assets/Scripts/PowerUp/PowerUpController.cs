@@ -8,7 +8,8 @@ namespace ServiceLocator.PowerUp
 {
     public class PowerUpController : MonoBehaviour
     {
-        [SerializeField] public Material powerUpMaterial;
+        [SerializeField] public SpriteRenderer powerUpSprite;
+        [SerializeField] public CircleCollider2D powerUpCollider;
 
         // Private Variables
         private PowerUpType powerUpType;
@@ -26,7 +27,7 @@ namespace ServiceLocator.PowerUp
         {
             // Setting Variables
             powerUpType = _powerUpData.powerUpType;
-            powerUpMaterial.color = _powerUpData.powerUpColor;
+            powerUpSprite.color = _powerUpData.powerUpColor;
             powerUpDuration = _powerUpData.powerUpDuration;
             powerUpValue = _powerUpData.powerUpValue;
             powerUpLifetime = _powerUpData.powerUpLifetime;
@@ -39,12 +40,12 @@ namespace ServiceLocator.PowerUp
             GameObject.Destroy(gameObject, powerUpLifetime); // Destroy the power-up after its lifetime
         }
 
-        private void ActivatePowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
+        private void ActivatePowerUp()
         {
-            StartCoroutine(PowerUp(powerUpType, powerUpDuration, powerUpValue)); // Activate power-up effect
+            StartCoroutine(PowerUp()); // Activate power-up effect
         }
 
-        private IEnumerator PowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
+        private IEnumerator PowerUp()
         {
             string powerUpText;
             if (powerUpType == PowerUpType.HealthPick || powerUpType == PowerUpType.Teleport)
@@ -79,7 +80,7 @@ namespace ServiceLocator.PowerUp
                     break;
                 case PowerUpType.SlowMotion:
                     Time.timeScale = powerUpValue; // Slow down time
-                    yield return new WaitForSeconds(powerUpDuration);
+                    yield return new WaitForSecondsRealtime(powerUpDuration);
                     Time.timeScale = 1f; // Reset time
                     break;
                 case PowerUpType.Teleport:
@@ -90,17 +91,23 @@ namespace ServiceLocator.PowerUp
                     yield return new WaitForSeconds(1);
                     break;
             }
-            uiService.GetUIController().UpdatePowerUpText(null); // Clear power-up text
+            uiService.GetUIController().HidePowerUpText(); // Hide power-up text
+            GameObject.Destroy(gameObject); // Some additional time or coroutine to work
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.CompareTag("Player"))
             {
+                // Hiding Powerup and disabling collider on collison
+                Color newColor = powerUpSprite.color;
+                newColor.a = 0;
+                powerUpSprite.color = newColor;
+                powerUpCollider.enabled = false;
+
                 PlayerController playerController = collider.GetComponent<PlayerController>();
-                ActivatePowerUp(powerUpType, powerUpDuration, powerUpValue); // Activate power-up effect
+                ActivatePowerUp(); // Activate power-up effect
                 soundService.PlaySoundEffect(SoundType.PowerUpPickup);
-                Destroy(gameObject); // Destroy the power-up after activation
             }
         }
 
