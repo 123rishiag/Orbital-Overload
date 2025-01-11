@@ -1,3 +1,5 @@
+using ServiceLocator.Bullet;
+using ServiceLocator.Player;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -5,7 +7,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f; // Speed of enemy movement
     [SerializeField] private GameObject bulletPrefab; // Bullet prefab for shooting
     [SerializeField] private Transform shootPoint; // Point from where bullets are shot
-    [SerializeField] private float bulletSpeed = 1f; // Speed of bullets
+    [SerializeField] private float shootSpeed = 1f; // Speed of bullets
     [SerializeField] private float awayFromPlayerDistance = 1f; // Minimum distance to keep from player
     [SerializeField] private float shootCooldown = 0.1f; // Cooldown between shots
 
@@ -15,9 +17,16 @@ public class EnemyController : MonoBehaviour
     private Vector2 mouseDirection = Vector2.zero; // Direction towards the player
     private GameObject player; // Reference to the player
 
-    private void Start()
+    // Private Services
+    private BulletService bulletService;
+
+    public void Init(BulletService _bulletService)
     {
+        // Setting Variables
         player = GameObject.FindGameObjectWithTag("Player");
+
+        // Setting Services
+        bulletService = _bulletService;
     }
 
     private void Update()
@@ -65,13 +74,7 @@ public class EnemyController : MonoBehaviour
         if (Time.time >= lastShootTime + shootCooldown)
         {
             lastShootTime = Time.time;
-            GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-            BulletController bulletController = bullet.GetComponent<BulletController>();
-            if (bulletController != null)
-            {
-                bulletController.SetOwnerTag(gameObject.tag); // Set owner tag to avoid self-collision
-                bulletController.ShootBullet(shootPoint.up, bulletSpeed); // Shoot the bullet
-            }
+            bulletService.Shoot(gameObject.tag, shootPoint, shootSpeed, false);
         }
     }
 

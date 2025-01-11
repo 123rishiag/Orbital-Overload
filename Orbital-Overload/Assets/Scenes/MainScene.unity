@@ -1662,6 +1662,7 @@ MonoBehaviour:
   sfxSource: {fileID: 654300007}
   bgSource: {fileID: 835171782}
   uiCanvas: {fileID: 1161684383}
+  bulletConfig: {fileID: 11400000, guid: 72499fc64374733438a28faf35c087d8, type: 2}
   player: {fileID: 1920444316}
   playerConfig: {fileID: 11400000, guid: ebe10e5de0786894f9fa685e8488b95f, type: 2}
 --- !u!1 &755282042

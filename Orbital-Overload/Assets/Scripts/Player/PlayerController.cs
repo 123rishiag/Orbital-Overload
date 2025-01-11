@@ -1,3 +1,4 @@
+using ServiceLocator.Bullet;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using System.Collections;
@@ -28,8 +29,10 @@ namespace ServiceLocator.Player
         // Private Services
         private SoundService soundService;
         private UIService uiService;
+        private BulletService bulletService;
 
-        public void Init(PlayerConfig _playerConfig, SoundService _soundService, UIService _uiService)
+        public void Init(PlayerConfig _playerConfig, SoundService _soundService, UIService _uiService, 
+            BulletService _bulletService)
         {
             // Setting Variables
             playerConfig = _playerConfig;
@@ -37,6 +40,7 @@ namespace ServiceLocator.Player
             // Setting Services
             soundService = _soundService;
             uiService = _uiService;
+            bulletService = _bulletService;
 
             // Setting Elements
             health = playerConfig.playerData.maxHealth; // Initialize health
@@ -135,17 +139,7 @@ namespace ServiceLocator.Player
             if (isShooting && Time.time >= lastShootTime + playerConfig.playerData.shootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
-                GameObject bullet = Instantiate(playerConfig.playerData.bulletPrefab, shootPoint.position, shootPoint.rotation);
-                BulletController bulletController = bullet.GetComponent<BulletController>();
-                if (bulletController != null)
-                {
-                    bulletController.SetOwnerTag(gameObject.tag); // Set owner tag to avoid self-collision
-                    if (isHoming)
-                    {
-                        bulletController.SetHoming(isHoming, playerConfig.playerData.homingSpeed); // Set homing properties
-                    }
-                    bulletController.ShootBullet(shootPoint.up, playerConfig.playerData.bulletSpeed); // Shoot the bullet
-                }
+                bulletService.Shoot(gameObject.tag, shootPoint, playerConfig.playerData.shootSpeed, isHoming);
             }
         }
 
