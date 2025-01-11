@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63aafd6ba5cd47b499a3f340224c59f6, type: 3}
+  m_Name: PowerUpConfig
+  m_EditorClassIdentifier: 
+  powerUpPrefab: {fileID: 2889606260969706577, guid: 91e6dc4249a206c4395e3455fb0f65a1, type: 3}
+  powerUpSpawnInterval: 5
+  powerUpSpawnRadius: 10
+  powerUpAwayFromPlayerSpawnDistance: 1
+  powerUpData:
+  - powerUpType: 0
+    powerUpColor: {r: 0.59607846, g: 1, b: 0.59607846, a: 1}
+    powerUpDuration: 2
+    powerUpValue: 1
+    powerUpLifetime: 10
+  - powerUpType: 1
+    powerUpColor: {r: 0.9019608, g: 0.9019608, b: 0.98039216, a: 1}
+    powerUpDuration: 10
+    powerUpValue: 0
+    powerUpLifetime: 10
+  - powerUpType: 2
+    powerUpColor: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
+    powerUpDuration: 10
+    powerUpValue: 2
+    powerUpLifetime: 10
+  - powerUpType: 3
+    powerUpColor: {r: 0.59607846, g: 0.9843137, b: 0.59607846, a: 1}
+    powerUpDuration: 10
+    powerUpValue: 0
+    powerUpLifetime: 10
+  - powerUpType: 4
+    powerUpColor: {r: 1, g: 0.8980392, b: 0.7058824, a: 1}
+    powerUpDuration: 10
+    powerUpValue: 0.5
+    powerUpLifetime: 10
+  - powerUpType: 5
+    powerUpColor: {r: 0.9411765, g: 0.5019608, b: 0.5019608, a: 1}
+    powerUpDuration: 2
+    powerUpValue: 5
+    powerUpLifetime: 10

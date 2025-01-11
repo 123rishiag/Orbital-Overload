@@ -1,7 +1,6 @@
 using ServiceLocator.Bullet;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
-using System.Collections;
 using UnityEngine;
 
 namespace ServiceLocator.Player
@@ -20,8 +19,9 @@ namespace ServiceLocator.Player
         private bool isShooting = false; // Shooting state
         private float lastShootTime = 0f; // Time of last shot
         private Vector2 mouseDirection = Vector2.zero; // Direction of the mouse
-        private bool isShieldActive = false; // Whether shield is active
-        private bool isHoming = false; // Whether bullets are homing
+        public bool isShieldActive = false; // Whether shield is active
+        public bool isHoming = false; // Whether bullets are homing
+        public float shootCooldown; // Cooldown between shots
 
         private int score = 0; // Player score
         private int health = 0; // Player health
@@ -31,7 +31,7 @@ namespace ServiceLocator.Player
         private UIService uiService;
         private BulletService bulletService;
 
-        public void Init(PlayerConfig _playerConfig, SoundService _soundService, UIService _uiService, 
+        public void Init(PlayerConfig _playerConfig, SoundService _soundService, UIService _uiService,
             BulletService _bulletService)
         {
             // Setting Variables
@@ -44,6 +44,7 @@ namespace ServiceLocator.Player
 
             // Setting Elements
             health = playerConfig.playerData.maxHealth; // Initialize health
+            shootCooldown = playerConfig.playerData.shootCooldown;
             uiService.GetUIController().UpdateHealthText(health); // Update health text
         }
 
@@ -136,7 +137,7 @@ namespace ServiceLocator.Player
 
         private void Shoot()
         {
-            if (isShooting && Time.time >= lastShootTime + playerConfig.playerData.shootCooldown)
+            if (isShooting && Time.time >= lastShootTime + shootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
                 bulletService.Shoot(gameObject.tag, shootPoint, playerConfig.playerData.shootSpeed, isHoming);
@@ -156,66 +157,6 @@ namespace ServiceLocator.Player
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90)); // Rotate player to face mouse
         }
 
-        public void AddScore()
-        {
-            score += playerConfig.playerData.increaseScoreValue; // Increase score
-            uiService.GetUIController().UpdateScoreText(score); // Update score text
-        }
-
-        public void ActivatePowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
-        {
-            StartCoroutine(PowerUp(powerUpType, powerUpDuration, powerUpValue)); // Activate power-up effect
-        }
-
-        private IEnumerator PowerUp(PowerUpType powerUpType, float powerUpDuration, float powerUpValue)
-        {
-            string powerUpText;
-            if (powerUpType == PowerUpType.HealthPick || powerUpType == PowerUpType.Teleport)
-            {
-                powerUpText = powerUpType.ToString() + "ed.";
-            }
-            else
-            {
-                powerUpText = powerUpType.ToString() + " activated for " + powerUpDuration.ToString() + " seconds.";
-            }
-            uiService.GetUIController().UpdatePowerUpText(powerUpText);
-            switch (powerUpType)
-            {
-                case PowerUpType.HealthPick:
-                    IncreaseHealth((int)powerUpValue); // Increase health
-                    yield return new WaitForSeconds(powerUpDuration);
-                    break;
-                case PowerUpType.HomingOrbs:
-                    isHoming = true; // Activate homing bullets
-                    yield return new WaitForSeconds(powerUpDuration);
-                    isHoming = false; // Deactivate homing bullets
-                    break;
-                case PowerUpType.RapidFire:
-                    playerConfig.playerData.shootCooldown /= powerUpValue; // Increase fire rate
-                    yield return new WaitForSeconds(powerUpDuration);
-                    playerConfig.playerData.shootCooldown *= powerUpValue; // Reset fire rate
-                    break;
-                case PowerUpType.Shield:
-                    isShieldActive = true; // Activate shield
-                    yield return new WaitForSeconds(powerUpDuration);
-                    isShieldActive = false; // Deactivate shield
-                    break;
-                case PowerUpType.SlowMotion:
-                    Time.timeScale = powerUpValue; // Slow down time
-                    yield return new WaitForSeconds(powerUpDuration);
-                    Time.timeScale = 1f; // Reset time
-                    break;
-                case PowerUpType.Teleport:
-                    Teleport(powerUpValue); // Teleport player
-                    yield return new WaitForSeconds(powerUpDuration);
-                    break;
-                default:
-                    yield return new WaitForSeconds(1);
-                    break;
-            }
-            uiService.GetUIController().UpdatePowerUpText(null); // Clear power-up text
-        }
-
         public void Teleport(float minDistance)
         {
             float maxDistance = minDistance + 3f;
@@ -233,6 +174,17 @@ namespace ServiceLocator.Player
             transform.position = newPosition; // Teleport player
         }
 
+        public Vector2 GetPosition()
+        {
+            return transform.position;
+        }
+
+        public void AddScore()
+        {
+            score += playerConfig.playerData.increaseScoreValue; // Increase score
+            uiService.GetUIController().UpdateScoreText(score); // Update score text
+        }
+
         public void DecreaseHealth()
         {
             health -= 1; // Decrease health
@@ -247,7 +199,7 @@ namespace ServiceLocator.Player
             uiService.GetUIController().UpdateHealthText(health);
         }
 
-        private void IncreaseHealth(int increaseHealth)
+        public void IncreaseHealth(int increaseHealth)
         {
             health += increaseHealth; // Increase health
             if (health > playerConfig.playerData.maxHealth)
@@ -267,7 +219,7 @@ namespace ServiceLocator.Player
         }
         private void PlayerDie()
         {
-            //gameController.GameOver(); // Trigger game over
+            uiService.GetUIController().GameOver(); // Trigger game over
         }
     }
 }

@@ -1,5 +1,6 @@
 using ServiceLocator.Bullet;
 using ServiceLocator.Player;
+using ServiceLocator.PowerUp;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using UnityEngine;
@@ -17,12 +18,14 @@ namespace ServiceLocator.Main
         [SerializeField] private BulletConfig bulletConfig;
         [SerializeField] private PlayerController player;
         [SerializeField] private PlayerConfig playerConfig;
+        [SerializeField] private PowerUpConfig powerUpConfig;
 
         // Private Services
         private SoundService soundService;
         private UIService uiService;
         private BulletService bulletService;
         private PlayerService playerService;
+        private PowerUpService powerUpService;
 
         private void Start()
         {
@@ -35,6 +38,12 @@ namespace ServiceLocator.Main
             uiService = new UIService(uiCanvas, soundService);
             bulletService = new BulletService(bulletConfig, soundService);
             playerService = new PlayerService(playerConfig, soundService, uiService, player, bulletService);
+            powerUpService = new PowerUpService(powerUpConfig, soundService, uiService, playerService);
+        }
+
+        private void Update()
+        {
+            powerUpService.Update();
         }
     }
 }
