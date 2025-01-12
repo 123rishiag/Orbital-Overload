@@ -7,12 +7,10 @@ namespace ServiceLocator.UI
         // Private Variables
         private UIController uiController;
 
-        public UIService(UIController _uiCanvas, GameService _gameService)
+        public UIService(UIView _uiCanvas, GameService _gameService)
         {
             // Setting Variables
-            uiController = _uiCanvas.GetComponent<UIController>();
-
-            uiController.Init(_gameService);
+            uiController = new UIController(_uiCanvas, _gameService);
         }
 
         // Getters

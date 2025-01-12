@@ -46,7 +46,7 @@ namespace ServiceLocator.Player
             // Setting Elements
             health = playerData.maxHealth; // Initialize health
             shootCooldown = playerData.shootCooldown;
-            uiService.GetUIController().UpdateHealthText(health); // Update health text
+            uiService.GetUIController().GetUIView().UpdateHealthText(health); // Update health text
         }
 
         private void Update()
@@ -138,7 +138,7 @@ namespace ServiceLocator.Player
         public void AddScore()
         {
             score += playerData.increaseScoreValue; // Increase score
-            uiService.GetUIController().UpdateScoreText(score); // Update score text
+            uiService.GetUIController().GetUIView().UpdateScoreText(score); // Update score text
         }
 
         public void DecreaseHealth()
@@ -152,7 +152,7 @@ namespace ServiceLocator.Player
             {
                 PlayerDie(); // Handle player death
             }
-            uiService.GetUIController().UpdateHealthText(health);
+            uiService.GetUIController().GetUIView().UpdateHealthText(health);
         }
 
         public void IncreaseHealth(int increaseHealth)
@@ -166,7 +166,7 @@ namespace ServiceLocator.Player
             {
                 soundService.PlaySoundEffect(SoundType.PlayerHeal); // Play heal sound effect
             }
-            uiService.GetUIController().UpdateHealthText(health);
+            uiService.GetUIController().GetUIView().UpdateHealthText(health);
         }
 
         public bool ShieldActive()

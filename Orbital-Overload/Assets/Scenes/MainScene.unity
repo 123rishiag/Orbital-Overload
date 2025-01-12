@@ -1609,7 +1609,6 @@ MonoBehaviour:
   bgSource: {fileID: 835171782}
   uiCanvas: {fileID: 1161684383}
   bulletConfig: {fileID: 11400000, guid: 72499fc64374733438a28faf35c087d8, type: 2}
-  player: {fileID: 0}
   playerConfig: {fileID: 11400000, guid: ebe10e5de0786894f9fa685e8488b95f, type: 2}
   enemyConfig: {fileID: 11400000, guid: 35689283cdb03e94ebac025ee0b1874c, type: 2}
   powerUpConfig: {fileID: 11400000, guid: 097c34bfea765904ba1e74e8f971708f, type: 2}
@@ -2922,24 +2921,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1161684378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adcbab9b163388c4f83e823aaf33821c, type: 3}
+  m_Script: {fileID: 11500000, guid: 26936791e91c50e40bcd2e1761e3c755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 778642472}
   scoreText: {fileID: 242969355}
   powerUpBar: {fileID: 1673637323}
   powerUpText: {fileID: 901840853}
-  mainMenuPanel: {fileID: 1987725274}
-  mainMenuPlayButton: {fileID: 755282044}
-  mainMenuQuitButton: {fileID: 2000039334}
-  mainMenuMuteButton: {fileID: 1269934019}
-  mainMenuMuteButtonText: {fileID: 1537800680}
   pauseMenuPanel: {fileID: 1822123725}
   pauseMenuResumeButton: {fileID: 914347577}
   pauseMenuMainMenuButton: {fileID: 2142499071}
   gameOverMenuPanel: {fileID: 165466858}
   gameOverMenuRestartButton: {fileID: 1676242877}
   gameOverMenuMainMenuButton: {fileID: 568482106}
+  mainMenuPanel: {fileID: 1987725274}
+  mainMenuPlayButton: {fileID: 755282044}
+  mainMenuQuitButton: {fileID: 2000039334}
+  mainMenuMuteButton: {fileID: 1269934019}
+  mainMenuMuteButtonText: {fileID: 1537800680}
 --- !u!1 &1202260566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2990,7 +2989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
+  m_Color: {r: 1, g: 0.98039216, b: 0.8039216, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

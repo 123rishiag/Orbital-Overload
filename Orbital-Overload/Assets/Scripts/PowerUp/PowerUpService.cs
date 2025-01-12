@@ -88,7 +88,7 @@ namespace ServiceLocator.PowerUp
             {
                 powerUpText = _powerUpData.powerUpType.ToString() + " activated for " + _powerUpData.powerUpDuration.ToString() + " seconds.";
             }
-            uiService.GetUIController().UpdatePowerUpText(powerUpText);
+            uiService.GetUIController().GetUIView().UpdatePowerUpText(powerUpText);
             switch (_powerUpData.powerUpType)
             {
                 case PowerUpType.HealthPick:
@@ -123,7 +123,7 @@ namespace ServiceLocator.PowerUp
                     yield return new WaitForSeconds(1);
                     break;
             }
-            uiService.GetUIController().HidePowerUpText(); // Hide power-up text
+            uiService.GetUIController().GetUIView().HidePowerUpText(); // Hide power-up text
         }
     }
 }
