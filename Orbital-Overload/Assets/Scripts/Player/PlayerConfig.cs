@@ -4,9 +4,10 @@ using UnityEngine;
 namespace ServiceLocator.Player
 {
     [CreateAssetMenu(fileName = "PlayerConfig", menuName = "ScriptableObjects/PlayerConfig")]
-    
+
     public class PlayerConfig : ScriptableObject
     {
+        public GameObject playerPrefab; // Player prefab to spawn
         public PlayerData playerData;
     }
 

@@ -1,4 +1,4 @@
-using ServiceLocator.Sound;
+using ServiceLocator.Main;
 
 namespace ServiceLocator.UI
 {
@@ -7,12 +7,12 @@ namespace ServiceLocator.UI
         // Private Variables
         private UIController uiController;
 
-        public UIService(UIController _uiCanvas, SoundService _soundService)
+        public UIService(UIController _uiCanvas, GameService _gameService)
         {
             // Setting Variables
             uiController = _uiCanvas.GetComponent<UIController>();
 
-            uiController.Init(_soundService);
+            uiController.Init(_gameService);
         }
 
         // Getters
