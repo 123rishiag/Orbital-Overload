@@ -19,7 +19,7 @@ namespace ServiceLocator.Main
         [SerializeField] private AudioSource bgSource;
 
         [Header("UI Components")]
-        [SerializeField] private UIController uiCanvas;
+        [SerializeField] private UIView uiCanvas;
 
         [Header("Game Configs")]
         [SerializeField] private BulletConfig bulletConfig;

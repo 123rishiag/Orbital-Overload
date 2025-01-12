@@ -48,7 +48,7 @@ namespace ServiceLocator.Main
             if (canPause)
             {
                 Time.timeScale = 0f; // Pause the game
-                uiService.GetUIController().pauseMenuPanel.SetActive(true); // Show Pause Menu
+                uiService.GetUIController().GetUIView().pauseMenuPanel.SetActive(true); // Show Pause Menu
                 isPaused = true;
                 soundService.PlaySoundEffect(SoundType.GamePause); // Play pause sound effect
             }
@@ -57,7 +57,7 @@ namespace ServiceLocator.Main
         public void ResumeGame()
         {
             Time.timeScale = 1f; // Resume the game
-            uiService.GetUIController().pauseMenuPanel.SetActive(false); // Hide Pause Menu
+            uiService.GetUIController().GetUIView().pauseMenuPanel.SetActive(false); // Hide Pause Menu
             isPaused = false;
             soundService.PlaySoundEffect(SoundType.GamePause); // Play resume sound effect
         }
@@ -66,7 +66,7 @@ namespace ServiceLocator.Main
         {
             canPause = false; // Disable pausing
             Time.timeScale = 0f; // Stop time
-            uiService.GetUIController().gameOverMenuPanel.SetActive(true); // Show Game Over Menu
+            uiService.GetUIController().GetUIView().gameOverMenuPanel.SetActive(true); // Show Game Over Menu
             soundService.PlaySoundEffect(SoundType.GameOver); // Play game over sound effect
         }
 
@@ -80,16 +80,16 @@ namespace ServiceLocator.Main
 
         public void MainMenu()
         {
-            uiService.GetUIController().mainMenuPanel.SetActive(true); // Show Main Menu
-            uiService.GetUIController().pauseMenuPanel.SetActive(false); // Hide Pause Menu
-            uiService.GetUIController().gameOverMenuPanel.SetActive(false); // Hide Game Over Menu
+            uiService.GetUIController().GetUIView().mainMenuPanel.SetActive(true); // Show Main Menu
+            uiService.GetUIController().GetUIView().pauseMenuPanel.SetActive(false); // Hide Pause Menu
+            uiService.GetUIController().GetUIView().gameOverMenuPanel.SetActive(false); // Hide Game Over Menu
             soundService.PlaySoundEffect(SoundType.ButtonQuit); // Play quit sound effect
         }
 
         public void PlayGame()
         {
             Time.timeScale = 1f; // Ensure game time is running
-            uiService.GetUIController().mainMenuPanel.SetActive(false); // Hide Main Menu
+            uiService.GetUIController().GetUIView().mainMenuPanel.SetActive(false); // Hide Main Menu
             soundService.PlaySoundEffect(SoundType.GameStart); // Play game start sound effect
         }
 
@@ -100,8 +100,8 @@ namespace ServiceLocator.Main
 
         public void MuteGame()
         {
-            bool isMute = uiService.GetUIController().mainMenuMuteButtonText.text == "Mute: On";
-            uiService.GetUIController().mainMenuMuteButtonText.text = isMute ? "Mute: Off" : "Mute: On"; // Toggle mute text
+            bool isMute = uiService.GetUIController().GetUIView().mainMenuMuteButtonText.text == "Mute: On";
+            uiService.GetUIController().GetUIView().mainMenuMuteButtonText.text = isMute ? "Mute: Off" : "Mute: On"; // Toggle mute text
             soundService.MuteGame(); // Mute/unmute the game
             soundService.PlaySoundEffect(SoundType.ButtonClick); // Play button click sound effect
         }
