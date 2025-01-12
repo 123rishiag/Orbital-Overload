@@ -96,7 +96,7 @@ namespace ServiceLocator.Player
             if (isShooting && Time.time >= lastShootTime + shootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
-                bulletService.Shoot(gameObject.tag, shootPoint, playerData.shootSpeed, isHoming);
+                bulletService.Shoot(gameObject.tag, playerData.shootSpeed, isHoming, shootPoint);
             }
         }
 

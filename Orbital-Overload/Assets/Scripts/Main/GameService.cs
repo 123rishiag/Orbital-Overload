@@ -69,11 +69,15 @@ namespace ServiceLocator.Main
         private void Update()
         {
             gameController.Update();
+            bulletService.Update();
             enemyService.Update();
             powerUpService.Update();
         }
 
-        private void FixedUpdate() { }
+        private void FixedUpdate()
+        {
+            bulletService.FixedUpdate();
+        }
 
         private void LateUpdate()
         {
