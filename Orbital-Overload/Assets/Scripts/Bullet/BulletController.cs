@@ -1,96 +1,52 @@
-using ServiceLocator.Player;
 using ServiceLocator.Sound;
 using UnityEngine;
 
 namespace ServiceLocator.Bullet
 {
-    public class BulletController : MonoBehaviour
+    public class BulletController
     {
         // Private Variables
-        private Rigidbody2D rb; // Rigidbody2D component of the bullet
-        private GameObject enemy; // Target enemy for homing bullets
-        private bool isHoming = false; // Whether the bullet is homing or not
-        private float homingSpeed = 0f; // Speed of homing
-        private Vector2 enemyDirection = Vector2.zero; // Direction towards the enemy
-        private string bulletOwnerTag; // Tag of the bullet's owner
+        private BulletModel bulletModel;
+        private BulletView bulletView;
+        public GameObject enemy; // Target enemy for homing bullets
 
         // Private Services
         private SoundService soundService;
 
-        public void Init(SoundService _soundService)
+        public BulletController(BulletData _bulletData,
+            string _bulletOwnerTag, float _shootSpeed, bool _isHoming, Transform _shootPoint,
+            SoundService _soundService)
         {
+            bulletModel = new BulletModel(_bulletData, _bulletOwnerTag, _isHoming);
+            bulletView = GameObject.Instantiate(_bulletData.bulletPrefab, _shootPoint.position, _shootPoint.rotation).
+                GetComponent<BulletView>();
+            bulletView.Init(this, _soundService);
+
             // Setting Services
             soundService = _soundService;
+
+            // Setting Elements
+            ShootBullet(_shootPoint, _shootSpeed); // Shoot the bullet
         }
 
-        private void Awake()
-        {
-            rb = GetComponent<Rigidbody2D>();
-        }
-
-        private void Update()
+        public void Update()
         {
             FindNearestEnemy(); // Find the nearest enemy for homing
         }
 
-        private void FixedUpdate()
+        public void FixedUpdate()
         {
             Homing(); // Homing logic in FixedUpdate for physics
         }
 
-        private void OnBecameInvisible()
-        {
-            Destroy(gameObject); // Destroy bullet when it goes off screen
-        }
-
-        private void OnTriggerEnter2D(Collider2D collider)
-        {
-            // Avoid collision with the owner
-            if (collider.CompareTag(bulletOwnerTag)) return;
-
-            if (collider.CompareTag("Player"))
-            {
-                PlayerController playerController = collider.GetComponent<PlayerController>();
-                if (!playerController.ShieldActive())
-                {
-                    playerController.DecreaseHealth(); // Decrease player's health on hit
-                    soundService.PlaySoundEffect(SoundType.PlayerHurt);
-                }
-                Destroy(gameObject); // Destroy bullet on hit
-            }
-            else if (collider.CompareTag("Enemy"))
-            {
-                PlayerController playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-                playerController.AddScore(); // Increase player score on hit
-                soundService.PlaySoundEffect(SoundType.PlayerHurt);
-                Destroy(collider.gameObject); // Destroy enemy on hit
-                Destroy(gameObject); // Destroy bullet on hit
-            }
-            else if (collider.CompareTag("Bullet"))
-            {
-                soundService.PlaySoundEffect(SoundType.BulletShoot);
-                Destroy(collider.gameObject); // Destroy other bullet on collision
-                Destroy(gameObject); // Destroy bullet on hit
-            }
-        }
-
-        private void Homing()
-        {
-            if (isHoming && enemy != null)
-            {
-                enemyDirection = ((Vector2)enemy.transform.position - rb.position).normalized;
-                rb.velocity = Vector2.Lerp(rb.velocity, enemyDirection * homingSpeed, Time.fixedDeltaTime);
-            }
-        }
-
         private void FindNearestEnemy()
         {
-            if (isHoming && enemy == null)
+            if (bulletModel.IsHoming && enemy == null)
             {
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
                 GameObject nearestEnemy = null;
                 float minDistance = Mathf.Infinity;
-                Vector2 currentPosition = transform.position;
+                Vector2 currentPosition = bulletView.transform.position;
 
                 // Find the nearest enemy
                 foreach (GameObject enemy in enemies)
@@ -106,21 +62,24 @@ namespace ServiceLocator.Bullet
             }
         }
 
-        public void ShootBullet(Vector2 bulletDirection, float bulletSpeed)
+        private void Homing()
         {
-            rb.velocity = bulletDirection * bulletSpeed * Time.fixedDeltaTime; // Set bullet velocity
+            if (bulletModel.IsHoming && enemy != null)
+            {
+                Vector2 enemyDirection = ((Vector2)enemy.transform.position - bulletView.rigidBody.position).normalized;
+                bulletView.rigidBody.velocity =
+                    Vector2.Lerp(bulletView.rigidBody.velocity, enemyDirection * bulletModel.HomingSpeed, Time.fixedDeltaTime);
+            }
+        }
+
+        public void ShootBullet(Transform _shootPoint, float _bulletSpeed)
+        {
+            bulletView.rigidBody.velocity = _shootPoint.up * _bulletSpeed * Time.fixedDeltaTime; // Set bullet velocity
             soundService.PlaySoundEffect(SoundType.BulletShoot);
         }
 
-        public void SetHoming(bool _isHoming, float _homingSpeed)
-        {
-            isHoming = _isHoming;
-            homingSpeed = _homingSpeed;
-        }
-
-        public void SetOwnerTag(string ownerTag)
-        {
-            bulletOwnerTag = ownerTag;
-        }
+        // Getters
+        public BulletModel GetBulletModel() => bulletModel;
+        public BulletView GetBulletView() => bulletView;
     }
 }

@@ -1,4 +1,5 @@
 using ServiceLocator.Sound;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ServiceLocator.Bullet
@@ -7,6 +8,7 @@ namespace ServiceLocator.Bullet
     {
         // Private Variables
         private BulletConfig bulletConfig;
+        private List<BulletController> bullets;
 
         // Private Services
         private SoundService soundService;
@@ -15,25 +17,45 @@ namespace ServiceLocator.Bullet
         {
             // Setting Variables
             bulletConfig = _bulletConfig;
+            bullets = new List<BulletController>();
 
             // Setting Services
             soundService = _soundService;
         }
 
-        public void Shoot(string _ownerTag, Transform _shootPoint, float _shootSpeed, bool _isHoming)
+        public void Update()
         {
-            GameObject bullet = GameObject.Instantiate(bulletConfig.bulletData.bulletPrefab, _shootPoint.position, _shootPoint.rotation);
-            BulletController bulletController = bullet.GetComponent<BulletController>();
-            bulletController.Init(soundService);
-            if (bulletController != null)
+            for (int i = bullets.Count - 1; i >= 0; i--)
             {
-                bulletController.SetOwnerTag(_ownerTag); // Set owner tag to avoid self-collision
-                if (_isHoming)
+                BulletController bullet = bullets[i];
+                if (bullet.GetBulletView() != null)
                 {
-                    bulletController.SetHoming(_isHoming, bulletConfig.bulletData.homingSpeed); // Set homing properties
+                    bullet.Update();
                 }
-                bulletController.ShootBullet(_shootPoint.up, _shootSpeed); // Shoot the bullet
+                else
+                {
+                    bullets.RemoveAt(i); // Safely remove without affecting iteration
+                }
             }
+        }
+
+        public void FixedUpdate()
+        {
+            for (int i = bullets.Count - 1; i >= 0; i--)
+            {
+                BulletController bullet = bullets[i];
+                if (bullet.GetBulletView() != null)
+                {
+                    bullet.FixedUpdate();
+                }
+            }
+        }
+
+        public void Shoot(string _ownerTag, float _shootSpeed, bool _isHoming, Transform _shootPoint)
+        {
+            BulletController bulletController =
+                new BulletController(bulletConfig.bulletData, _ownerTag, _shootSpeed, _isHoming, _shootPoint, soundService);
+            bullets.Add(bulletController);
         }
     }
 }

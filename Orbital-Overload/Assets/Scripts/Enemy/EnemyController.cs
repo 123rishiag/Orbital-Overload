@@ -76,7 +76,7 @@ namespace ServiceLocator.Enemy
             if (Time.time >= lastShootTime + enemyData.shootCooldown)
             {
                 lastShootTime = Time.time;
-                bulletService.Shoot(gameObject.tag, shootPoint, enemyData.shootSpeed, false);
+                bulletService.Shoot(gameObject.tag, enemyData.shootSpeed, false, shootPoint);
             }
         }
 
