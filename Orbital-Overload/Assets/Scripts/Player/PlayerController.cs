@@ -1,4 +1,5 @@
 using ServiceLocator.Bullet;
+using ServiceLocator.Main;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using UnityEngine;
@@ -8,8 +9,6 @@ namespace ServiceLocator.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Transform shootPoint; // Point from where bullets are shot
-        [SerializeField] private Transform mainCamera; // Main camera reference
-        [SerializeField] private float cameraFollowSpeed = 2f; // Speed at which the camera follows the player
 
         // Private Variables
         private PlayerData playerData;
@@ -27,17 +26,19 @@ namespace ServiceLocator.Player
         private int health = 0; // Player health
 
         // Private Services
+        private GameService gameService;
         private SoundService soundService;
         private UIService uiService;
         private BulletService bulletService;
 
-        public void Init(PlayerData _playerData, SoundService _soundService, UIService _uiService,
+        public void Init(PlayerData _playerData, GameService _gameService, SoundService _soundService, UIService _uiService,
             BulletService _bulletService)
         {
             // Setting Variables
             playerData = _playerData;
 
             // Setting Services
+            gameService = _gameService;
             soundService = _soundService;
             uiService = _uiService;
             bulletService = _bulletService;
@@ -60,51 +61,6 @@ namespace ServiceLocator.Player
             Move(); // Handle movement
             Shoot(); // Handle shooting
             Rotate(); // Handle rotation
-        }
-
-        private void LateUpdate()
-        {
-            MoveCamera(); // Handle camera movement
-        }
-
-        private void MoveCamera()
-        {
-            if (mainCamera != null)
-            {
-                Vector3 playerPosition = transform.position;
-                Vector3 cameraPosition = mainCamera.position;
-
-                float verticalExtent = Camera.main.orthographicSize - 1f;
-                float horizontalExtent = (verticalExtent * Screen.width / Screen.height) - 1f;
-
-                float cameraLeftEdge = cameraPosition.x - horizontalExtent;
-                float cameraRightEdge = cameraPosition.x + horizontalExtent;
-                float cameraTopEdge = cameraPosition.y + verticalExtent;
-                float cameraBottomEdge = cameraPosition.y - verticalExtent;
-
-                Vector3 newCameraPosition = cameraPosition;
-
-                // Move camera to follow player
-                if (playerPosition.x > cameraRightEdge)
-                {
-                    newCameraPosition.x = playerPosition.x - horizontalExtent;
-                }
-                else if (playerPosition.x < cameraLeftEdge)
-                {
-                    newCameraPosition.x = playerPosition.x + horizontalExtent;
-                }
-
-                if (playerPosition.y > cameraTopEdge)
-                {
-                    newCameraPosition.y = playerPosition.y - verticalExtent;
-                }
-                else if (playerPosition.y < cameraBottomEdge)
-                {
-                    newCameraPosition.y = playerPosition.y + verticalExtent;
-                }
-
-                mainCamera.position = Vector3.Lerp(cameraPosition, newCameraPosition, cameraFollowSpeed * Time.deltaTime);
-            }
         }
 
         private void MovementInput()
@@ -219,7 +175,7 @@ namespace ServiceLocator.Player
         }
         private void PlayerDie()
         {
-            uiService.GetUIController().GameOver(); // Trigger game over
+            gameService.GetGameController().GameOver(); // Trigger game over
         }
     }
 }
