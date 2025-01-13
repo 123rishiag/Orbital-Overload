@@ -30,6 +30,6 @@ namespace ServiceLocator.Enemy
         public float shootCooldown; // Cooldown between shots
 
         [Header("Score Data")]
-        public int killScore; // Score increment value
+        public int hitScore; // Score increment value
     }
 }
