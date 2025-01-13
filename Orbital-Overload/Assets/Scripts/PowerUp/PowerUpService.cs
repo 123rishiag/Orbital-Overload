@@ -50,7 +50,7 @@ namespace ServiceLocator.PowerUp
 
         private void SpawnPowerUp()
         {
-            // Fetching Data
+            // Fetching Index
             int powerUpIndex = Random.Range(0, powerUpConfig.powerUpData.Length);
 
             // Fetching Position & Direction

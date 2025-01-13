@@ -1,16 +1,16 @@
-namespace ServiceLocator.Player
+namespace ServiceLocator.Enemy
 {
-    public class PlayerModel
+    public class EnemyModel
     {
-        public PlayerModel(PlayerData _playerData)
+        public EnemyModel(EnemyData _enemyData)
         {
-            MaxHealth = _playerData.maxHealth;
+            MaxHealth = _enemyData.maxHealth;
             CurrentHealth = MaxHealth;
-            CasualMoveSpeed = _playerData.casualMoveSpeed;
-            MoveSpeed = _playerData.moveSpeed;
-            ShootSpeed = _playerData.shootSpeed;
-            ShootCooldown = _playerData.shootCooldown;
-            HitScore = _playerData.hitScore;
+            CasualMoveSpeed = _enemyData.casualMoveSpeed;
+            MoveSpeed = _enemyData.moveSpeed;
+            ShootSpeed = _enemyData.shootSpeed;
+            ShootCooldown = _enemyData.shootCooldown;
+            HitScore = _enemyData.killScore;
             CurrentScore = 0;
             IsShieldActive = false;
             IsHoming = false; // Whether bullets are homing

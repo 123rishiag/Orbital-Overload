@@ -11,7 +11,12 @@ namespace ServiceLocator.Player
         // Private Variables
         private PlayerModel playerModel;
         private PlayerView playerView;
+
         private float lastShootTime; // Time of last shot
+        public float moveX; // X-axis movement input
+        public float moveY; // Y-axis movement input
+        public bool isShooting; // Shooting state
+        public Vector2 mouseDirection; // Direction of the mouse
 
         // Private Services
         private GameService gameService;
@@ -27,7 +32,12 @@ namespace ServiceLocator.Player
             playerModel = new PlayerModel(_playerConfig.playerData);
             playerView = GameObject.Instantiate(_playerConfig.playerPrefab).GetComponent<PlayerView>();
             playerView.Init(this);
+
             lastShootTime = 0f;
+            moveX = 0f;
+            moveY = 0f;
+            isShooting = false;
+            mouseDirection = Vector2.zero;
 
             // Setting Services
             gameService = _gameService;
@@ -41,9 +51,9 @@ namespace ServiceLocator.Player
 
         public void Update()
         {
-            playerView.MovementInput(); // Handle movement input
-            playerView.ShootInput(); // Handle shoot input
-            playerView.RotateInput(); // Handle rotate input
+            MovementInput(); // Handle movement input
+            ShootInput(); // Handle shoot input
+            RotateInput(); // Handle rotate input
         }
         public void FixedUpdate()
         {
@@ -52,14 +62,41 @@ namespace ServiceLocator.Player
             Rotate(); // Handle rotation
         }
 
+        private void MovementInput()
+        {
+            moveX = Input.GetAxis("Horizontal"); // Get horizontal input
+            moveY = Input.GetAxis("Vertical"); // Get vertical input
+            if (moveX == 0f)
+            {
+                moveX = playerModel.CasualMoveSpeed; // Default move speed
+            }
+        }
+        private void ShootInput()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                isShooting = true; // Start shooting
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                isShooting = false; // Stop shooting
+            }
+        }
+        private void RotateInput()
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0f; // Ensure z is zero for 2D
+            mouseDirection = (mousePosition - playerView.transform.position).normalized;
+        }
+
         private void Move()
         {
-            Vector2 moveVector = new Vector2(playerView.MoveX, playerView.MoveY) * playerModel.MoveSpeed * Time.fixedDeltaTime;
+            Vector2 moveVector = new Vector2(moveX, moveY) * playerModel.MoveSpeed * Time.fixedDeltaTime;
             playerView.transform.Translate(moveVector, Space.World); // Move player
         }
         private void Shoot()
         {
-            if (playerView.IsShooting && Time.time >= lastShootTime + playerModel.ShootCooldown)
+            if (isShooting && Time.time >= lastShootTime + playerModel.ShootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
                 bulletService.Shoot(playerView.gameObject.tag, playerModel.ShootSpeed, playerModel.IsHoming,
@@ -68,7 +105,7 @@ namespace ServiceLocator.Player
         }
         private void Rotate()
         {
-            float angle = Mathf.Atan2(playerView.MouseDirection.y, playerView.MouseDirection.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
             playerView.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90)); // Rotate player to face mouse
         }
 
@@ -89,9 +126,9 @@ namespace ServiceLocator.Player
             playerView.transform.position = newPosition; // Teleport player
         }
 
-        public void AddScore()
+        public void AddScore(int _score)
         {
-            playerModel.CurrentScore += playerModel.IncreaseScoreValue; // Increase score
+            playerModel.CurrentScore += _score; // Increase score
             uiService.GetUIController().GetUIView().UpdateScoreText(playerModel.CurrentScore); // Update score text
         }
 
