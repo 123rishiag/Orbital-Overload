@@ -10,7 +10,7 @@ namespace ServiceLocator.Enemy
             MoveSpeed = _enemyData.moveSpeed;
             ShootSpeed = _enemyData.shootSpeed;
             ShootCooldown = _enemyData.shootCooldown;
-            HitScore = _enemyData.killScore;
+            HitScore = _enemyData.hitScore;
             CurrentScore = 0;
             IsShieldActive = false;
             IsHoming = false; // Whether bullets are homing

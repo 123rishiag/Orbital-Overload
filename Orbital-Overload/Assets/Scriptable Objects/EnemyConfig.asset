@@ -23,4 +23,4 @@ MonoBehaviour:
     moveSpeed: 5
     shootSpeed: 500
     shootCooldown: 0.5
-    killScore: 10
+    hitScore: 10
