@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c09f21f60cffbbd4c99324fbcdd51081, type: 3}
   m_Name: BulletConfig
   m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 2285328053563287540, guid: 2007e1f5e9c32424fa8e129bff2c084e, type: 3}
   bulletData:
-    bulletPrefab: {fileID: 2285328053563287540, guid: 2007e1f5e9c32424fa8e129bff2c084e, type: 3}
     homingSpeed: 500

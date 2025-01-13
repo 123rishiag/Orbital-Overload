@@ -13,12 +13,12 @@ namespace ServiceLocator.Bullet
         // Private Services
         private SoundService soundService;
 
-        public BulletController(BulletData _bulletData,
+        public BulletController(BulletConfig _bulletConfig,
             string _bulletOwnerTag, float _shootSpeed, bool _isHoming, Transform _shootPoint,
             SoundService _soundService)
         {
-            bulletModel = new BulletModel(_bulletData, _bulletOwnerTag, _isHoming);
-            bulletView = GameObject.Instantiate(_bulletData.bulletPrefab, _shootPoint.position, _shootPoint.rotation).
+            bulletModel = new BulletModel(_bulletConfig.bulletData, _bulletOwnerTag, _isHoming);
+            bulletView = GameObject.Instantiate(_bulletConfig.bulletPrefab, _shootPoint.position, _shootPoint.rotation).
                 GetComponent<BulletView>();
             bulletView.Init(this, _soundService);
 

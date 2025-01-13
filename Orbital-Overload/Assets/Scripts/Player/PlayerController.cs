@@ -1,29 +1,19 @@
 using ServiceLocator.Bullet;
 using ServiceLocator.Main;
+using ServiceLocator.PowerUp;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
+using System.Collections;
 using UnityEngine;
 
 namespace ServiceLocator.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController
     {
-        [SerializeField] private Transform shootPoint; // Point from where bullets are shot
-
         // Private Variables
-        private PlayerData playerData;
-
-        private float moveX = 0f; // X-axis movement input
-        private float moveY = 0f; // Y-axis movement input
-        private bool isShooting = false; // Shooting state
-        private float lastShootTime = 0f; // Time of last shot
-        private Vector2 mouseDirection = Vector2.zero; // Direction of the mouse
-        public bool isShieldActive = false; // Whether shield is active
-        public bool isHoming = false; // Whether bullets are homing
-        public float shootCooldown; // Cooldown between shots
-
-        private int score = 0; // Player score
-        private int health = 0; // Player health
+        private PlayerModel playerModel;
+        private PlayerView playerView;
+        private float lastShootTime; // Time of last shot
 
         // Private Services
         private GameService gameService;
@@ -31,11 +21,15 @@ namespace ServiceLocator.Player
         private UIService uiService;
         private BulletService bulletService;
 
-        public void Init(PlayerData _playerData, GameService _gameService, SoundService _soundService, UIService _uiService,
+        public PlayerController(PlayerConfig _playerConfig,
+            GameService _gameService, SoundService _soundService, UIService _uiService,
             BulletService _bulletService)
         {
             // Setting Variables
-            playerData = _playerData;
+            playerModel = new PlayerModel(_playerConfig.playerData);
+            playerView = GameObject.Instantiate(_playerConfig.playerPrefab).GetComponent<PlayerView>();
+            playerView.Init(this);
+            lastShootTime = 0f;
 
             // Setting Services
             gameService = _gameService;
@@ -44,138 +38,156 @@ namespace ServiceLocator.Player
             bulletService = _bulletService;
 
             // Setting Elements
-            health = playerData.maxHealth; // Initialize health
-            shootCooldown = playerData.shootCooldown;
-            uiService.GetUIController().GetUIView().UpdateHealthText(health); // Update health text
+            uiService.GetUIController().GetUIView().UpdateHealthText(playerModel.CurrentHealth); // Update health text
         }
 
-        private void Update()
+        public void Update()
         {
-            MovementInput(); // Handle movement input
-            ShootInput(); // Handle shoot input
-            RotateInput(); // Handle rotate input
+            playerView.MovementInput(); // Handle movement input
+            playerView.ShootInput(); // Handle shoot input
+            playerView.RotateInput(); // Handle rotate input
         }
-
-        private void FixedUpdate()
+        public void FixedUpdate()
         {
             Move(); // Handle movement
             Shoot(); // Handle shooting
             Rotate(); // Handle rotation
         }
 
-        private void MovementInput()
-        {
-            moveX = Input.GetAxis("Horizontal"); // Get horizontal input
-            moveY = Input.GetAxis("Vertical"); // Get vertical input
-            if (moveX == 0f)
-            {
-                moveX = playerData.casualMoveSpeed; // Default move speed
-            }
-        }
-
         private void Move()
         {
-            Vector2 moveVector = new Vector2(moveX, moveY) * playerData.moveSpeed * Time.fixedDeltaTime;
-            transform.Translate(moveVector, Space.World); // Move player
+            Vector2 moveVector = new Vector2(playerView.MoveX, playerView.MoveY) * playerModel.MoveSpeed * Time.fixedDeltaTime;
+            playerView.transform.Translate(moveVector, Space.World); // Move player
         }
-
-        private void ShootInput()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                isShooting = true; // Start shooting
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                isShooting = false; // Stop shooting
-            }
-        }
-
         private void Shoot()
         {
-            if (isShooting && Time.time >= lastShootTime + shootCooldown)
+            if (playerView.IsShooting && Time.time >= lastShootTime + playerModel.ShootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
-                bulletService.Shoot(gameObject.tag, playerData.shootSpeed, isHoming, shootPoint);
+                bulletService.Shoot(playerView.gameObject.tag, playerModel.ShootSpeed, playerModel.IsHoming,
+                    playerView.shootPoint);
             }
         }
-
-        private void RotateInput()
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0f; // Ensure z is zero for 2D
-            mouseDirection = (mousePosition - transform.position).normalized;
-        }
-
         private void Rotate()
         {
-            float angle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90)); // Rotate player to face mouse
+            float angle = Mathf.Atan2(playerView.MouseDirection.y, playerView.MouseDirection.x) * Mathf.Rad2Deg;
+            playerView.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90)); // Rotate player to face mouse
         }
 
-        public void Teleport(float minDistance)
+        public void Teleport(float _minDistance)
         {
-            float maxDistance = minDistance + 3f;
+            float maxDistance = _minDistance + 3f;
 
             float angle = Random.Range(0f, Mathf.PI * 2);
 
-            float distance = Random.Range(minDistance, maxDistance);
+            float distance = Random.Range(_minDistance, maxDistance);
 
             Vector3 offset = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * distance;
-            Vector3 newPosition = transform.position + offset;
+            Vector3 newPosition = playerView.transform.position + offset;
 
             newPosition.x = Mathf.Clamp(newPosition.x, -8f, 8f); // Clamp x position
             newPosition.y = Mathf.Clamp(newPosition.y, -4f, 4f); // Clamp y position
 
-            transform.position = newPosition; // Teleport player
-        }
-
-        public Vector2 GetPosition()
-        {
-            return transform.position;
+            playerView.transform.position = newPosition; // Teleport player
         }
 
         public void AddScore()
         {
-            score += playerData.increaseScoreValue; // Increase score
-            uiService.GetUIController().GetUIView().UpdateScoreText(score); // Update score text
+            playerModel.CurrentScore += playerModel.IncreaseScoreValue; // Increase score
+            uiService.GetUIController().GetUIView().UpdateScoreText(playerModel.CurrentScore); // Update score text
         }
 
         public void DecreaseHealth()
         {
-            health -= 1; // Decrease health
-            if (health < 0)
+            playerModel.CurrentHealth -= 1; // Decrease health
+            if (playerModel.CurrentHealth < 0)
             {
-                health = 0;
+                playerModel.CurrentHealth = 0;
             }
-            if (health == 0)
+            if (playerModel.CurrentHealth == 0)
             {
                 PlayerDie(); // Handle player death
             }
-            uiService.GetUIController().GetUIView().UpdateHealthText(health);
+            soundService.PlaySoundEffect(SoundType.PlayerHurt);
+            uiService.GetUIController().GetUIView().UpdateHealthText(playerModel.CurrentHealth);
         }
 
-        public void IncreaseHealth(int increaseHealth)
+        public void IncreaseHealth(int _increaseHealth)
         {
-            health += increaseHealth; // Increase health
-            if (health > playerData.maxHealth)
+            playerModel.CurrentHealth += _increaseHealth; // Increase health
+            if (playerModel.CurrentHealth > playerModel.MaxHealth)
             {
-                health = playerData.maxHealth; // Clamp health to max
+                playerModel.CurrentHealth = playerModel.MaxHealth; // Clamp health to max
             }
             else
             {
                 soundService.PlaySoundEffect(SoundType.PlayerHeal); // Play heal sound effect
             }
-            uiService.GetUIController().GetUIView().UpdateHealthText(health);
+            uiService.GetUIController().GetUIView().UpdateHealthText(playerModel.CurrentHealth);
         }
 
-        public bool ShieldActive()
+        public void ActivatePowerUp(PowerUpData _powerUpData)
         {
-            return isShieldActive;
+            gameService.StartManagedCoroutine(PowerUp(_powerUpData)); // Activate power-up effect
         }
+
+        private IEnumerator PowerUp(PowerUpData _powerUpData)
+        {
+            string powerUpText;
+            if (_powerUpData.powerUpType == PowerUpType.HealthPick || _powerUpData.powerUpType == PowerUpType.Teleport)
+            {
+                powerUpText = _powerUpData.powerUpType.ToString() + "ed.";
+            }
+            else
+            {
+                powerUpText = _powerUpData.powerUpType.ToString() + " activated for " + _powerUpData.powerUpDuration.ToString() + " seconds.";
+            }
+            soundService.PlaySoundEffect(SoundType.PowerUpPickup);
+            uiService.GetUIController().GetUIView().UpdatePowerUpText(powerUpText);
+            switch (_powerUpData.powerUpType)
+            {
+                case PowerUpType.HealthPick:
+                    IncreaseHealth((int)_powerUpData.powerUpValue); // Increase health
+                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
+                    break;
+                case PowerUpType.HomingOrbs:
+                    playerModel.IsHoming = true; // Activate homing bullets
+                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
+                    playerModel.IsHoming = false; // Deactivate homing bullets
+                    break;
+                case PowerUpType.RapidFire:
+                    playerModel.ShootCooldown /= _powerUpData.powerUpValue; // Increase fire rate
+                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
+                    playerModel.ShootCooldown *= _powerUpData.powerUpValue; // Reset fire rate
+                    break;
+                case PowerUpType.Shield:
+                    playerModel.IsShieldActive = true; // Activate shield
+                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
+                    playerModel.IsShieldActive = false; // Deactivate shield
+                    break;
+                case PowerUpType.SlowMotion:
+                    Time.timeScale = _powerUpData.powerUpValue; // Slow down time
+                    yield return new WaitForSecondsRealtime(_powerUpData.powerUpDuration);
+                    Time.timeScale = 1f; // Reset time
+                    break;
+                case PowerUpType.Teleport:
+                    Teleport(_powerUpData.powerUpValue); // Teleport player
+                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
+                    break;
+                default:
+                    yield return new WaitForSeconds(1);
+                    break;
+            }
+            uiService.GetUIController().GetUIView().HidePowerUpText(); // Hide power-up text
+        }
+
         private void PlayerDie()
         {
             gameService.GetGameController().GameOver(); // Trigger game over
         }
+
+        // Getters
+        public PlayerModel GetPlayerModel() => playerModel;
+        public PlayerView GetPlayerView() => playerView;
     }
 }

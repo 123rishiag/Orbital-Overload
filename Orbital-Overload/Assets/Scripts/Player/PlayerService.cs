@@ -2,7 +2,6 @@ using ServiceLocator.Bullet;
 using ServiceLocator.Main;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
-using UnityEngine;
 
 namespace ServiceLocator.Player
 {
@@ -13,16 +12,26 @@ namespace ServiceLocator.Player
 
         // Private Services
 
-        public PlayerService(PlayerConfig _playerConfig, GameService _gameService, SoundService _soundService, UIService _uiService,
+        public PlayerService(PlayerConfig _playerConfig,
+            GameService _gameService, SoundService _soundService, UIService _uiService,
             BulletService _bulletService)
         {
             // Setting Variables
-            playerController = GameObject.Instantiate(_playerConfig.playerPrefab).GetComponent<PlayerController>();
-
-            // Setting Elements
-            playerController.Init(_playerConfig.playerData, _gameService, _soundService, _uiService, _bulletService);
+            playerController = new PlayerController(_playerConfig,
+            _gameService, _soundService, _uiService,
+            _bulletService);
         }
 
+        public void Update()
+        {
+            playerController.Update();
+        }
+        public void FixedUpdate()
+        {
+            playerController.FixedUpdate();
+        }
+
+        // Getters
         public PlayerController GetPlayerController() => playerController;
     }
 }
