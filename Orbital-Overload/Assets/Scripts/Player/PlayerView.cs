@@ -1,5 +1,4 @@
 using ServiceLocator.Bullet;
-using ServiceLocator.PowerUp;
 using UnityEngine;
 
 namespace ServiceLocator.Player
@@ -65,11 +64,6 @@ namespace ServiceLocator.Player
                 {
                     playerController.DecreaseHealth(); // Decrease player's health on hit
                 }
-            }
-            else if (_collider.CompareTag("PowerUp"))
-            {
-                PowerUpController powerUpController = _collider.GetComponent<PowerUpController>();
-                playerController.ActivatePowerUp(powerUpController.powerUpData); // Activate power-up effect
             }
         }
 
