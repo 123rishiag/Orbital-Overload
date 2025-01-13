@@ -1,4 +1,8 @@
+using ServiceLocator.Main;
 using ServiceLocator.Player;
+using ServiceLocator.Sound;
+using ServiceLocator.UI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ServiceLocator.PowerUp
@@ -7,21 +11,28 @@ namespace ServiceLocator.PowerUp
     {
         // Private Variables
         private PowerUpConfig powerUpConfig;
+        private List<PowerUpController> powerUps;
         private float powerUpSpawnTimer;
 
         // Private Services
+        private GameService gameService;
+        private SoundService soundService;
+        private UIService uiService;
         private PlayerService playerService;
 
-        public PowerUpService(PowerUpConfig _powerUpConfig, PlayerService _playerService)
+        public PowerUpService(PowerUpConfig _powerUpConfig,
+            GameService _gameService, SoundService _soundService, UIService _uiService, PlayerService _playerService)
         {
             // Setting Variables
             powerUpConfig = _powerUpConfig;
+            powerUps = new List<PowerUpController>();
+            powerUpSpawnTimer = powerUpConfig.powerUpSpawnInterval;
 
             // Setting Services
+            gameService = _gameService;
+            soundService = _soundService;
+            uiService = _uiService;
             playerService = _playerService;
-
-            // Setting Elements
-            powerUpSpawnTimer = powerUpConfig.powerUpSpawnInterval;
         }
 
         public void Update()
@@ -40,8 +51,7 @@ namespace ServiceLocator.PowerUp
         private void SpawnPowerUp()
         {
             // Fetching Data
-            int index = Random.Range(0, powerUpConfig.powerUpData.Length);
-            PowerUpData powerUpData = powerUpConfig.powerUpData[index];
+            int powerUpIndex = Random.Range(0, powerUpConfig.powerUpData.Length);
 
             // Fetching Position & Direction
             Vector2 randomDirection = new Vector2(
@@ -53,14 +63,10 @@ namespace ServiceLocator.PowerUp
             Vector2 spawnPosition = playerPosition + awayFromPlayerOffset +
                 Random.insideUnitCircle * powerUpConfig.powerUpSpawnRadius;
 
-            // Instantiating Object
-            GameObject powerUp = GameObject.Instantiate(powerUpConfig.powerUpPrefab, spawnPosition, Quaternion.identity);
-
             // Creating Controller
-            PowerUpController powerUpController = powerUp.GetComponent<PowerUpController>();
-            powerUpController.Init(powerUpData);
+            PowerUpController powerUpController = new PowerUpController(powerUpConfig, spawnPosition, powerUpIndex,
+                gameService, soundService, uiService);
+            powerUps.Add(powerUpController);
         }
-
-
     }
 }

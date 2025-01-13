@@ -58,7 +58,7 @@ namespace ServiceLocator.Main
             playerService = new PlayerService(playerConfig, this, soundService, uiService, bulletService);
             cameraService = new CameraService(mainCamera, cameraFollowSpeed, playerService);
             enemyService = new EnemyService(enemyConfig, bulletService, playerService);
-            powerUpService = new PowerUpService(powerUpConfig, playerService);
+            powerUpService = new PowerUpService(powerUpConfig, this, soundService, uiService, playerService);
         }
 
         private void InjectDependencies()

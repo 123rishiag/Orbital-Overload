@@ -1,9 +1,7 @@
 using ServiceLocator.Bullet;
 using ServiceLocator.Main;
-using ServiceLocator.PowerUp;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
-using System.Collections;
 using UnityEngine;
 
 namespace ServiceLocator.Player
@@ -124,61 +122,6 @@ namespace ServiceLocator.Player
                 soundService.PlaySoundEffect(SoundType.PlayerHeal); // Play heal sound effect
             }
             uiService.GetUIController().GetUIView().UpdateHealthText(playerModel.CurrentHealth);
-        }
-
-        public void ActivatePowerUp(PowerUpData _powerUpData)
-        {
-            gameService.StartManagedCoroutine(PowerUp(_powerUpData)); // Activate power-up effect
-        }
-
-        private IEnumerator PowerUp(PowerUpData _powerUpData)
-        {
-            string powerUpText;
-            if (_powerUpData.powerUpType == PowerUpType.HealthPick || _powerUpData.powerUpType == PowerUpType.Teleport)
-            {
-                powerUpText = _powerUpData.powerUpType.ToString() + "ed.";
-            }
-            else
-            {
-                powerUpText = _powerUpData.powerUpType.ToString() + " activated for " + _powerUpData.powerUpDuration.ToString() + " seconds.";
-            }
-            soundService.PlaySoundEffect(SoundType.PowerUpPickup);
-            uiService.GetUIController().GetUIView().UpdatePowerUpText(powerUpText);
-            switch (_powerUpData.powerUpType)
-            {
-                case PowerUpType.HealthPick:
-                    IncreaseHealth((int)_powerUpData.powerUpValue); // Increase health
-                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
-                    break;
-                case PowerUpType.HomingOrbs:
-                    playerModel.IsHoming = true; // Activate homing bullets
-                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
-                    playerModel.IsHoming = false; // Deactivate homing bullets
-                    break;
-                case PowerUpType.RapidFire:
-                    playerModel.ShootCooldown /= _powerUpData.powerUpValue; // Increase fire rate
-                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
-                    playerModel.ShootCooldown *= _powerUpData.powerUpValue; // Reset fire rate
-                    break;
-                case PowerUpType.Shield:
-                    playerModel.IsShieldActive = true; // Activate shield
-                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
-                    playerModel.IsShieldActive = false; // Deactivate shield
-                    break;
-                case PowerUpType.SlowMotion:
-                    Time.timeScale = _powerUpData.powerUpValue; // Slow down time
-                    yield return new WaitForSecondsRealtime(_powerUpData.powerUpDuration);
-                    Time.timeScale = 1f; // Reset time
-                    break;
-                case PowerUpType.Teleport:
-                    Teleport(_powerUpData.powerUpValue); // Teleport player
-                    yield return new WaitForSeconds(_powerUpData.powerUpDuration);
-                    break;
-                default:
-                    yield return new WaitForSeconds(1);
-                    break;
-            }
-            uiService.GetUIController().GetUIView().HidePowerUpText(); // Hide power-up text
         }
 
         private void PlayerDie()
