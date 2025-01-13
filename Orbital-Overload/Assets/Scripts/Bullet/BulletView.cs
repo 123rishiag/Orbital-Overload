@@ -1,4 +1,3 @@
-using ServiceLocator.Player;
 using ServiceLocator.Sound;
 using UnityEngine;
 
@@ -30,11 +29,7 @@ namespace ServiceLocator.Bullet
 
             if (_collider.CompareTag("Enemy"))
             {
-                PlayerView playerView = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerView>();
-                playerView.playerController.AddScore(); // Increase player score on hit
-                Destroy(_collider.gameObject); // Destroy enemy on hit
-                Destroy(gameObject); // Destroy bullet on hit
-                soundService.PlaySoundEffect(SoundType.EnemyHurt);
+                Destroy(gameObject);
             }
             else if (_collider.CompareTag("Player"))
             {
@@ -42,7 +37,7 @@ namespace ServiceLocator.Bullet
             }
             else if (_collider.CompareTag("Bullet"))
             {
-                Destroy(gameObject); // Destroy bullet on hit
+                Destroy(gameObject);
             }
         }
 

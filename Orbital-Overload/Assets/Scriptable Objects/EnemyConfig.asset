@@ -16,8 +16,11 @@ MonoBehaviour:
   enemySpawnInterval: 2
   enemySpawnRadius: 5
   enemyAwayFromPlayerSpawnDistance: 10
+  enemyAwayFromPlayerMinDistance: 3
   enemyData:
+    maxHealth: 1
+    casualMoveSpeed: 0
     moveSpeed: 5
     shootSpeed: 500
     shootCooldown: 0.5
-    enemyAwayFromPlayerMinDistance: 3
+    killScore: 10

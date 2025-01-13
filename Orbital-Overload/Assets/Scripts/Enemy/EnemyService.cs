@@ -1,5 +1,6 @@
 using ServiceLocator.Bullet;
 using ServiceLocator.Player;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ServiceLocator.Enemy
@@ -8,6 +9,7 @@ namespace ServiceLocator.Enemy
     {
         // Private Variables
         private EnemyConfig enemyConfig;
+        private List<EnemyController> enemies;
         private float enemySpawnTimer;
 
         // Private Services
@@ -18,6 +20,7 @@ namespace ServiceLocator.Enemy
         {
             // Setting Variables
             enemyConfig = _enemyConfig;
+            enemies = new List<EnemyController>();
 
             // Setting Services
             bulletService = _bulletService;
@@ -38,6 +41,31 @@ namespace ServiceLocator.Enemy
                 enemySpawnTimer = enemyConfig.enemySpawnInterval; // Reset the timer
                 SpawnEnemy();
             }
+
+            for (int i = enemies.Count - 1; i >= 0; i--)
+            {
+                EnemyController enemy = enemies[i];
+                if (enemy.GetEnemyView() != null)
+                {
+                    enemy.Update();
+                }
+                else
+                {
+                    enemies.RemoveAt(i); // Safely remove without affecting iteration
+                }
+            }
+        }
+
+        public void FixedUpdate()
+        {
+            for (int i = enemies.Count - 1; i >= 0; i--)
+            {
+                EnemyController enemy = enemies[i];
+                if (enemy.GetEnemyView() != null)
+                {
+                    enemy.FixedUpdate();
+                }
+            }
         }
 
         private void SpawnEnemy()
@@ -55,12 +83,10 @@ namespace ServiceLocator.Enemy
             Vector2 spawnPosition = playerPosition + awayFromPlayerOffset +
                 Random.insideUnitCircle * enemyConfig.enemySpawnRadius;
 
-            // Instantiating Object
-            GameObject enemy = GameObject.Instantiate(enemyConfig.enemyPrefab, spawnPosition, Quaternion.identity);
-
             // Creating Controller
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            enemyController.Init(enemyData, bulletService, playerService);
+            EnemyController enemyController = new EnemyController(enemyConfig, spawnPosition,
+                bulletService, playerService);
+            enemies.Add(enemyController);
         }
     }
 }

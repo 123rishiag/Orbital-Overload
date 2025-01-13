@@ -79,6 +79,7 @@ namespace ServiceLocator.Main
         {
             bulletService.FixedUpdate();
             playerService.FixedUpdate();
+            enemyService.FixedUpdate();
         }
 
         private void LateUpdate()

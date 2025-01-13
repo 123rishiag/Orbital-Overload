@@ -26,6 +26,6 @@ namespace ServiceLocator.Player
         public float shootCooldown; // Cooldown between shots
 
         [Header("Score Data")]
-        public int increaseScoreValue; // Score increment value
+        public int hitScore; // Score increment value
     }
 }
