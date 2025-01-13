@@ -58,7 +58,7 @@ namespace ServiceLocator.Main
             playerService = new PlayerService(playerConfig, this, soundService, uiService, bulletService);
             cameraService = new CameraService(mainCamera, cameraFollowSpeed, playerService);
             enemyService = new EnemyService(enemyConfig, bulletService, playerService);
-            powerUpService = new PowerUpService(powerUpConfig, this, soundService, uiService, playerService);
+            powerUpService = new PowerUpService(powerUpConfig, playerService);
         }
 
         private void InjectDependencies()
@@ -70,6 +70,7 @@ namespace ServiceLocator.Main
         {
             gameController.Update();
             bulletService.Update();
+            playerService.Update();
             enemyService.Update();
             powerUpService.Update();
         }
@@ -77,6 +78,7 @@ namespace ServiceLocator.Main
         private void FixedUpdate()
         {
             bulletService.FixedUpdate();
+            playerService.FixedUpdate();
         }
 
         private void LateUpdate()

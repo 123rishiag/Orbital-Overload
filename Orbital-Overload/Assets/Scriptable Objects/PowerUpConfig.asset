@@ -20,7 +20,7 @@ MonoBehaviour:
   - powerUpType: 0
     powerUpColor: {r: 0.59607846, g: 1, b: 0.59607846, a: 1}
     powerUpDuration: 2
-    powerUpValue: 1
+    powerUpValue: 5
     powerUpLifetime: 10
   - powerUpType: 1
     powerUpColor: {r: 0.9019608, g: 0.9019608, b: 0.98039216, a: 1}

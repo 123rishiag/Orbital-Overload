@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4826865101074099133}
   - component: {fileID: 4006782972604691271}
   - component: {fileID: 7657378284874840363}
-  - component: {fileID: 4086121986005359668}
+  - component: {fileID: 1367885917734870146}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -181,7 +181,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &4086121986005359668
+--- !u!114 &1367885917734870146
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,24 +190,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7105477246142074162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0744710b865cbed46a9bf5498cc452f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 26ac1bce2fae2ff46a42cfefd7810489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  casualMoveSpeed: 0.1
-  moveSpeed: 20
-  bulletPrefab: {fileID: 2285328053563287540, guid: 2007e1f5e9c32424fa8e129bff2c084e, type: 3}
   shootPoint: {fileID: 2678801807194975282}
-  bulletSpeed: 1500
-  homingSpeed: 500
-  shootCooldown: 0.15
-  mainCamera: {fileID: 0}
-  cameraFollowSpeed: 2
-  powerUpText: {fileID: 0}
-  increaseScoreValue: 10
-  scoreText: {fileID: 0}
-  gameManager: {fileID: 0}
-  maxHealth: 3
-  healthText: {fileID: 0}
 --- !u!1 &7605165835670563916
 GameObject:
   m_ObjectHideFlags: 0

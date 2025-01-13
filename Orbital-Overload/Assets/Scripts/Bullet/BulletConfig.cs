@@ -7,15 +7,13 @@ namespace ServiceLocator.Bullet
 
     public class BulletConfig : ScriptableObject
     {
+        public GameObject bulletPrefab;
         public BulletData bulletData;
     }
 
     [Serializable]
     public class BulletData
     {
-        [Header("Prefabs")]
-        public GameObject bulletPrefab; // Bullet prefab for shooting
-
         [Header("Speed Data")]
         public float homingSpeed; // Speed of bullets while homing
     }

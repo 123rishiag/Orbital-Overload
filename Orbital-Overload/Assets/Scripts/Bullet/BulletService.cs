@@ -54,7 +54,7 @@ namespace ServiceLocator.Bullet
         public void Shoot(string _ownerTag, float _shootSpeed, bool _isHoming, Transform _shootPoint)
         {
             BulletController bulletController =
-                new BulletController(bulletConfig.bulletData, _ownerTag, _shootSpeed, _isHoming, _shootPoint, soundService);
+                new BulletController(bulletConfig, _ownerTag, _shootSpeed, _isHoming, _shootPoint, soundService);
             bullets.Add(bulletController);
         }
     }

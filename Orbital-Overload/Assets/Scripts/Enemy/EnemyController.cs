@@ -50,7 +50,7 @@ namespace ServiceLocator.Enemy
 
         private void MoveTowardsPlayerDirection()
         {
-            Vector2 playerPosition = playerService.GetPlayerController().GetPosition();
+            Vector2 playerPosition = playerService.GetPlayerController().GetPlayerView().GetPosition();
             float distanceToPlayer = Vector2.Distance(transform.position, playerPosition);
             if (distanceToPlayer > enemyData.enemyAwayFromPlayerMinDistance)
             {
@@ -82,7 +82,7 @@ namespace ServiceLocator.Enemy
 
         private void RotateInput()
         {
-            Vector2 playerPosition = playerService.GetPlayerController().GetPosition();
+            Vector2 playerPosition = playerService.GetPlayerController().GetPlayerView().GetPosition();
             mouseDirection = (playerPosition - (Vector2)transform.position).normalized;
         }
 

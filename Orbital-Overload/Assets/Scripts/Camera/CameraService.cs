@@ -30,7 +30,7 @@ namespace ServiceLocator.Vision
         private void FollowCameraTowardsPlayer()
         {
             Vector3 cameraPosition = mainCamera.transform.position;
-            Vector3 playerPosition = playerService.GetPlayerController().GetPosition();
+            Vector3 playerPosition = playerService.GetPlayerController().GetPlayerView().GetPosition();
 
             float verticalExtent = mainCamera.orthographicSize - 1f;
             float horizontalExtent = (verticalExtent * Screen.width / Screen.height) - 1f;

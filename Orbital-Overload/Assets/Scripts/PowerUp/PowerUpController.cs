@@ -1,5 +1,3 @@
-using ServiceLocator.Player;
-using ServiceLocator.Sound;
 using UnityEngine;
 
 namespace ServiceLocator.PowerUp
@@ -9,35 +7,22 @@ namespace ServiceLocator.PowerUp
         [SerializeField] public SpriteRenderer powerUpSprite;
 
         // Private Variables
-        private PowerUpData powerUpData;
+        public PowerUpData powerUpData;
 
-        // Private Services
-        private SoundService soundService;
-        private PowerUpService powerUpService;
-
-        public void Init(PowerUpData _powerUpData, SoundService _soundService, PowerUpService _powerUpService)
+        public void Init(PowerUpData _powerUpData)
         {
             // Setting Variables
             powerUpData = _powerUpData;
             powerUpSprite.color = _powerUpData.powerUpColor;
 
-            // Setting Services
-            soundService = _soundService;
-            powerUpService = _powerUpService;
-
-            GameObject.Destroy(gameObject, powerUpData.powerUpLifetime); // Destroy the power-up after its lifetime
+            Destroy(gameObject, powerUpData.powerUpLifetime); // Destroy the power-up after its lifetime
         }
 
-
-
-        private void OnTriggerEnter2D(Collider2D collider)
+        private void OnTriggerEnter2D(Collider2D _collider)
         {
-            if (collider.CompareTag("Player"))
+            if (_collider.CompareTag("Player"))
             {
-                PlayerController playerController = collider.GetComponent<PlayerController>();
-                powerUpService.ActivatePowerUp(powerUpData); // Activate power-up effect
-                GameObject.Destroy(gameObject); // Some additional time or coroutine to work
-                soundService.PlaySoundEffect(SoundType.PowerUpPickup);
+                Destroy(gameObject);
             }
         }
 

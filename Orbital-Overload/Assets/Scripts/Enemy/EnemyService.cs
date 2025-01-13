@@ -51,7 +51,7 @@ namespace ServiceLocator.Enemy
                     Random.Range(0, 2) == 0 ? -1 : 1
                     );
             Vector2 awayFromPlayerOffset = randomDirection * enemyConfig.enemyAwayFromPlayerSpawnDistance;
-            Vector2 playerPosition = playerService.GetPlayerController().GetPosition();
+            Vector2 playerPosition = playerService.GetPlayerController().GetPlayerView().GetPosition();
             Vector2 spawnPosition = playerPosition + awayFromPlayerOffset +
                 Random.insideUnitCircle * enemyConfig.enemySpawnRadius;
 
