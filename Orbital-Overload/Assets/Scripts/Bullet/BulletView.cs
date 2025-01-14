@@ -1,4 +1,4 @@
-using ServiceLocator.Sound;
+using ServiceLocator.Actor;
 using UnityEngine;
 
 namespace ServiceLocator.Bullet
@@ -9,30 +9,22 @@ namespace ServiceLocator.Bullet
         public Rigidbody2D rigidBody; // Rigidbody2D component of the bullet// Private Variables
         public BulletController bulletController;
 
-        // Private Services
-        private SoundService soundService;
-
-        public void Init(BulletController _bulletController, SoundService _soundService)
+        public void Init(BulletController _bulletController)
         {
             // Setting Variables
             bulletController = _bulletController;
             rigidBody = GetComponent<Rigidbody2D>();
-
-            // Setting Services
-            soundService = _soundService;
         }
 
         private void OnTriggerEnter2D(Collider2D _collider)
         {
-            // Avoid collision with the owner
-            if (_collider.CompareTag(bulletController.GetBulletModel().BulletOwnerTag)) return;
+            if (_collider.CompareTag("Actor"))
+            {
+                // Avoid collision with the owner
+                ActorView actorView = _collider.gameObject.GetComponent<ActorView>();
+                if (actorView.actorController.GetActorModel().ActorType ==
+                    bulletController.GetBulletModel().BulletOwnerActor) return;
 
-            if (_collider.CompareTag("Enemy"))
-            {
-                Destroy(gameObject);
-            }
-            else if (_collider.CompareTag("Player"))
-            {
                 Destroy(gameObject);
             }
             else if (_collider.CompareTag("Bullet"))

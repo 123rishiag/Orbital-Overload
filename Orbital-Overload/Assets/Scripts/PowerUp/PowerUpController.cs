@@ -1,5 +1,5 @@
+using ServiceLocator.Actor;
 using ServiceLocator.Main;
-using ServiceLocator.Player;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using System.Collections;
@@ -23,7 +23,7 @@ namespace ServiceLocator.PowerUp
         {
             // Setting Variables
             powerUpModel = new PowerUpModel(_powerUpConfig.powerUpData[_powerUpIndex]);
-            powerUpView = GameObject.Instantiate(_powerUpConfig.powerUpPrefab, _spawnPosition, Quaternion.identity).
+            powerUpView = Object.Instantiate(_powerUpConfig.powerUpPrefab, _spawnPosition, Quaternion.identity).
                 GetComponent<PowerUpView>();
             powerUpView.Init(this, powerUpModel.PowerUpColor);
 
@@ -33,12 +33,12 @@ namespace ServiceLocator.PowerUp
             uiService = _uiService;
         }
 
-        public void ActivatePowerUp(PlayerController _playerController)
+        public void ActivatePowerUp(ActorController _actorController)
         {
-            gameService.StartManagedCoroutine(PowerUp(_playerController)); // Activate power-up effect
+            gameService.StartManagedCoroutine(PowerUp(_actorController)); // Activate power-up effect
         }
 
-        private IEnumerator PowerUp(PlayerController _playerController)
+        private IEnumerator PowerUp(ActorController _actorController)
         {
             string powerUpText;
             if (powerUpModel.PowerUpType == PowerUpType.HealthPick || powerUpModel.PowerUpType == PowerUpType.Teleport)
@@ -54,23 +54,23 @@ namespace ServiceLocator.PowerUp
             switch (powerUpModel.PowerUpType)
             {
                 case PowerUpType.HealthPick:
-                    _playerController.IncreaseHealth((int)powerUpModel.PowerUpValue); // Increase health
+                    _actorController.IncreaseHealth((int)powerUpModel.PowerUpValue); // Increase health
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
                     break;
                 case PowerUpType.HomingOrbs:
-                    _playerController.GetPlayerModel().IsHoming = true; // Activate homing bullets
+                    _actorController.GetActorModel().IsHoming = true; // Activate homing bullets
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _playerController.GetPlayerModel().IsHoming = false; // Deactivate homing bullets
+                    _actorController.GetActorModel().IsHoming = false; // Deactivate homing bullets
                     break;
                 case PowerUpType.RapidFire:
-                    _playerController.GetPlayerModel().ShootCooldown /= powerUpModel.PowerUpValue; // Increase fire rate
+                    _actorController.GetActorModel().ShootCooldown /= powerUpModel.PowerUpValue; // Increase fire rate
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _playerController.GetPlayerModel().ShootCooldown *= powerUpModel.PowerUpValue; // Reset fire rate
+                    _actorController.GetActorModel().ShootCooldown *= powerUpModel.PowerUpValue; // Reset fire rate
                     break;
                 case PowerUpType.Shield:
-                    _playerController.GetPlayerModel().IsShieldActive = true; // Activate shield
+                    _actorController.GetActorModel().IsShieldActive = true; // Activate shield
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _playerController.GetPlayerModel().IsShieldActive = false; // Deactivate shield
+                    _actorController.GetActorModel().IsShieldActive = false; // Deactivate shield
                     break;
                 case PowerUpType.SlowMotion:
                     Time.timeScale = powerUpModel.PowerUpValue; // Slow down time
@@ -78,7 +78,7 @@ namespace ServiceLocator.PowerUp
                     Time.timeScale = 1f; // Reset time
                     break;
                 case PowerUpType.Teleport:
-                    _playerController.Teleport(powerUpModel.PowerUpValue); // Teleport player
+                    _actorController.Teleport(powerUpModel.PowerUpValue); // Teleport player
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
                     break;
                 default:

@@ -16,5 +16,8 @@ namespace ServiceLocator.Bullet
     {
         [Header("Speed Data")]
         public float homingSpeed; // Speed of bullets while homing
+
+        [Header("Score Data")]
+        public int hitScore; // Score increment value
     }
 }

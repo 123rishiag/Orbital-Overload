@@ -1,4 +1,4 @@
-using ServiceLocator.Player;
+using ServiceLocator.Actor;
 using UnityEngine;
 
 namespace ServiceLocator.PowerUp
@@ -21,11 +21,14 @@ namespace ServiceLocator.PowerUp
 
         private void OnTriggerEnter2D(Collider2D _collider)
         {
-            if (_collider.CompareTag("Player"))
+            if (_collider.CompareTag("Actor"))
             {
-                PlayerView playerView = _collider.GetComponent<PlayerView>();
-                powerUpController.ActivatePowerUp(playerView.playerController);
-                Destroy(gameObject);
+                ActorView actorView = _collider.GetComponent<ActorView>();
+                if (actorView.actorController.GetActorModel().ActorType == ActorType.Player)
+                {
+                    powerUpController.ActivatePowerUp(actorView.actorController);
+                    Destroy(gameObject);
+                }
             }
         }
 

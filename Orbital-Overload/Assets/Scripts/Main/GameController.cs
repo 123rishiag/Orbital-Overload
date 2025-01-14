@@ -1,5 +1,7 @@
+using ServiceLocator.Actor;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
+using ServiceLocator.Vision;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,23 +12,32 @@ namespace ServiceLocator.Main
         // Private Variables
         private bool isPaused; // Whether the game is paused
         private bool canPause; // Whether the game can be paused
+        private bool isGameOver; // Whether the game is over
+        private bool canGameOver;// Whether the game can be over
 
         // Private Services
         private SoundService soundService;
         private UIService uiService;
+        private CameraService cameraService;
+        private ActorService actorService;
 
         public GameController()
         {
             // Setting Variables
             isPaused = false;
             canPause = true;
+            isGameOver = false;
+            canGameOver = false;
         }
 
-        public void Init(SoundService _soundService, UIService _uiService)
+        public void Init(SoundService _soundService, UIService _uiService, CameraService _cameraService,
+            ActorService _actorService)
         {
             // Setting Services
             soundService = _soundService;
             uiService = _uiService;
+            cameraService = _cameraService;
+            actorService = _actorService;
         }
         public void Update()
         {
@@ -41,15 +52,27 @@ namespace ServiceLocator.Main
                     PauseGame(); // Pause game if not paused
                 }
             }
+
+            if ((!actorService.GetPlayerActorController().IsAlive()))
+            {
+                GameOver();
+            }
+        }
+
+        public void LateUpdate()
+        {
+            // Camera should follow player
+            cameraService.FollowCameraTowardsPosition(
+                actorService.GetPlayerActorController().GetActorView().GetPosition());
         }
 
         public void PauseGame()
         {
-            if (canPause)
+            if (canPause && !isGameOver)
             {
                 Time.timeScale = 0f; // Pause the game
-                uiService.GetUIController().GetUIView().pauseMenuPanel.SetActive(true); // Show Pause Menu
                 isPaused = true;
+                uiService.GetUIController().GetUIView().pauseMenuPanel.SetActive(true); // Show Pause Menu
                 soundService.PlaySoundEffect(SoundType.GamePause); // Play pause sound effect
             }
         }
@@ -64,15 +87,21 @@ namespace ServiceLocator.Main
 
         public void GameOver()
         {
-            canPause = false; // Disable pausing
-            Time.timeScale = 0f; // Stop time
-            uiService.GetUIController().GetUIView().gameOverMenuPanel.SetActive(true); // Show Game Over Menu
-            soundService.PlaySoundEffect(SoundType.GameOver); // Play game over sound effect
+            if (canGameOver)
+            {
+                canPause = false; // Disable pausing
+                canGameOver = false; // Disable game Over
+                isGameOver = true;
+                Time.timeScale = 0f; // Stop time
+                uiService.GetUIController().GetUIView().gameOverMenuPanel.SetActive(true); // Show Game Over Menu
+                soundService.PlaySoundEffect(SoundType.GameOver); // Play game over sound effect
+            }
         }
 
         public void RestartGame()
         {
             canPause = true;
+            canGameOver = true;
             Time.timeScale = 1f; // Restart time
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
             soundService.PlaySoundEffect(SoundType.GameStart); // Play game start sound effect
@@ -80,6 +109,9 @@ namespace ServiceLocator.Main
 
         public void MainMenu()
         {
+            canPause = true;
+            canGameOver = true;
+            SceneManager.LoadScene(0); // Reload 0th scene
             uiService.GetUIController().GetUIView().mainMenuPanel.SetActive(true); // Show Main Menu
             uiService.GetUIController().GetUIView().pauseMenuPanel.SetActive(false); // Hide Pause Menu
             uiService.GetUIController().GetUIView().gameOverMenuPanel.SetActive(false); // Hide Game Over Menu
