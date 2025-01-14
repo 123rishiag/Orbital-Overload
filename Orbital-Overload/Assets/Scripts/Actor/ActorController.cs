@@ -98,7 +98,7 @@ namespace ServiceLocator.Actor
 
         public void AddScore(int _score)
         {
-            actorModel.CurrentScore += _score; // Increase score
+            actorService.GetPlayerActorController().GetActorModel().CurrentScore += _score; // Increase score
         }
 
         public void DecreaseHealth()

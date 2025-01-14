@@ -32,11 +32,11 @@ namespace ServiceLocator.Actor
                 if (!actorController.GetActorModel().IsShieldActive)
                 {
                     actorController.DecreaseHealth(); // Decrease actor's health on hit
-                    actorController.AddScore(bulletView.bulletController.GetBulletModel().HitScore);
                 }
 
                 if (actorController.GetActorModel().ActorType != ActorType.Player)
                 {
+                    actorController.AddScore(bulletView.bulletController.GetBulletModel().HitScore);
                     if (!actorController.IsAlive())
                     {
                         Destroy(gameObject);

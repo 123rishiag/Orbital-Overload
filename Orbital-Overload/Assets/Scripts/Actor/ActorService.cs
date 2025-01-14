@@ -17,20 +17,22 @@ namespace ServiceLocator.Actor
         private SoundService soundService;
         private BulletService bulletService;
 
-        public ActorService(ActorConfig _actorConfig,
-            SoundService _soundService, BulletService _bulletService)
+        public ActorService(ActorConfig _actorConfig)
         {
             // Setting Variables
             actorConfig = _actorConfig;
             enemyActorControllers = new List<ActorController>();
+            enemySpawnTimer = _actorConfig.enemySpawnInterval;
+        }
 
+        public void Init(SoundService _soundService, BulletService _bulletService)
+        {
             // Setting Services
             soundService = _soundService;
             bulletService = _bulletService;
 
             // Setting Elements
             CreatePlayer();
-            enemySpawnTimer = _actorConfig.enemySpawnInterval;
         }
 
         private void CreatePlayer()
