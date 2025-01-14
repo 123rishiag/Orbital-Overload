@@ -20,14 +20,16 @@ namespace ServiceLocator.PowerUp
         private UIService uiService;
         private ActorService actorService;
 
-        public PowerUpService(PowerUpConfig _powerUpConfig,
-            GameService _gameService, SoundService _soundService, UIService _uiService, ActorService _actorService)
+        public PowerUpService(PowerUpConfig _powerUpConfig)
         {
             // Setting Variables
             powerUpConfig = _powerUpConfig;
             powerUps = new List<PowerUpController>();
             powerUpSpawnTimer = powerUpConfig.powerUpSpawnInterval;
+        }
 
+        public void Init(GameService _gameService, SoundService _soundService, UIService _uiService, ActorService _actorService)
+        {
             // Setting Services
             gameService = _gameService;
             soundService = _soundService;

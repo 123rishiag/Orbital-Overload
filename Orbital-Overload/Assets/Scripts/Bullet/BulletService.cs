@@ -14,12 +14,15 @@ namespace ServiceLocator.Bullet
         // Private Services
         private SoundService soundService;
 
-        public BulletService(BulletConfig _bulletConfig, SoundService _soundService)
+        public BulletService(BulletConfig _bulletConfig)
         {
             // Setting Variables
             bulletConfig = _bulletConfig;
             bullets = new List<BulletController>();
+        }
 
+        public void Init(SoundService _soundService)
+        {
             // Setting Services
             soundService = _soundService;
         }

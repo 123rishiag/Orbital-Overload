@@ -1,3 +1,4 @@
+using ServiceLocator.Actor;
 using ServiceLocator.Main;
 
 namespace ServiceLocator.UI
@@ -7,10 +8,16 @@ namespace ServiceLocator.UI
         // Private Variables
         private UIView uiView;
 
-        public UIController(UIView _uiCanvas, GameService _gameService)
+        // Private Services
+        private ActorService actorService;
+
+        public UIController(UIView _uiCanvas, GameService _gameService, ActorService _actorService)
         {
             // Setting Variables
             uiView = _uiCanvas.GetComponent<UIView>();
+
+            // Setting Services
+            actorService = _actorService;
 
             // Adding Listeners
             uiView.pauseMenuResumeButton.onClick.AddListener(_gameService.GetGameController().ResumeGame); // Add listener to resume button
@@ -22,6 +29,14 @@ namespace ServiceLocator.UI
             uiView.mainMenuPlayButton.onClick.AddListener(_gameService.GetGameController().PlayGame); // Add listener to play button
             uiView.mainMenuQuitButton.onClick.AddListener(_gameService.GetGameController().QuitGame); // Add listener to quit button
             uiView.mainMenuMuteButton.onClick.AddListener(_gameService.GetGameController().MuteGame); // Add listener to mute button
+        }
+
+        public void Update()
+        {
+            // Updating and Displaying Player Metrics on UI
+            ActorModel actorModel = actorService.GetPlayerActorController().GetActorModel();
+            uiView.UpdateHealthText(actorModel.CurrentHealth);
+            uiView.UpdateScoreText(actorModel.CurrentScore);
         }
 
         // Getters
