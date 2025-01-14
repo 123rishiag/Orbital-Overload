@@ -19,6 +19,15 @@ namespace ServiceLocator.PowerUp
             Destroy(gameObject, powerUpController.GetPowerUpModel().PowerUpLifetime); // Destroy the power-up after its lifetime
         }
 
+        private void Update()
+        {
+            Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+            if (screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1)
+            {
+                Destroy(gameObject); // Destroying the object if it is off-screen
+            }
+        }
+
         private void OnTriggerEnter2D(Collider2D _collider)
         {
             if (_collider.CompareTag("Actor"))
@@ -30,11 +39,6 @@ namespace ServiceLocator.PowerUp
                     Destroy(gameObject);
                 }
             }
-        }
-
-        private void OnBecameInvisible()
-        {
-            Destroy(gameObject); // Destroy the power-up if it goes off screen
         }
     }
 }

@@ -108,7 +108,7 @@ namespace ServiceLocator.Actor
             {
                 actorModel.CurrentHealth = 0;
             }
-            soundService.PlaySoundEffect(SoundType.PlayerHurt);
+            soundService.PlaySoundEffect(SoundType.ActorHurt);
         }
 
         public void IncreaseHealth(int _increaseHealth)
@@ -120,7 +120,7 @@ namespace ServiceLocator.Actor
             }
             else
             {
-                soundService.PlaySoundEffect(SoundType.PlayerHeal); // Play heal sound effect
+                soundService.PlaySoundEffect(SoundType.ActorHeal); // Play heal sound effect
             }
         }
 

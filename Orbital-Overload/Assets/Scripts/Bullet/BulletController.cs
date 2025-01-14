@@ -13,10 +13,11 @@ namespace ServiceLocator.Bullet
 
         // Private Services
         private SoundService soundService;
+        private ActorService actorService;
 
         public BulletController(BulletConfig _bulletConfig,
             ActorType _bulletOwnerActor, float _shootSpeed, bool _isHoming, Transform _shootPoint,
-            SoundService _soundService)
+            SoundService _soundService, ActorService _actorService)
         {
             bulletModel = new BulletModel(_bulletConfig.bulletData, _bulletOwnerActor, _isHoming);
             bulletView = Object.Instantiate(_bulletConfig.bulletPrefab, _shootPoint.position, _shootPoint.rotation).
@@ -25,6 +26,7 @@ namespace ServiceLocator.Bullet
 
             // Setting Services
             soundService = _soundService;
+            actorService = _actorService;
 
             // Setting Elements
             ShootBullet(_shootPoint, _shootSpeed); // Shoot the bullet
@@ -44,21 +46,24 @@ namespace ServiceLocator.Bullet
         {
             if (bulletModel.IsHoming && enemy == null)
             {
-                GameObject[] actors = GameObject.FindGameObjectsWithTag("Actor");
-                GameObject nearestActor = null;
+                ActorView nearestActor = null;
                 float minDistance = Mathf.Infinity;
                 Vector2 currentPosition = bulletView.transform.position;
 
                 // Find the nearest enemy
-                foreach (GameObject actor in actors)
+                foreach (var actorController in actorService.GetEnemyActorControllers())
                 {
                     // Avoid Hitting Player
-                    if (actor.GetComponent<ActorView>().actorController.GetActorModel().ActorType == ActorType.Player) continue;
+                    if (actorController.GetActorModel().ActorType == ActorType.Player) continue;
 
-                    float distance = Vector2.Distance(actor.transform.position, currentPosition);
+                    // Avoid Dead Enemies
+                    if (!actorController.IsAlive()) return;
+
+                    // Fetching Distance from enemies
+                    float distance = Vector2.Distance(actorController.GetActorView().transform.position, currentPosition);
                     if (distance < minDistance)
                     {
-                        nearestActor = actor;
+                        nearestActor = actorController.GetActorView();
                         minDistance = distance;
                     }
                 }

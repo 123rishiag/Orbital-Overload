@@ -26,12 +26,10 @@ MonoBehaviour:
   - soundType: 5
     soundClip: {fileID: 8300000, guid: a137c371f2ceee9438e035663e9c4160, type: 3}
   - soundType: 6
-    soundClip: {fileID: 8300000, guid: a137c371f2ceee9438e035663e9c4160, type: 3}
-  - soundType: 7
     soundClip: {fileID: 8300000, guid: d560c58ca426fcd42aed390fa01fd927, type: 3}
-  - soundType: 8
+  - soundType: 7
     soundClip: {fileID: 8300000, guid: 89fd80a442a88b544bd704fa66be3045, type: 3}
-  - soundType: 9
+  - soundType: 8
     soundClip: {fileID: 8300000, guid: e73e3419f5f186a408e4bb957232c134, type: 3}
-  - soundType: 10
+  - soundType: 9
     soundClip: {fileID: 8300000, guid: 1951b76721a4b2b498ad596217dc23c5, type: 3}
