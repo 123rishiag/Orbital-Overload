@@ -61,7 +61,7 @@ namespace ServiceLocator.Main
         {
             gameController.Init(soundService, uiService, cameraService, actorService);
             uiService.Init(this, actorService);
-            bulletService.Init(soundService);
+            bulletService.Init(soundService, actorService);
             powerUpService.Init(this, soundService, uiService, actorService);
             actorService.Init(soundService, bulletService);
         }
