@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac10b4a9d20b67e48817258b303e6ec2, type: 3}
+  m_Name: ActorConfig
+  m_EditorClassIdentifier: 
+  actorPrefab: {fileID: 3149009284950446537, guid: 0cfd1909fcb3052469845f4b92ffb1ad, type: 3}
+  playerCasualMoveSpeed: 0.1
+  playerData:
+    actorType: 0
+    actorColor: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
+    actorShooterColor: {r: 0.9411765, g: 0.5019608, b: 0.5019608, a: 1}
+    maxHealth: 100
+    moveSpeed: 10
+    shootSpeed: 1000
+    shootCooldown: 0.2
+  enemySpawnInterval: 2
+  enemySpawnRadius: 5
+  enemyAwayFromPlayerSpawnDistance: 10
+  enemyAwayFromPlayerMinDistance: 3
+  enemyData:
+  - actorType: 1
+    actorColor: {r: 0.38959342, g: 0.8301887, b: 0.37123528, a: 1}
+    actorShooterColor: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
+    maxHealth: 1
+    moveSpeed: 3
+    shootSpeed: 300
+    shootCooldown: 0.7
+  - actorType: 1
+    actorColor: {r: 0.84705883, g: 0.7490196, b: 0.84705883, a: 1}
+    actorShooterColor: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
+    maxHealth: 2
+    moveSpeed: 5
+    shootSpeed: 500
+    shootCooldown: 0.5

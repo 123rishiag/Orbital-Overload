@@ -1,5 +1,5 @@
+using ServiceLocator.Actor;
 using ServiceLocator.Main;
-using ServiceLocator.Player;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using System.Collections.Generic;
@@ -18,10 +18,10 @@ namespace ServiceLocator.PowerUp
         private GameService gameService;
         private SoundService soundService;
         private UIService uiService;
-        private PlayerService playerService;
+        private ActorService actorService;
 
         public PowerUpService(PowerUpConfig _powerUpConfig,
-            GameService _gameService, SoundService _soundService, UIService _uiService, PlayerService _playerService)
+            GameService _gameService, SoundService _soundService, UIService _uiService, ActorService _actorService)
         {
             // Setting Variables
             powerUpConfig = _powerUpConfig;
@@ -32,7 +32,7 @@ namespace ServiceLocator.PowerUp
             gameService = _gameService;
             soundService = _soundService;
             uiService = _uiService;
-            playerService = _playerService;
+            actorService = _actorService;
         }
 
         public void Update()
@@ -59,7 +59,7 @@ namespace ServiceLocator.PowerUp
                     Random.Range(0, 2) == 0 ? -1 : 1
                     );
             Vector2 awayFromPlayerOffset = randomDirection * powerUpConfig.powerUpAwayFromPlayerSpawnDistance;
-            Vector2 playerPosition = playerService.GetPlayerController().GetPlayerView().GetPosition();
+            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetPosition();
             Vector2 spawnPosition = playerPosition + awayFromPlayerOffset +
                 Random.insideUnitCircle * powerUpConfig.powerUpSpawnRadius;
 

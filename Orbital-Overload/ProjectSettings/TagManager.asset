@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - Actor
   - Bullet
   - PowerUp
   layers:
@@ -14,10 +14,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
-  - Enemy
+  - Actor
   - Bullet
   - PowerUp
+  - 
   - 
   - 
   - 

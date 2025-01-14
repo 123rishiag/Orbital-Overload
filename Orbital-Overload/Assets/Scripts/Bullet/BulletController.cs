@@ -1,3 +1,4 @@
+using ServiceLocator.Actor;
 using ServiceLocator.Sound;
 using UnityEngine;
 
@@ -8,19 +9,19 @@ namespace ServiceLocator.Bullet
         // Private Variables
         private BulletModel bulletModel;
         private BulletView bulletView;
-        public GameObject enemy; // Target enemy for homing bullets
+        public ActorView enemy; // Target enemy for homing bullets
 
         // Private Services
         private SoundService soundService;
 
         public BulletController(BulletConfig _bulletConfig,
-            string _bulletOwnerTag, float _shootSpeed, bool _isHoming, Transform _shootPoint,
+            ActorType _bulletOwnerActor, float _shootSpeed, bool _isHoming, Transform _shootPoint,
             SoundService _soundService)
         {
-            bulletModel = new BulletModel(_bulletConfig.bulletData, _bulletOwnerTag, _isHoming);
-            bulletView = GameObject.Instantiate(_bulletConfig.bulletPrefab, _shootPoint.position, _shootPoint.rotation).
+            bulletModel = new BulletModel(_bulletConfig.bulletData, _bulletOwnerActor, _isHoming);
+            bulletView = Object.Instantiate(_bulletConfig.bulletPrefab, _shootPoint.position, _shootPoint.rotation).
                 GetComponent<BulletView>();
-            bulletView.Init(this, _soundService);
+            bulletView.Init(this);
 
             // Setting Services
             soundService = _soundService;
@@ -43,22 +44,28 @@ namespace ServiceLocator.Bullet
         {
             if (bulletModel.IsHoming && enemy == null)
             {
-                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-                GameObject nearestEnemy = null;
+                GameObject[] actors = GameObject.FindGameObjectsWithTag("Actor");
+                GameObject nearestActor = null;
                 float minDistance = Mathf.Infinity;
                 Vector2 currentPosition = bulletView.transform.position;
 
                 // Find the nearest enemy
-                foreach (GameObject enemy in enemies)
+                foreach (GameObject actor in actors)
                 {
-                    float distance = Vector2.Distance(enemy.transform.position, currentPosition);
+                    // Avoid Hitting Player
+                    if (actor.GetComponent<ActorView>().actorController.GetActorModel().ActorType == ActorType.Player) continue;
+
+                    float distance = Vector2.Distance(actor.transform.position, currentPosition);
                     if (distance < minDistance)
                     {
-                        nearestEnemy = enemy;
+                        nearestActor = actor;
                         minDistance = distance;
                     }
                 }
-                enemy = nearestEnemy;
+                if (nearestActor != null)
+                {
+                    enemy = nearestActor.GetComponent<ActorView>();
+                }
             }
         }
 

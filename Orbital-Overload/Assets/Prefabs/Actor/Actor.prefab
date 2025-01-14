@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8364136493840385820}
   - component: {fileID: 7097769079628687403}
   - component: {fileID: 2269811123762063804}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Shooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -143,10 +143,10 @@ GameObject:
   - component: {fileID: 7754871150818196846}
   - component: {fileID: 3818493593238482407}
   - component: {fileID: 4887699234756883864}
-  - component: {fileID: 3094784284292863648}
-  m_Layer: 7
-  m_Name: Enemy
-  m_TagString: Enemy
+  - component: {fileID: 3149009284950446537}
+  m_Layer: 6
+  m_Name: Actor
+  m_TagString: Actor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,7 +209,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.84705883, g: 0.7490196, b: 0.84705883, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -281,7 +281,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &3094784284292863648
+--- !u!114 &3149009284950446537
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,10 +290,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4264170587383386023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18c84f28ec79ecf44bf86dae19cc2367, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c0c921f1c932f640afbbecde81a24b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 4830572363492128675}
+  actorSprite: {fileID: 7754871150818196846}
+  actorShooterSprite: {fileID: 7097769079628687403}
 --- !u!1 &6922597243742180474
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4830572363492128675}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Shootpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

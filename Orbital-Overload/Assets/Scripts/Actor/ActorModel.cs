@@ -1,29 +1,33 @@
-namespace ServiceLocator.Player
+using UnityEngine;
+
+namespace ServiceLocator.Actor
 {
-    public class PlayerModel
+    public class ActorModel
     {
-        public PlayerModel(PlayerData _playerData)
+        public ActorModel(ActorData _actorData)
         {
-            MaxHealth = _playerData.maxHealth;
+            ActorType = _actorData.actorType;
+            ActorColor = _actorData.actorColor;
+            ActorShooterColor = _actorData.actorShooterColor;
+            MaxHealth = _actorData.maxHealth;
             CurrentHealth = MaxHealth;
-            CasualMoveSpeed = _playerData.casualMoveSpeed;
-            MoveSpeed = _playerData.moveSpeed;
-            ShootSpeed = _playerData.shootSpeed;
-            ShootCooldown = _playerData.shootCooldown;
-            HitScore = _playerData.hitScore;
+            MoveSpeed = _actorData.moveSpeed;
+            ShootSpeed = _actorData.shootSpeed;
+            ShootCooldown = _actorData.shootCooldown;
             CurrentScore = 0;
             IsShieldActive = false;
-            IsHoming = false; // Whether bullets are homing
+            IsHoming = false;
         }
 
         // Getters & Setters
+        public ActorType ActorType { get; private set; } // Actor Type
+        public Color ActorColor { get; private set; } // Actor Color
+        public Color ActorShooterColor { get; private set; } // Actor's Shooter Color
         public int MaxHealth { get; private set; } // Maximum health
         public int CurrentHealth { get; set; } // Current health
-        public float CasualMoveSpeed { get; private set; } // Default move speed when idle
         public float MoveSpeed { get; private set; } // Movement speed
         public float ShootSpeed { get; private set; } // Speed of shooting
         public float ShootCooldown { get; set; } // Cooldown between shots
-        public int HitScore { get; private set; } // Value for score increment
         public int CurrentScore { get; set; } // Current player score
         public bool IsShieldActive { get; set; } // Whether the shield is active
         public bool IsHoming { get; set; } // Whether bullets are homing

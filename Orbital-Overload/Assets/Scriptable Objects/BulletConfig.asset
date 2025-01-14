@@ -15,3 +15,4 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2285328053563287540, guid: 2007e1f5e9c32424fa8e129bff2c084e, type: 3}
   bulletData:
     homingSpeed: 500
+    hitScore: 10

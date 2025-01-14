@@ -1,6 +1,5 @@
+using ServiceLocator.Actor;
 using ServiceLocator.Bullet;
-using ServiceLocator.Enemy;
-using ServiceLocator.Player;
 using ServiceLocator.PowerUp;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
@@ -21,15 +20,14 @@ namespace ServiceLocator.Main
         [Header("UI Components")]
         [SerializeField] private UIView uiCanvas;
 
-        [Header("Game Configs")]
-        [SerializeField] private BulletConfig bulletConfig;
-        [SerializeField] private PlayerConfig playerConfig;
-        [SerializeField] private EnemyConfig enemyConfig;
-        [SerializeField] private PowerUpConfig powerUpConfig;
-
         [Header("Camera Components")]
         [SerializeField] private Camera mainCamera; // Main camera reference
         [SerializeField] private float cameraFollowSpeed; // Speed at which the camera follows the player
+
+        [Header("Game Configs")]
+        [SerializeField] private BulletConfig bulletConfig;
+        [SerializeField] private ActorConfig actorConfig;
+        [SerializeField] private PowerUpConfig powerUpConfig;
 
         // Private Variables
         private GameController gameController;
@@ -38,9 +36,8 @@ namespace ServiceLocator.Main
         private SoundService soundService;
         private UIService uiService;
         private BulletService bulletService;
-        private PlayerService playerService;
+        private ActorService actorService;
         private CameraService cameraService;
-        private EnemyService enemyService;
         private PowerUpService powerUpService;
 
         private void Start()
@@ -54,37 +51,34 @@ namespace ServiceLocator.Main
             gameController = new GameController();
             soundService = new SoundService(soundConfig, sfxSource, bgSource);
             uiService = new UIService(uiCanvas, this);
+            cameraService = new CameraService(mainCamera, cameraFollowSpeed);
             bulletService = new BulletService(bulletConfig, soundService);
-            playerService = new PlayerService(playerConfig, this, soundService, uiService, bulletService);
-            cameraService = new CameraService(mainCamera, cameraFollowSpeed, playerService);
-            enemyService = new EnemyService(enemyConfig, bulletService, playerService);
-            powerUpService = new PowerUpService(powerUpConfig, this, soundService, uiService, playerService);
+            actorService = new ActorService(actorConfig, soundService, bulletService);
+            powerUpService = new PowerUpService(powerUpConfig, this, soundService, uiService, actorService);
         }
 
         private void InjectDependencies()
         {
-            gameController.Init(soundService, uiService);
+            gameController.Init(soundService, uiService, cameraService, actorService);
         }
 
         private void Update()
         {
             gameController.Update();
             bulletService.Update();
-            playerService.Update();
-            enemyService.Update();
+            actorService.Update();
             powerUpService.Update();
         }
 
         private void FixedUpdate()
         {
             bulletService.FixedUpdate();
-            playerService.FixedUpdate();
-            enemyService.FixedUpdate();
+            actorService.FixedUpdate();
         }
 
         private void LateUpdate()
         {
-            cameraService.LateUpdate();
+            gameController.LateUpdate();
         }
 
         public void StartManagedCoroutine(IEnumerator _coroutine)
