@@ -30,6 +30,6 @@ namespace ServiceLocator.Actor
         public float ShootCooldown { get; set; } // Cooldown between shots
         public int CurrentScore { get; set; } // Current player score
         public bool IsShieldActive { get; set; } // Whether the shield is active
-        public bool IsHoming { get; set; } // Whether bullets are homing
+        public bool IsHoming { get; set; } // Whether projectiles are homing
     }
 }

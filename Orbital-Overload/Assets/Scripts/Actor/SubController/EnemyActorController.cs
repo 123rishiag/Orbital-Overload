@@ -1,4 +1,4 @@
-using ServiceLocator.Bullet;
+using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using UnityEngine;
 
@@ -10,9 +10,9 @@ namespace ServiceLocator.Actor
         public float enemyAwayFromPlayerMinDistance; // Minimum distance from player enemy should maintain
 
         public EnemyActorController(ActorConfig _actorConfig, Vector2 _spawnPosition, int _actorIndex,
-            SoundService _soundService, BulletService _bulletService, ActorService _actorService) :
+            SoundService _soundService, ProjectileService _projectileService, ActorService _actorService) :
             base(_actorConfig.enemyData[_actorIndex], _actorConfig.actorPrefab, _spawnPosition,
-                _soundService, _bulletService, _actorService)
+                _soundService, _projectileService, _actorService)
         {
             // Setting Variables
             isShooting = true;

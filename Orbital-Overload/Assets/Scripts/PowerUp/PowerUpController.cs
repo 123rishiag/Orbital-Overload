@@ -58,9 +58,9 @@ namespace ServiceLocator.PowerUp
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
                     break;
                 case PowerUpType.HomingOrbs:
-                    _actorController.GetActorModel().IsHoming = true; // Activate homing bullets
+                    _actorController.GetActorModel().IsHoming = true; // Activate homing projectiles
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _actorController.GetActorModel().IsHoming = false; // Deactivate homing bullets
+                    _actorController.GetActorModel().IsHoming = false; // Deactivate homing projectiles
                     break;
                 case PowerUpType.RapidFire:
                     _actorController.GetActorModel().ShootCooldown /= powerUpModel.PowerUpValue; // Increase fire rate

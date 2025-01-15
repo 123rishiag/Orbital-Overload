@@ -1,4 +1,4 @@
-using ServiceLocator.Bullet;
+using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace ServiceLocator.Actor
 
         // Private Services
         private SoundService soundService;
-        private BulletService bulletService;
+        private ProjectileService projectileService;
 
         public ActorService(ActorConfig _actorConfig)
         {
@@ -25,11 +25,11 @@ namespace ServiceLocator.Actor
             enemySpawnTimer = _actorConfig.enemySpawnInterval;
         }
 
-        public void Init(SoundService _soundService, BulletService _bulletService)
+        public void Init(SoundService _soundService, ProjectileService _projectileService)
         {
             // Setting Services
             soundService = _soundService;
-            bulletService = _bulletService;
+            projectileService = _projectileService;
 
             // Setting Elements
             CreatePlayer();
@@ -44,7 +44,7 @@ namespace ServiceLocator.Actor
             Vector2 spawnPosition = new Vector2(0f, 0f);
             playerActorController = new PlayerActorController(
                 actorConfig, spawnPosition, actorIndex,
-                soundService, bulletService, this);
+                soundService, projectileService, this);
         }
 
         private void CreateEnemy()
@@ -65,7 +65,7 @@ namespace ServiceLocator.Actor
             // Creating Controller
             ActorController enemyActorController = new EnemyActorController(
                 actorConfig, spawnPosition, actorIndex,
-                soundService, bulletService, this);
+                soundService, projectileService, this);
             enemyActorControllers.Add(enemyActorController);
         }
 

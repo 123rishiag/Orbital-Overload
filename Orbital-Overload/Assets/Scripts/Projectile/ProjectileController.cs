@@ -2,34 +2,34 @@ using ServiceLocator.Actor;
 using ServiceLocator.Sound;
 using UnityEngine;
 
-namespace ServiceLocator.Bullet
+namespace ServiceLocator.Projectile
 {
-    public class BulletController
+    public class ProjectileController
     {
         // Private Variables
-        private BulletModel bulletModel;
-        private BulletView bulletView;
-        public ActorView enemy; // Target enemy for homing bullets
+        private ProjectileModel projectileModel;
+        private ProjectileView projectileView;
+        public ActorView enemy; // Target enemy for homing projectiles
 
         // Private Services
         private SoundService soundService;
         private ActorService actorService;
 
-        public BulletController(BulletConfig _bulletConfig,
-            ActorType _bulletOwnerActor, float _shootSpeed, bool _isHoming, Transform _shootPoint,
+        public ProjectileController(ProjectileConfig _projectileConfig,
+            ActorType _projectileOwnerActor, float _shootSpeed, bool _isHoming, Transform _shootPoint,
             SoundService _soundService, ActorService _actorService)
         {
-            bulletModel = new BulletModel(_bulletConfig.bulletData, _bulletOwnerActor, _isHoming);
-            bulletView = Object.Instantiate(_bulletConfig.bulletPrefab, _shootPoint.position, _shootPoint.rotation).
-                GetComponent<BulletView>();
-            bulletView.Init(this);
+            projectileModel = new ProjectileModel(_projectileConfig.projectileData, _projectileOwnerActor, _isHoming);
+            projectileView = Object.Instantiate(_projectileConfig.projectilePrefab, _shootPoint.position, _shootPoint.rotation).
+                GetComponent<ProjectileView>();
+            projectileView.Init(this);
 
             // Setting Services
             soundService = _soundService;
             actorService = _actorService;
 
             // Setting Elements
-            ShootBullet(_shootPoint, _shootSpeed); // Shoot the bullet
+            ShootProjectile(_shootPoint, _shootSpeed); // Shoot the projectile
         }
 
         public void Update()
@@ -44,11 +44,11 @@ namespace ServiceLocator.Bullet
 
         private void FindNearestEnemy()
         {
-            if (bulletModel.IsHoming && enemy == null)
+            if (projectileModel.IsHoming && enemy == null)
             {
                 ActorView nearestActor = null;
                 float minDistance = Mathf.Infinity;
-                Vector2 currentPosition = bulletView.transform.position;
+                Vector2 currentPosition = projectileView.transform.position;
 
                 // Find the nearest enemy
                 foreach (var actorController in actorService.GetEnemyActorControllers())
@@ -76,22 +76,22 @@ namespace ServiceLocator.Bullet
 
         private void Homing()
         {
-            if (bulletModel.IsHoming && enemy != null)
+            if (projectileModel.IsHoming && enemy != null)
             {
-                Vector2 enemyDirection = ((Vector2)enemy.transform.position - bulletView.rigidBody.position).normalized;
-                bulletView.rigidBody.velocity =
-                    Vector2.Lerp(bulletView.rigidBody.velocity, enemyDirection * bulletModel.HomingSpeed, Time.fixedDeltaTime);
+                Vector2 enemyDirection = ((Vector2)enemy.transform.position - projectileView.rigidBody.position).normalized;
+                projectileView.rigidBody.velocity =
+                    Vector2.Lerp(projectileView.rigidBody.velocity, enemyDirection * projectileModel.HomingSpeed, Time.fixedDeltaTime);
             }
         }
 
-        public void ShootBullet(Transform _shootPoint, float _bulletSpeed)
+        public void ShootProjectile(Transform _shootPoint, float _projectileSpeed)
         {
-            bulletView.rigidBody.velocity = _shootPoint.up * _bulletSpeed * Time.fixedDeltaTime; // Set bullet velocity
-            soundService.PlaySoundEffect(SoundType.BulletShoot);
+            projectileView.rigidBody.velocity = _shootPoint.up * _projectileSpeed * Time.fixedDeltaTime; // Set projectile velocity
+            soundService.PlaySoundEffect(SoundType.ProjectileShoot);
         }
 
         // Getters
-        public BulletModel GetBulletModel() => bulletModel;
-        public BulletView GetBulletView() => bulletView;
+        public ProjectileModel GetProjectileModel() => projectileModel;
+        public ProjectileView GetProjectileView() => projectileView;
     }
 }

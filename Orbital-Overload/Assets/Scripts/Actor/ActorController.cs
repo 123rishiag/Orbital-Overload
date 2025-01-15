@@ -1,4 +1,4 @@
-using ServiceLocator.Bullet;
+using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using UnityEngine;
 
@@ -18,11 +18,11 @@ namespace ServiceLocator.Actor
 
         // Private Services
         protected SoundService soundService;
-        protected BulletService bulletService;
+        protected ProjectileService projectileService;
         protected ActorService actorService;
 
         public ActorController(ActorData _actorData, ActorView _actorPrefab, Vector2 _spawnPosition,
-            SoundService _soundService, BulletService _bulletService, ActorService _actorService)
+            SoundService _soundService, ProjectileService _projectileService, ActorService _actorService)
         {
             // Setting Variables
             actorModel = new ActorModel(_actorData);
@@ -37,7 +37,7 @@ namespace ServiceLocator.Actor
 
             // Setting Services
             soundService = _soundService;
-            bulletService = _bulletService;
+            projectileService = _projectileService;
             actorService = _actorService;
         }
 
@@ -68,7 +68,7 @@ namespace ServiceLocator.Actor
             if (isShooting && Time.time >= lastShootTime + actorModel.ShootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
-                bulletService.Shoot(actorModel.ActorType, actorModel.ShootSpeed, actorModel.IsHoming,
+                projectileService.Shoot(actorModel.ActorType, actorModel.ShootSpeed, actorModel.IsHoming,
                     actorView.shootPoint);
             }
         }
