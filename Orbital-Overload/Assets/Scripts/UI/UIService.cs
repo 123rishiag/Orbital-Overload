@@ -1,4 +1,3 @@
-using ServiceLocator.Actor;
 using ServiceLocator.Main;
 
 namespace ServiceLocator.UI
@@ -15,15 +14,10 @@ namespace ServiceLocator.UI
             uiCanvas = _uiCanvas;
         }
 
-        public void Init(GameService _gameService, ActorService _actorService)
+        public void Init(GameService _gameService)
         {
             // Setting Variables
-            uiController = new UIController(uiCanvas, _gameService, _actorService);
-        }
-
-        public void Update()
-        {
-            uiController.Update();
+            uiController = new UIController(uiCanvas, _gameService);
         }
 
         // Getters

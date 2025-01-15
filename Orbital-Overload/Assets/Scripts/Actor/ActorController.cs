@@ -1,5 +1,6 @@
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
+using ServiceLocator.UI;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -18,11 +19,12 @@ namespace ServiceLocator.Actor
 
         // Private Services
         protected SoundService soundService;
+        protected UIService uiService;
         protected ProjectileService projectileService;
         protected ActorService actorService;
 
         public ActorController(ActorData _actorData, ActorView _actorPrefab, Vector2 _spawnPosition,
-            SoundService _soundService, ProjectileService _projectileService, ActorService _actorService)
+            SoundService _soundService, UIService _uiService, ProjectileService _projectileService, ActorService _actorService)
         {
             // Setting Variables
             actorModel = new ActorModel(_actorData);
@@ -37,11 +39,12 @@ namespace ServiceLocator.Actor
 
             // Setting Services
             soundService = _soundService;
+            uiService = _uiService;
             projectileService = _projectileService;
             actorService = _actorService;
         }
 
-        public void Update()
+        public virtual void Update()
         {
             MovementInput(); // Handle movement input
             ShootInput(); // Handle shoot input
