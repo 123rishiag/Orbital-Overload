@@ -82,7 +82,7 @@ namespace ServiceLocator.Projectile
             switch (_projectileType)
             {
                 case ProjectileType.Normal_Bullet:
-                    return new NormalBulletProjectileController(projectileConfig,
+                    return new ProjectileController(projectileConfig,
                         _projectileOwnerActor, _shootSpeed, _shootPoint, _projectileIndex,
                         soundService, actorService);
                 case ProjectileType.Homing_Bullet:
