@@ -1,5 +1,6 @@
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
+using ServiceLocator.Spawn;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,10 +12,10 @@ namespace ServiceLocator.Actor
         private ActorConfig actorConfig;
         private ActorController playerActorController;
         private List<ActorController> enemyActorControllers;
-        private float enemySpawnTimer;
 
         // Private Services
         private SoundService soundService;
+        private SpawnService spawnService;
         private ProjectileService projectileService;
 
         public ActorService(ActorConfig _actorConfig)
@@ -22,14 +23,18 @@ namespace ServiceLocator.Actor
             // Setting Variables
             actorConfig = _actorConfig;
             enemyActorControllers = new List<ActorController>();
-            enemySpawnTimer = _actorConfig.enemySpawnInterval;
         }
 
-        public void Init(SoundService _soundService, ProjectileService _projectileService)
+        public void Init(SoundService _soundService, SpawnService _spawnService, ProjectileService _projectileService)
         {
             // Setting Services
             soundService = _soundService;
+            spawnService = _spawnService;
             projectileService = _projectileService;
+
+            // Creating spawn controller for enemies
+            spawnService.CreateSpawnController(actorConfig.enemySpawnInterval, actorConfig.enemySpawnRadius,
+                actorConfig.enemyAwayFromPlayerSpawnDistance, CreateEnemy);
 
             // Setting Elements
             CreatePlayer();
@@ -46,32 +51,20 @@ namespace ServiceLocator.Actor
                 actorConfig, spawnPosition, actorIndex,
                 soundService, projectileService, this);
         }
-
-        private void CreateEnemy()
+        private void CreateEnemy(Vector2 _spawnPosition)
         {
             // Fetching Random Index
             int actorIndex = Random.Range(0, actorConfig.enemyData.Length);
 
-            // Fetching Spawn Position
-            Vector2 randomDirection = new Vector2(
-                    Random.Range(0, 2) == 0 ? -1 : 1,
-                    Random.Range(0, 2) == 0 ? -1 : 1
-                    );
-            Vector2 awayFromPlayerOffset = randomDirection * actorConfig.enemyAwayFromPlayerSpawnDistance;
-            Vector2 playerPosition = playerActorController.GetActorView().GetPosition();
-            Vector2 spawnPosition = playerPosition + awayFromPlayerOffset +
-                Random.insideUnitCircle * actorConfig.enemySpawnRadius;
-
-            // Creating Controller
-            ActorController enemyActorController = new EnemyActorController(
-                actorConfig, spawnPosition, actorIndex,
-                soundService, projectileService, this);
+            // Get spawn position from SpawnController
+            var enemyActorController = new EnemyActorController(actorConfig, _spawnPosition, actorIndex,
+                soundService, projectileService, this
+            );
             enemyActorControllers.Add(enemyActorController);
         }
 
         public void Update()
         {
-            SpawnEnemy();
             ProcessActorUpdate();
         }
         public void FixedUpdate()
@@ -111,19 +104,6 @@ namespace ServiceLocator.Actor
                 {
                     enemy.FixedUpdate();
                 }
-            }
-        }
-
-        private void SpawnEnemy()
-        {
-            // Accumulate time
-            enemySpawnTimer -= Time.deltaTime;
-
-            // Check if the spawn interval has passed
-            if (enemySpawnTimer < 0)
-            {
-                enemySpawnTimer = actorConfig.enemySpawnInterval; // Reset the timer
-                CreateEnemy();
             }
         }
 
