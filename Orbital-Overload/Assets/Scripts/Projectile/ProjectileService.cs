@@ -1,5 +1,6 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Sound;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,11 +58,17 @@ namespace ServiceLocator.Projectile
             }
         }
 
-        public void Shoot(ActorType _projectileOwnerActor, float _shootSpeed, bool _isHoming, Transform _shootPoint)
+        public void Shoot(
+            ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, ProjectileType _projectileType)
         {
+            // Fetching Index of Projectile Type
+            int projectileIndex = Array.FindIndex(projectileConfig.projectileData, data => data.projectileType == _projectileType);
+            if (projectileIndex != -1) projectileIndex = 0;
+
+            // Creating Controller
             ProjectileController projectileController =
-                new ProjectileController(projectileConfig, _projectileOwnerActor, _shootSpeed, _isHoming, _shootPoint,
-                soundService, actorService);
+            new ProjectileController(projectileConfig, _projectileOwnerActor, _shootSpeed, _shootPoint, projectileIndex,
+            soundService, actorService);
             projectiles.Add(projectileController);
         }
     }

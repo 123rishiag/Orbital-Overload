@@ -5,14 +5,16 @@ namespace ServiceLocator.Projectile
 {
     public class ProjectileView : MonoBehaviour
     {
-        // Private Variables
-        public Rigidbody2D rigidBody; // Rigidbody2D component of the projectile// Private Variables
+        public Rigidbody2D rigidBody; // Rigidbody2D component of the projectile
+        [SerializeField] public SpriteRenderer projectileSprite; // Projectile Sprite
+        [HideInInspector]
         public ProjectileController projectileController;
 
         public void Init(ProjectileController _projectileController)
         {
             // Setting Variables
             projectileController = _projectileController;
+            projectileSprite.color = projectileController.GetProjectileModel().ProjectileColor;
             rigidBody = GetComponent<Rigidbody2D>();
         }
 

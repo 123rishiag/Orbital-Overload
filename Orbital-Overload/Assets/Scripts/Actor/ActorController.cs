@@ -68,8 +68,8 @@ namespace ServiceLocator.Actor
             if (isShooting && Time.time >= lastShootTime + actorModel.ShootCooldown)
             {
                 lastShootTime = Time.time; // Update last shoot time
-                projectileService.Shoot(actorModel.ActorType, actorModel.ShootSpeed, actorModel.IsHoming,
-                    actorView.shootPoint);
+                projectileService.Shoot(actorModel.ActorType, actorModel.ShootSpeed, actorView.shootPoint,
+                    actorModel.ProjectileType);
             }
         }
 

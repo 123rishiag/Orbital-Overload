@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 2285328053563287540, guid: 2007e1f5e9c32424fa8e129bff2c084e, type: 3}
   projectileData:
-    homingSpeed: 500
+  - projectileType: 0
+    projectileColor: {r: 0.9411765, g: 0.5019608, b: 0.5019608, a: 1}
     hitScore: 10
+  - projectileType: 1
+    projectileColor: {r: 0.78039217, g: 0.78039217, b: 0.99215686, a: 1}
+    hitScore: 20

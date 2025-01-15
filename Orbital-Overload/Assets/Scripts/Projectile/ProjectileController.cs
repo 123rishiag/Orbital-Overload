@@ -16,10 +16,11 @@ namespace ServiceLocator.Projectile
         private ActorService actorService;
 
         public ProjectileController(ProjectileConfig _projectileConfig,
-            ActorType _projectileOwnerActor, float _shootSpeed, bool _isHoming, Transform _shootPoint,
+            ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, int _projectileIndex,
             SoundService _soundService, ActorService _actorService)
         {
-            projectileModel = new ProjectileModel(_projectileConfig.projectileData, _projectileOwnerActor, _isHoming);
+            projectileModel =
+                new ProjectileModel(_projectileConfig.projectileData[_projectileIndex], _projectileOwnerActor, _shootSpeed);
             projectileView = Object.Instantiate(_projectileConfig.projectilePrefab, _shootPoint.position, _shootPoint.rotation).
                 GetComponent<ProjectileView>();
             projectileView.Init(this);
@@ -44,7 +45,7 @@ namespace ServiceLocator.Projectile
 
         private void FindNearestEnemy()
         {
-            if (projectileModel.IsHoming && enemy == null)
+            if (projectileModel.ProjectileType == ProjectileType.Homing_Bullet && enemy == null)
             {
                 ActorView nearestActor = null;
                 float minDistance = Mathf.Infinity;
@@ -76,11 +77,11 @@ namespace ServiceLocator.Projectile
 
         private void Homing()
         {
-            if (projectileModel.IsHoming && enemy != null)
+            if (projectileModel.ProjectileType == ProjectileType.Homing_Bullet && enemy != null)
             {
                 Vector2 enemyDirection = ((Vector2)enemy.transform.position - projectileView.rigidBody.position).normalized;
                 projectileView.rigidBody.velocity =
-                    Vector2.Lerp(projectileView.rigidBody.velocity, enemyDirection * projectileModel.HomingSpeed, Time.fixedDeltaTime);
+                    Vector2.Lerp(projectileView.rigidBody.velocity, enemyDirection * projectileModel.ShootSpeed, Time.fixedDeltaTime);
             }
         }
 
