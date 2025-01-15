@@ -63,13 +63,36 @@ namespace ServiceLocator.Projectile
         {
             // Fetching Index of Projectile Type
             int projectileIndex = Array.FindIndex(projectileConfig.projectileData, data => data.projectileType == _projectileType);
-            if (projectileIndex != -1) projectileIndex = 0;
 
-            // Creating Controller
-            ProjectileController projectileController =
-            new ProjectileController(projectileConfig, _projectileOwnerActor, _shootSpeed, _shootPoint, projectileIndex,
-            soundService, actorService);
-            projectiles.Add(projectileController);
+            // Created the controller
+            ProjectileController projectileController = CreateProjectileController(
+                _projectileType, _projectileOwnerActor, _shootSpeed, _shootPoint, projectileIndex);
+
+            // Add the created controller to the list if valid
+            if (projectileController != null)
+            {
+                projectiles.Add(projectileController);
+            }
+        }
+
+        private ProjectileController CreateProjectileController(
+            ProjectileType _projectileType,
+            ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, int _projectileIndex)
+        {
+            switch (_projectileType)
+            {
+                case ProjectileType.Normal_Bullet:
+                    return new NormalBulletProjectileController(projectileConfig,
+                        _projectileOwnerActor, _shootSpeed, _shootPoint, _projectileIndex,
+                        soundService, actorService);
+                case ProjectileType.Homing_Bullet:
+                    return new HomingBulletProjectileController(projectileConfig,
+                        _projectileOwnerActor, _shootSpeed, _shootPoint, _projectileIndex,
+                        soundService, actorService);
+                default:
+                    Debug.LogWarning($"Unhandled ProjectileType: {_projectileType}");
+                    return null;
+            }
         }
     }
 }
