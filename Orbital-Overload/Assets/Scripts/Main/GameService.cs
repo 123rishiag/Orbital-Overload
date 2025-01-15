@@ -63,20 +63,18 @@ namespace ServiceLocator.Main
         private void InjectDependencies()
         {
             gameController.Init(soundService, uiService, cameraService, actorService);
-            uiService.Init(this, actorService);
+            uiService.Init(this);
             spawnService.Init(actorService);
             projectileService.Init(soundService, actorService);
-            powerUpService.Init(this, soundService, uiService, actorService);
-            actorService.Init(soundService, spawnService, projectileService);
+            powerUpService.Init(this, soundService, uiService, spawnService);
+            actorService.Init(soundService, uiService, spawnService, projectileService);
         }
 
         private void Update()
         {
             gameController.Update();
-            uiService.Update();
             spawnService.Update();
             projectileService.Update();
-            powerUpService.Update();
             actorService.Update();
         }
 

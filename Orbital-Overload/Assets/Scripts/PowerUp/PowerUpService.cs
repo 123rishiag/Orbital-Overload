@@ -1,6 +1,6 @@
-using ServiceLocator.Actor;
 using ServiceLocator.Main;
 using ServiceLocator.Sound;
+using ServiceLocator.Spawn;
 using ServiceLocator.UI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +18,7 @@ namespace ServiceLocator.PowerUp
         private GameService gameService;
         private SoundService soundService;
         private UIService uiService;
-        private ActorService actorService;
+        private SpawnService spawnService;
 
         public PowerUpService(PowerUpConfig _powerUpConfig)
         {
@@ -28,45 +28,26 @@ namespace ServiceLocator.PowerUp
             powerUpSpawnTimer = powerUpConfig.powerUpSpawnInterval;
         }
 
-        public void Init(GameService _gameService, SoundService _soundService, UIService _uiService, ActorService _actorService)
+        public void Init(GameService _gameService, SoundService _soundService, UIService _uiService, SpawnService _spawnService)
         {
             // Setting Services
             gameService = _gameService;
             soundService = _soundService;
             uiService = _uiService;
-            actorService = _actorService;
+            spawnService = _spawnService;
+
+            // Creating spawn controller for powerups
+            spawnService.CreateSpawnController(powerUpConfig.powerUpSpawnInterval, powerUpConfig.powerUpSpawnRadius,
+                powerUpConfig.powerUpAwayFromPlayerSpawnDistance, CreatePowerUp);
         }
 
-        public void Update()
+        private void CreatePowerUp(Vector2 _spawnPosition)
         {
-            // Accumulate time
-            powerUpSpawnTimer -= Time.deltaTime;
-
-            // Check if the spawn interval has passed
-            if (powerUpSpawnTimer < 0)
-            {
-                powerUpSpawnTimer = powerUpConfig.powerUpSpawnInterval; // Reset the timer
-                SpawnPowerUp();
-            }
-        }
-
-        private void SpawnPowerUp()
-        {
-            // Fetching Index
+            // Fetching Random Index
             int powerUpIndex = Random.Range(0, powerUpConfig.powerUpData.Length);
 
-            // Fetching Position & Direction
-            Vector2 randomDirection = new Vector2(
-                    Random.Range(0, 2) == 0 ? -1 : 1,
-                    Random.Range(0, 2) == 0 ? -1 : 1
-                    );
-            Vector2 awayFromPlayerOffset = randomDirection * powerUpConfig.powerUpAwayFromPlayerSpawnDistance;
-            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetPosition();
-            Vector2 spawnPosition = playerPosition + awayFromPlayerOffset +
-                Random.insideUnitCircle * powerUpConfig.powerUpSpawnRadius;
-
             // Creating Controller
-            PowerUpController powerUpController = new PowerUpController(powerUpConfig, spawnPosition, powerUpIndex,
+            PowerUpController powerUpController = new PowerUpController(powerUpConfig, _spawnPosition, powerUpIndex,
                 gameService, soundService, uiService);
             powerUps.Add(powerUpController);
         }

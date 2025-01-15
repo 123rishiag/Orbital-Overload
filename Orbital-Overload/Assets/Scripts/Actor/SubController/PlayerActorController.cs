@@ -1,5 +1,6 @@
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
+using ServiceLocator.UI;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -10,13 +11,20 @@ namespace ServiceLocator.Actor
         private float playerCasualMoveSpeed; // Default move speed when idle
 
         public PlayerActorController(ActorConfig _actorConfig, Vector2 _spawnPosition, int _actorIndex,
-            SoundService _soundService, ProjectileService _projectileService, ActorService _actorService) :
+            SoundService _soundService, UIService _uiService, ProjectileService _projectileService, ActorService _actorService) :
             base(_actorConfig.playerData, _actorConfig.actorPrefab, _spawnPosition,
-                _soundService, _projectileService, _actorService)
+                _soundService, _uiService, _projectileService, _actorService)
         {
             // Setting Variables
             isShooting = false;
             playerCasualMoveSpeed = _actorConfig.playerCasualMoveSpeed;
+        }
+        public override void Update()
+        {
+            base.Update();
+
+            uiService.GetUIController().GetUIView().UpdateHealthText(actorModel.CurrentHealth);
+            uiService.GetUIController().GetUIView().UpdateScoreText(actorModel.CurrentScore);
         }
         protected override void MovementInput()
         {

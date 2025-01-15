@@ -11,7 +11,7 @@ namespace ServiceLocator.Spawn
         private Action<Vector2> spawnAction;
         private float spawnTimer;
 
-        public SpawnController(float _spawnInterval, float _spawnRadius, 
+        public SpawnController(float _spawnInterval, float _spawnRadius,
             float _awayFromPlayerDistance, Action<Vector2> _spawnAction)
         {
             spawnInterval = _spawnInterval;

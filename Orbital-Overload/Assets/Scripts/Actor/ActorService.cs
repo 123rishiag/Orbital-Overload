@@ -1,6 +1,7 @@
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.Spawn;
+using ServiceLocator.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace ServiceLocator.Actor
 
         // Private Services
         private SoundService soundService;
+        private UIService uiService;
         private SpawnService spawnService;
         private ProjectileService projectileService;
 
@@ -25,19 +27,21 @@ namespace ServiceLocator.Actor
             enemyActorControllers = new List<ActorController>();
         }
 
-        public void Init(SoundService _soundService, SpawnService _spawnService, ProjectileService _projectileService)
+        public void Init(SoundService _soundService, UIService _uiService, SpawnService _spawnService,
+            ProjectileService _projectileService)
         {
             // Setting Services
             soundService = _soundService;
+            uiService = _uiService;
             spawnService = _spawnService;
             projectileService = _projectileService;
+
+            // Setting Elements
+            CreatePlayer();
 
             // Creating spawn controller for enemies
             spawnService.CreateSpawnController(actorConfig.enemySpawnInterval, actorConfig.enemySpawnRadius,
                 actorConfig.enemyAwayFromPlayerSpawnDistance, CreateEnemy);
-
-            // Setting Elements
-            CreatePlayer();
         }
 
         private void CreatePlayer()
@@ -49,16 +53,16 @@ namespace ServiceLocator.Actor
             Vector2 spawnPosition = new Vector2(0f, 0f);
             playerActorController = new PlayerActorController(
                 actorConfig, spawnPosition, actorIndex,
-                soundService, projectileService, this);
+                soundService, uiService, projectileService, this);
         }
         private void CreateEnemy(Vector2 _spawnPosition)
         {
             // Fetching Random Index
             int actorIndex = Random.Range(0, actorConfig.enemyData.Length);
 
-            // Get spawn position from SpawnController
+            // Creating Controller
             var enemyActorController = new EnemyActorController(actorConfig, _spawnPosition, actorIndex,
-                soundService, projectileService, this
+                soundService, uiService, projectileService, this
             );
             enemyActorControllers.Add(enemyActorController);
         }
