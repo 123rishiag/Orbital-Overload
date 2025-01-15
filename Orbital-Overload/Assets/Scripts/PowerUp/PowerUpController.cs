@@ -1,5 +1,6 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Main;
+using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using System.Collections;
@@ -58,9 +59,9 @@ namespace ServiceLocator.PowerUp
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
                     break;
                 case PowerUpType.HomingOrbs:
-                    _actorController.GetActorModel().IsHoming = true; // Activate homing projectiles
+                    _actorController.GetActorModel().ProjectileType = ProjectileType.Homing_Bullet; // Activate homing projectiles
                     yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _actorController.GetActorModel().IsHoming = false; // Deactivate homing projectiles
+                    _actorController.GetActorModel().ProjectileType = ProjectileType.Normal_Bullet; // Deactivate homing projectiles
                     break;
                 case PowerUpType.RapidFire:
                     _actorController.GetActorModel().ShootCooldown /= powerUpModel.PowerUpValue; // Increase fire rate

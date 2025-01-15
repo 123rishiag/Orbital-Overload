@@ -8,14 +8,15 @@ namespace ServiceLocator.Projectile
     public class ProjectileConfig : ScriptableObject
     {
         public GameObject projectilePrefab;
-        public ProjectileData projectileData;
+        public ProjectileData[] projectileData;
     }
 
     [Serializable]
     public class ProjectileData
     {
-        [Header("Speed Data")]
-        public float homingSpeed; // Speed of projectiles while homing
+        [Header("Projectile Data")]
+        public ProjectileType projectileType; // Type of Projectile
+        public Color projectileColor; // Color of Projectile
 
         [Header("Score Data")]
         public int hitScore; // Score increment value
