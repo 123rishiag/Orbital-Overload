@@ -8,7 +8,7 @@ namespace ServiceLocator.Sound
         PowerUpPickup,
         ActorHeal,
         ActorHurt,
-        BulletShoot,
+        ProjectileShoot,
         GamePause,
         GameOver,
         GameStart

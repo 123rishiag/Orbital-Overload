@@ -1,4 +1,4 @@
-using ServiceLocator.Bullet;
+using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using UnityEngine;
 
@@ -10,9 +10,9 @@ namespace ServiceLocator.Actor
         private float playerCasualMoveSpeed; // Default move speed when idle
 
         public PlayerActorController(ActorConfig _actorConfig, Vector2 _spawnPosition, int _actorIndex,
-            SoundService _soundService, BulletService _bulletService, ActorService _actorService) :
+            SoundService _soundService, ProjectileService _projectileService, ActorService _actorService) :
             base(_actorConfig.playerData, _actorConfig.actorPrefab, _spawnPosition,
-                _soundService, _bulletService, _actorService)
+                _soundService, _projectileService, _actorService)
         {
             // Setting Variables
             isShooting = false;

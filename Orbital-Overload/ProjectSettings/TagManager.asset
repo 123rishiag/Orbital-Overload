@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Actor
-  - Bullet
+  - Projectile
   - PowerUp
   layers:
   - Default
@@ -15,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Actor
-  - Bullet
+  - Projectile
   - PowerUp
   - 
   - 

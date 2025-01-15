@@ -1,18 +1,18 @@
 using ServiceLocator.Actor;
 using UnityEngine;
 
-namespace ServiceLocator.Bullet
+namespace ServiceLocator.Projectile
 {
-    public class BulletView : MonoBehaviour
+    public class ProjectileView : MonoBehaviour
     {
         // Private Variables
-        public Rigidbody2D rigidBody; // Rigidbody2D component of the bullet// Private Variables
-        public BulletController bulletController;
+        public Rigidbody2D rigidBody; // Rigidbody2D component of the projectile// Private Variables
+        public ProjectileController projectileController;
 
-        public void Init(BulletController _bulletController)
+        public void Init(ProjectileController _projectileController)
         {
             // Setting Variables
-            bulletController = _bulletController;
+            projectileController = _projectileController;
             rigidBody = GetComponent<Rigidbody2D>();
         }
 
@@ -32,11 +32,11 @@ namespace ServiceLocator.Bullet
                 // Avoid collision with the owner
                 ActorView actorView = _collider.gameObject.GetComponent<ActorView>();
                 if (actorView.actorController.GetActorModel().ActorType ==
-                    bulletController.GetBulletModel().BulletOwnerActor) return;
+                    projectileController.GetProjectileModel().ProjectileOwnerActor) return;
 
                 Destroy(gameObject);
             }
-            else if (_collider.CompareTag("Bullet"))
+            else if (_collider.CompareTag("Projectile"))
             {
                 Destroy(gameObject);
             }
