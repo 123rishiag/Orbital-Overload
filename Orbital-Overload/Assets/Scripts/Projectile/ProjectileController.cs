@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ServiceLocator.Projectile
 {
-    public abstract class ProjectileController
+    public class ProjectileController
     {
         // Private Variables
         protected ProjectileModel projectileModel;
