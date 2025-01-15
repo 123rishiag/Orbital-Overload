@@ -18,5 +18,5 @@ MonoBehaviour:
     projectileColor: {r: 0.9411765, g: 0.5019608, b: 0.5019608, a: 1}
     hitScore: 10
   - projectileType: 1
-    projectileColor: {r: 0.78039217, g: 0.78039217, b: 0.99215686, a: 1}
+    projectileColor: {r: 0.46650052, g: 0.46650052, b: 0.9811321, a: 1}
     hitScore: 20

@@ -4,16 +4,15 @@ using UnityEngine;
 
 namespace ServiceLocator.Projectile
 {
-    public class ProjectileController
+    public abstract class ProjectileController
     {
         // Private Variables
-        private ProjectileModel projectileModel;
-        private ProjectileView projectileView;
-        public ActorView enemy; // Target enemy for homing projectiles
+        protected ProjectileModel projectileModel;
+        protected ProjectileView projectileView;
 
         // Private Services
-        private SoundService soundService;
-        private ActorService actorService;
+        protected SoundService soundService;
+        protected ActorService actorService;
 
         public ProjectileController(ProjectileConfig _projectileConfig,
             ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, int _projectileIndex,
@@ -33,57 +32,9 @@ namespace ServiceLocator.Projectile
             ShootProjectile(_shootPoint, _shootSpeed); // Shoot the projectile
         }
 
-        public void Update()
-        {
-            FindNearestEnemy(); // Find the nearest enemy for homing
-        }
+        public virtual void Update() { }
 
-        public void FixedUpdate()
-        {
-            Homing(); // Homing logic in FixedUpdate for physics
-        }
-
-        private void FindNearestEnemy()
-        {
-            if (projectileModel.ProjectileType == ProjectileType.Homing_Bullet && enemy == null)
-            {
-                ActorView nearestActor = null;
-                float minDistance = Mathf.Infinity;
-                Vector2 currentPosition = projectileView.transform.position;
-
-                // Find the nearest enemy
-                foreach (var actorController in actorService.GetEnemyActorControllers())
-                {
-                    // Avoid Hitting Player
-                    if (actorController.GetActorModel().ActorType == ActorType.Player) continue;
-
-                    // Avoid Dead Enemies
-                    if (!actorController.IsAlive()) return;
-
-                    // Fetching Distance from enemies
-                    float distance = Vector2.Distance(actorController.GetActorView().transform.position, currentPosition);
-                    if (distance < minDistance)
-                    {
-                        nearestActor = actorController.GetActorView();
-                        minDistance = distance;
-                    }
-                }
-                if (nearestActor != null)
-                {
-                    enemy = nearestActor.GetComponent<ActorView>();
-                }
-            }
-        }
-
-        private void Homing()
-        {
-            if (projectileModel.ProjectileType == ProjectileType.Homing_Bullet && enemy != null)
-            {
-                Vector2 enemyDirection = ((Vector2)enemy.transform.position - projectileView.rigidBody.position).normalized;
-                projectileView.rigidBody.velocity =
-                    Vector2.Lerp(projectileView.rigidBody.velocity, enemyDirection * projectileModel.ShootSpeed, Time.fixedDeltaTime);
-            }
-        }
+        public virtual void FixedUpdate() { }
 
         public void ShootProjectile(Transform _shootPoint, float _projectileSpeed)
         {
