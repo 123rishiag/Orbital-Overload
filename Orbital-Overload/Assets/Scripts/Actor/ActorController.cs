@@ -1,3 +1,4 @@
+using ServiceLocator.Control;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
@@ -20,11 +21,13 @@ namespace ServiceLocator.Actor
         // Private Services
         protected SoundService soundService;
         protected UIService uiService;
+        protected InputService inputService;
         protected ProjectileService projectileService;
         protected ActorService actorService;
 
         public ActorController(ActorData _actorData, ActorView _actorPrefab, Vector2 _spawnPosition,
-            SoundService _soundService, UIService _uiService, ProjectileService _projectileService, ActorService _actorService)
+            SoundService _soundService, UIService _uiService, InputService _inputService,
+            ProjectileService _projectileService, ActorService _actorService)
         {
             // Setting Variables
             actorModel = new ActorModel(_actorData);
@@ -40,6 +43,7 @@ namespace ServiceLocator.Actor
             // Setting Services
             soundService = _soundService;
             uiService = _uiService;
+            inputService = _inputService;
             projectileService = _projectileService;
             actorService = _actorService;
         }

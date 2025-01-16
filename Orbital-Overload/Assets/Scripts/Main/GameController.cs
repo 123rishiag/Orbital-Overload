@@ -1,4 +1,5 @@
 using ServiceLocator.Actor;
+using ServiceLocator.Control;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using ServiceLocator.Vision;
@@ -18,30 +19,33 @@ namespace ServiceLocator.Main
         // Private Services
         private SoundService soundService;
         private UIService uiService;
+        private InputService inputService;
         private CameraService cameraService;
         private ActorService actorService;
 
         public GameController()
         {
             // Setting Variables
-            isPaused = false;
-            canPause = true;
+            isPaused = true;
+            canPause = false;
             isGameOver = false;
-            canGameOver = false;
+            canGameOver = true;
+            Time.timeScale = 0f;
         }
 
-        public void Init(SoundService _soundService, UIService _uiService, CameraService _cameraService,
-            ActorService _actorService)
+        public void Init(SoundService _soundService, UIService _uiService, InputService _inputService,
+            CameraService _cameraService, ActorService _actorService)
         {
             // Setting Services
             soundService = _soundService;
             uiService = _uiService;
+            inputService = _inputService;
             cameraService = _cameraService;
             actorService = _actorService;
         }
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (inputService.IsEscapePressed)
             {
                 if (isPaused)
                 {
@@ -104,6 +108,9 @@ namespace ServiceLocator.Main
             canGameOver = true;
             Time.timeScale = 1f; // Restart time
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+            uiService.GetUIController().GetUIView().mainMenuPanel.SetActive(false); // Hide Main Menu
+            uiService.GetUIController().GetUIView().pauseMenuPanel.SetActive(false); // Hide Pause Menu
+            uiService.GetUIController().GetUIView().gameOverMenuPanel.SetActive(false); // Hide Game Over Menu
             soundService.PlaySoundEffect(SoundType.GameStart); // Play game start sound effect
         }
 
@@ -121,6 +128,8 @@ namespace ServiceLocator.Main
         public void PlayGame()
         {
             Time.timeScale = 1f; // Ensure game time is running
+            isPaused = false;
+            canPause = true;
             uiService.GetUIController().GetUIView().mainMenuPanel.SetActive(false); // Hide Main Menu
             soundService.PlaySoundEffect(SoundType.GameStart); // Play game start sound effect
         }

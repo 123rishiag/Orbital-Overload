@@ -1,4 +1,5 @@
 using ServiceLocator.Actor;
+using ServiceLocator.Control;
 using ServiceLocator.PowerUp;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
@@ -36,6 +37,7 @@ namespace ServiceLocator.Main
         // Private Services
         private SoundService soundService;
         private UIService uiService;
+        private InputService inputService;
         private CameraService cameraService;
         private SpawnService spawnService;
         private ProjectileService projectileService;
@@ -44,15 +46,16 @@ namespace ServiceLocator.Main
 
         private void Start()
         {
-            CreateServicesAndControllers();
+            gameController = new GameController();
+            CreateServices();
             InjectDependencies();
         }
 
-        private void CreateServicesAndControllers()
+        private void CreateServices()
         {
-            gameController = new GameController();
             soundService = new SoundService(soundConfig, sfxSource, bgSource);
             uiService = new UIService(uiCanvas);
+            inputService = new InputService();
             cameraService = new CameraService(mainCamera, cameraFollowSpeed);
             spawnService = new SpawnService();
             projectileService = new ProjectileService(projectileConfig);
@@ -62,17 +65,18 @@ namespace ServiceLocator.Main
 
         private void InjectDependencies()
         {
-            gameController.Init(soundService, uiService, cameraService, actorService);
+            gameController.Init(soundService, uiService, inputService, cameraService, actorService);
             uiService.Init(this);
             spawnService.Init(actorService);
             projectileService.Init(soundService, actorService);
             powerUpService.Init(this, soundService, uiService, spawnService);
-            actorService.Init(soundService, uiService, spawnService, projectileService);
+            actorService.Init(soundService, uiService, inputService, spawnService, projectileService);
         }
 
         private void Update()
         {
             gameController.Update();
+            inputService.Update();
             spawnService.Update();
             projectileService.Update();
             actorService.Update();

@@ -1,3 +1,4 @@
+using ServiceLocator.Control;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.Spawn;
@@ -17,6 +18,7 @@ namespace ServiceLocator.Actor
         // Private Services
         private SoundService soundService;
         private UIService uiService;
+        private InputService inputService;
         private SpawnService spawnService;
         private ProjectileService projectileService;
 
@@ -27,12 +29,13 @@ namespace ServiceLocator.Actor
             enemyActorControllers = new List<ActorController>();
         }
 
-        public void Init(SoundService _soundService, UIService _uiService, SpawnService _spawnService,
-            ProjectileService _projectileService)
+        public void Init(SoundService _soundService, UIService _uiService, InputService _inputService,
+            SpawnService _spawnService, ProjectileService _projectileService)
         {
             // Setting Services
             soundService = _soundService;
             uiService = _uiService;
+            inputService = _inputService;
             spawnService = _spawnService;
             projectileService = _projectileService;
 
@@ -53,7 +56,7 @@ namespace ServiceLocator.Actor
             Vector2 spawnPosition = new Vector2(0f, 0f);
             playerActorController = new PlayerActorController(
                 actorConfig, spawnPosition, actorIndex,
-                soundService, uiService, projectileService, this);
+                soundService, uiService, inputService, projectileService, this);
         }
         private void CreateEnemy(Vector2 _spawnPosition)
         {
@@ -62,7 +65,7 @@ namespace ServiceLocator.Actor
 
             // Creating Controller
             var enemyActorController = new EnemyActorController(actorConfig, _spawnPosition, actorIndex,
-                soundService, uiService, projectileService, this
+                soundService, uiService, inputService, projectileService, this
             );
             enemyActorControllers.Add(enemyActorController);
         }
