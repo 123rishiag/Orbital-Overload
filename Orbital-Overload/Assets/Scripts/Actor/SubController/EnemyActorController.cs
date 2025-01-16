@@ -11,16 +11,18 @@ namespace ServiceLocator.Actor
         // Private Variables
         public float enemyAwayFromPlayerMinDistance; // Minimum distance from player enemy should maintain
 
-        public EnemyActorController(ActorConfig _actorConfig, Vector2 _spawnPosition, int _actorIndex,
+        public EnemyActorController(ActorData _actorData, ActorView _actorPrefab, Vector2 _spawnPosition,
+            float _enemyAwayFromPlayerMinDistance,
             SoundService _soundService, UIService _uiService, InputService _inputService,
             ProjectileService _projectileService, ActorService _actorService) :
-            base(_actorConfig.enemyData[_actorIndex], _actorConfig.actorPrefab, _spawnPosition,
+
+            base(_actorData, _actorPrefab, _spawnPosition,
                 _soundService, _uiService, _inputService,
                 _projectileService, _actorService)
         {
             // Setting Variables
             isShooting = true;
-            enemyAwayFromPlayerMinDistance = _actorConfig.enemyAwayFromPlayerMinDistance;
+            enemyAwayFromPlayerMinDistance = _enemyAwayFromPlayerMinDistance;
         }
 
         protected override void MovementInput()

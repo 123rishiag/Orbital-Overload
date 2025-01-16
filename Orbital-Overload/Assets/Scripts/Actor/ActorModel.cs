@@ -7,6 +7,11 @@ namespace ServiceLocator.Actor
     {
         public ActorModel(ActorData _actorData)
         {
+            Reset(_actorData);
+        }
+
+        public void Reset(ActorData _actorData)
+        {
             ActorType = _actorData.actorType;
             ActorColor = _actorData.actorColor;
             ActorShooterColor = _actorData.actorShooterColor;

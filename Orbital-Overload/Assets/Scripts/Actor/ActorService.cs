@@ -4,6 +4,7 @@ using ServiceLocator.Sound;
 using ServiceLocator.Spawn;
 using ServiceLocator.UI;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -12,8 +13,8 @@ namespace ServiceLocator.Actor
     {
         // Private Variables
         private ActorConfig actorConfig;
+        private ActorPool actorPool;
         private ActorController playerActorController;
-        private List<ActorController> enemyActorControllers;
 
         // Private Services
         private SoundService soundService;
@@ -26,7 +27,6 @@ namespace ServiceLocator.Actor
         {
             // Setting Variables
             actorConfig = _actorConfig;
-            enemyActorControllers = new List<ActorController>();
         }
 
         public void Init(SoundService _soundService, UIService _uiService, InputService _inputService,
@@ -41,6 +41,9 @@ namespace ServiceLocator.Actor
 
             // Setting Elements
             CreatePlayer();
+            actorPool = new ActorPool(actorConfig,
+                _soundService, _uiService, _inputService,
+            _projectileService, this);
 
             // Creating spawn controller for enemies
             spawnService.CreateSpawnController(actorConfig.enemySpawnInterval, actorConfig.enemySpawnRadius,
@@ -55,19 +58,13 @@ namespace ServiceLocator.Actor
             // Fetching Spawn Position
             Vector2 spawnPosition = new Vector2(0f, 0f);
             playerActorController = new PlayerActorController(
-                actorConfig, spawnPosition, actorIndex,
+                actorConfig.playerData, actorConfig.actorPrefab, spawnPosition,
+                actorConfig.playerCasualMoveSpeed,
                 soundService, uiService, inputService, projectileService, this);
         }
         private void CreateEnemy(Vector2 _spawnPosition)
         {
-            // Fetching Random Index
-            int actorIndex = Random.Range(0, actorConfig.enemyData.Length);
-
-            // Creating Controller
-            var enemyActorController = new EnemyActorController(actorConfig, _spawnPosition, actorIndex,
-                soundService, uiService, inputService, projectileService, this
-            );
-            enemyActorControllers.Add(enemyActorController);
+            actorPool.GetActor(_spawnPosition);
         }
 
         public void Update()
@@ -85,16 +82,20 @@ namespace ServiceLocator.Actor
             playerActorController.Update();
 
             // For Enemies
-            for (int i = enemyActorControllers.Count - 1; i >= 0; i--)
+            for (int i = actorPool.pooledItems.Count - 1; i >= 0; i--)
             {
-                ActorController enemy = enemyActorControllers[i];
-                if (enemy.IsAlive())
+                // Skipping if the pooled item's isUsed is false
+                if (!actorPool.pooledItems[i].isUsed)
                 {
-                    enemy.Update();
+                    continue;
                 }
-                else
+
+                var actorController = actorPool.pooledItems[i].Item;
+                actorController.Update();
+
+                if (!actorController.IsAlive())
                 {
-                    enemyActorControllers.RemoveAt(i); // Safely removing destroyed enemies from List
+                    ReturnActorToPool(actorController);
                 }
             }
         }
@@ -104,18 +105,28 @@ namespace ServiceLocator.Actor
             playerActorController.FixedUpdate();
 
             // For Enemies
-            for (int i = enemyActorControllers.Count - 1; i >= 0; i--)
+            for (int i = actorPool.pooledItems.Count - 1; i >= 0; i--)
             {
-                ActorController enemy = enemyActorControllers[i];
-                if (enemy.IsAlive())
+                // Skipping if the pooled item's isUsed is false
+                if (!actorPool.pooledItems[i].isUsed)
                 {
-                    enemy.FixedUpdate();
+                    continue;
                 }
+
+                var actorController = actorPool.pooledItems[i].Item;
+                actorController.FixedUpdate();
             }
+        }
+
+        private void ReturnActorToPool(ActorController _actorToReturn)
+        {
+            _actorToReturn.GetActorView().HideView();
+            actorPool.ReturnItem(_actorToReturn);
         }
 
         // Getters
         public ActorController GetPlayerActorController() => playerActorController;
-        public List<ActorController> GetEnemyActorControllers() => enemyActorControllers;
+        public List<ActorController> GetEnemyActorControllers() =>
+            actorPool.pooledItems.Where(item => item.isUsed).Select(item => item.Item).ToList();
     }
 }
