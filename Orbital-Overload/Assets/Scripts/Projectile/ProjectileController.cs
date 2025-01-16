@@ -30,7 +30,6 @@ namespace ServiceLocator.Projectile
 
             // Setting Elements
             ShootProjectile(_shootPoint, _shootSpeed); // Shoot the projectile
-            Debug.Log("New");
         }
 
         public void Reset(ProjectileData _projectileData, ActorType _projectileOwnerActor, float _shootSpeed,
@@ -41,7 +40,6 @@ namespace ServiceLocator.Projectile
             projectileView.SetPosition(_shootPoint.position);
             projectileView.ShowView();
             ShootProjectile(_shootPoint, _shootSpeed);
-            Debug.Log("Old");
         }
 
         public virtual void Update() { }
@@ -56,7 +54,7 @@ namespace ServiceLocator.Projectile
 
         public bool IsActive()
         {
-            if (projectileView == null) return false;
+            if (!projectileView.gameObject.activeInHierarchy) return false;
             Vector3 screenPoint = Camera.main.WorldToViewportPoint(projectileView.transform.position);
             if (screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1)
             {
