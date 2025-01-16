@@ -35,7 +35,7 @@ namespace ServiceLocator.Actor
 
         public ActorController GetActor(Vector2 _spawnPosition)
         {
-            var item = GetItem(_spawnPosition);
+            var item = GetItem<ActorController>(_spawnPosition);
 
             // Fetching Random Index
             int actorIndex = GetRandomActorIndex();
@@ -46,7 +46,7 @@ namespace ServiceLocator.Actor
             return item;
         }
 
-        protected override ActorController CreateItem(Vector2 _spawnPosition)
+        protected override ActorController CreateItem<U>(Vector2 _spawnPosition)
         {
             // Fetching Random Index
             int actorIndex = GetRandomActorIndex();

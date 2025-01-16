@@ -41,6 +41,8 @@ namespace ServiceLocator.Actor
 
             // Setting Elements
             CreatePlayer();
+
+            // Creating Object Pool for enemies
             actorPool = new ActorPool(actorConfig,
                 _soundService, _uiService, _inputService,
             _projectileService, this);

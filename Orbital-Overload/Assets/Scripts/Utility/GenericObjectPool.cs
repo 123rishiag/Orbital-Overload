@@ -12,30 +12,30 @@ namespace ServiceLocator.Utility
     {
         public List<PooledItem<T>> pooledItems = new List<PooledItem<T>>();
 
-        public virtual T GetItem(Vector2 _spawnPosition)
+        public virtual T GetItem<U>(Vector2 _spawnPosition) where U : T
         {
             if (pooledItems.Count > 0)
             {
-                PooledItem<T> item = pooledItems.Find(item => !item.isUsed);
+                PooledItem<T> item = pooledItems.Find(item => !item.isUsed && item.Item is U);
                 if (item != null)
                 {
                     item.isUsed = true;
                     return item.Item;
                 }
             }
-            return CreateNewPooledItem(_spawnPosition);
+            return CreateNewPooledItem<U>(_spawnPosition);
         }
 
-        private T CreateNewPooledItem(Vector2 _spawnPosition)
+        private T CreateNewPooledItem<U>(Vector2 _spawnPosition) where U : T
         {
             PooledItem<T> newItem = new PooledItem<T>();
-            newItem.Item = CreateItem(_spawnPosition);
+            newItem.Item = CreateItem<U>(_spawnPosition);
             newItem.isUsed = true;
             pooledItems.Add(newItem);
             return newItem.Item;
         }
 
-        protected virtual T CreateItem(Vector2 _spawnPosition)
+        protected virtual T CreateItem<U>(Vector2 _spawnPosition) where U : T
         {
             throw new NotImplementedException("CreateItem() method not implemented in derived class");
         }
