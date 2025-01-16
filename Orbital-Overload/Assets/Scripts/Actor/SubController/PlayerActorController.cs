@@ -11,16 +11,18 @@ namespace ServiceLocator.Actor
         // Private Variables
         private float playerCasualMoveSpeed; // Default move speed when idle
 
-        public PlayerActorController(ActorConfig _actorConfig, Vector2 _spawnPosition, int _actorIndex,
+        public PlayerActorController(ActorData _actorData, ActorView _actorPrefab, Vector2 _spawnPosition,
+            float _playerCasualMoveSpeed,
             SoundService _soundService, UIService _uiService, InputService _inputService,
             ProjectileService _projectileService, ActorService _actorService) :
-            base(_actorConfig.playerData, _actorConfig.actorPrefab, _spawnPosition,
+
+            base(_actorData, _actorPrefab, _spawnPosition,
                 _soundService, _uiService, _inputService,
                 _projectileService, _actorService)
         {
             // Setting Variables
             isShooting = false;
-            playerCasualMoveSpeed = _actorConfig.playerCasualMoveSpeed;
+            playerCasualMoveSpeed = _playerCasualMoveSpeed;
         }
         public override void Update()
         {

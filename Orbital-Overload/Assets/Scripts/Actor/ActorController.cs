@@ -48,6 +48,14 @@ namespace ServiceLocator.Actor
             actorService = _actorService;
         }
 
+        public void Reset(ActorData _actorData, Vector2 _spawnPosition)
+        {
+            actorModel.Reset(_actorData);
+            actorView.Reset();
+            actorView.SetPosition(_spawnPosition);
+            actorView.ShowView();
+        }
+
         public virtual void Update()
         {
             MovementInput(); // Handle movement input

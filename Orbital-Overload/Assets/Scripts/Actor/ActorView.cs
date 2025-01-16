@@ -16,8 +16,28 @@ namespace ServiceLocator.Actor
         {
             // Setting Variables
             actorController = _actorController;
+            Reset();
+        }
+
+        public void Reset()
+        {
             actorSprite.color = actorController.GetActorModel().ActorColor;
             actorShooterSprite.color = actorController.GetActorModel().ActorShooterColor;
+        }
+
+        public void SetPosition(Vector2 _position)
+        {
+            transform.position = _position;
+        }
+
+        public void ShowView()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void HideView()
+        {
+            gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D _collider)
@@ -37,10 +57,6 @@ namespace ServiceLocator.Actor
                 if (actorController.GetActorModel().ActorType != ActorType.Player)
                 {
                     actorController.AddScore(projectileView.projectileController.GetProjectileModel().HitScore);
-                    if (!actorController.IsAlive())
-                    {
-                        Destroy(gameObject);
-                    }
                 }
             }
         }
