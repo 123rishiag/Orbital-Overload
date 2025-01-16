@@ -36,24 +36,24 @@ namespace ServiceLocator.Actor
 
         public ActorController GetActor(Vector2 _spawnPosition)
         {
-            // Setting Spawn Position
+            // Setting Variables
             spawnPosition = _spawnPosition;
 
             // Fetching Item
             var item = GetItem<ActorController>();
 
-            // Fetching Random Index
+            // Fetching Index
             int actorIndex = GetRandomActorIndex();
 
             // Resetting Item Properties
-            item.Reset(actorConfig.enemyData[actorIndex], _spawnPosition);
+            item.Reset(actorConfig.enemyData[actorIndex], spawnPosition);
 
             return item;
         }
 
-        protected override ActorController CreateItem<U>()
+        protected override ActorController CreateItem<T>()
         {
-            // Fetching Random Index
+            // Fetching Index
             int actorIndex = GetRandomActorIndex();
 
             // Creating Controller
