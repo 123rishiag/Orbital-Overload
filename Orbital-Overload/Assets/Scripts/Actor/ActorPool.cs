@@ -11,6 +11,7 @@ namespace ServiceLocator.Actor
     {
         // Private Variables
         private ActorConfig actorConfig;
+        private Vector2 spawnPosition;
 
         // Private Services
         private SoundService soundService;
@@ -35,7 +36,11 @@ namespace ServiceLocator.Actor
 
         public ActorController GetActor(Vector2 _spawnPosition)
         {
-            var item = GetItem<ActorController>(_spawnPosition);
+            // Setting Spawn Position
+            spawnPosition = _spawnPosition;
+
+            // Fetching Item
+            var item = GetItem<ActorController>();
 
             // Fetching Random Index
             int actorIndex = GetRandomActorIndex();
@@ -46,13 +51,13 @@ namespace ServiceLocator.Actor
             return item;
         }
 
-        protected override ActorController CreateItem<U>(Vector2 _spawnPosition)
+        protected override ActorController CreateItem<U>()
         {
             // Fetching Random Index
             int actorIndex = GetRandomActorIndex();
 
             // Creating Controller
-            return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab, _spawnPosition,
+            return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab, spawnPosition,
                 actorConfig.enemyAwayFromPlayerMinDistance,
                 soundService, uiService, inputService, projectileService, actorService
             );
