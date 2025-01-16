@@ -5,7 +5,7 @@ namespace ServiceLocator.Projectile
 {
     public class ProjectileView : MonoBehaviour
     {
-        public Rigidbody2D rigidBody; // Rigidbody2D component of the projectile
+        [SerializeField] public Rigidbody2D rigidBody; // Rigidbody2D component of the projectile
         [SerializeField] public SpriteRenderer projectileSprite; // Projectile Sprite
         [HideInInspector]
         public ProjectileController projectileController;
@@ -14,17 +14,28 @@ namespace ServiceLocator.Projectile
         {
             // Setting Variables
             projectileController = _projectileController;
-            projectileSprite.color = projectileController.GetProjectileModel().ProjectileColor;
             rigidBody = GetComponent<Rigidbody2D>();
+            Reset();
         }
 
-        private void Update()
+        public void Reset()
         {
-            Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
-            if (screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1)
-            {
-                Destroy(gameObject); // Destroying the object if it is off-screen
-            }
+            projectileSprite.color = projectileController.GetProjectileModel().ProjectileColor;
+        }
+
+        public void SetPosition(Vector2 _position)
+        {
+            transform.position = _position;
+        }
+
+        public void ShowView()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void HideView()
+        {
+            gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D _collider)
@@ -36,11 +47,11 @@ namespace ServiceLocator.Projectile
                 if (actorView.actorController.GetActorModel().ActorType ==
                     projectileController.GetProjectileModel().ProjectileOwnerActor) return;
 
-                Destroy(gameObject);
+                HideView();
             }
             else if (_collider.CompareTag("Projectile"))
             {
-                Destroy(gameObject);
+                HideView();
             }
         }
     }

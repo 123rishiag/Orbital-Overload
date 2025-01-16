@@ -1,7 +1,5 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Sound;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ServiceLocator.Projectile
@@ -10,7 +8,7 @@ namespace ServiceLocator.Projectile
     {
         // Private Variables
         private ProjectileConfig projectileConfig;
-        private List<ProjectileController> projectiles;
+        private ProjectilePool projectilePool;
 
         // Private Services
         private SoundService soundService;
@@ -20,7 +18,6 @@ namespace ServiceLocator.Projectile
         {
             // Setting Variables
             projectileConfig = _projectileConfig;
-            projectiles = new List<ProjectileController>();
         }
 
         public void Init(SoundService _soundService, ActorService _actorService)
@@ -28,71 +25,65 @@ namespace ServiceLocator.Projectile
             // Setting Services
             soundService = _soundService;
             actorService = _actorService;
+
+            // Setting Elements
+            projectilePool = new ProjectilePool(projectileConfig, soundService, actorService);
         }
 
         public void Update()
         {
-            for (int i = projectiles.Count - 1; i >= 0; i--)
+            ProcessProjectileUpdate();
+        }
+        public void FixedUpdate()
+        {
+            ProcessProjectileFixedUpdate();
+        }
+
+        private void ProcessProjectileUpdate()
+        {
+            for (int i = projectilePool.pooledItems.Count - 1; i >= 0; i--)
             {
-                ProjectileController projectile = projectiles[i];
-                if (projectile.GetProjectileView() != null)
+                // Skipping if the pooled item's isUsed is false
+                if (!projectilePool.pooledItems[i].isUsed)
                 {
-                    projectile.Update();
+                    continue;
                 }
-                else
+
+                var projectileController = projectilePool.pooledItems[i].Item;
+                projectileController.Update();
+
+                if (!projectileController.IsActive())
                 {
-                    projectiles.RemoveAt(i); // Safely remove without affecting iteration
+                    ReturnProjectileToPool(projectileController);
                 }
             }
         }
-
-        public void FixedUpdate()
+        private void ProcessProjectileFixedUpdate()
         {
-            for (int i = projectiles.Count - 1; i >= 0; i--)
+            for (int i = projectilePool.pooledItems.Count - 1; i >= 0; i--)
             {
-                ProjectileController projectile = projectiles[i];
-                if (projectile.GetProjectileView() != null)
+                // Skipping if the pooled item's isUsed is false
+                if (!projectilePool.pooledItems[i].isUsed)
                 {
-                    projectile.FixedUpdate();
+                    continue;
                 }
+
+                var projectileController = projectilePool.pooledItems[i].Item;
+                projectileController.FixedUpdate();
             }
         }
 
         public void Shoot(
             ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, ProjectileType _projectileType)
         {
-            // Fetching Index of Projectile Type
-            int projectileIndex = Array.FindIndex(projectileConfig.projectileData, data => data.projectileType == _projectileType);
-
-            // Created the controller
-            ProjectileController projectileController = CreateProjectileController(
-                _projectileType, _projectileOwnerActor, _shootSpeed, _shootPoint, projectileIndex);
-
-            // Add the created controller to the list if valid
-            if (projectileController != null)
-            {
-                projectiles.Add(projectileController);
-            }
+            projectilePool.GetProjectile(_projectileOwnerActor, _shootSpeed,
+            _shootPoint, _projectileType);
         }
 
-        private ProjectileController CreateProjectileController(
-            ProjectileType _projectileType,
-            ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, int _projectileIndex)
+        private void ReturnProjectileToPool(ProjectileController _projectileToReturn)
         {
-            switch (_projectileType)
-            {
-                case ProjectileType.Normal_Bullet:
-                    return new ProjectileController(projectileConfig,
-                        _projectileOwnerActor, _shootSpeed, _shootPoint, _projectileIndex,
-                        soundService, actorService);
-                case ProjectileType.Homing_Bullet:
-                    return new HomingBulletProjectileController(projectileConfig,
-                        _projectileOwnerActor, _shootSpeed, _shootPoint, _projectileIndex,
-                        soundService, actorService);
-                default:
-                    Debug.LogWarning($"Unhandled ProjectileType: {_projectileType}");
-                    return null;
-            }
+            _projectileToReturn.GetProjectileView().HideView();
+            projectilePool.ReturnItem(_projectileToReturn);
         }
     }
 }

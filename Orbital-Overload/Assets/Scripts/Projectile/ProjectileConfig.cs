@@ -7,7 +7,7 @@ namespace ServiceLocator.Projectile
 
     public class ProjectileConfig : ScriptableObject
     {
-        public GameObject projectilePrefab;
+        public ProjectileView projectilePrefab;
         public ProjectileData[] projectileData;
     }
 
