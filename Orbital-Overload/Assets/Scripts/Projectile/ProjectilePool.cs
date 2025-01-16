@@ -29,8 +29,8 @@ namespace ServiceLocator.Projectile
             actorService = _actorService;
         }
 
-        public ProjectileController GetProjectile(ActorType _projectileOwnerActor, float _shootSpeed,
-            Transform _shootPoint, ProjectileType _projectileType)
+        public ProjectileController GetProjectile<T>(ActorType _projectileOwnerActor, float _shootSpeed,
+            Transform _shootPoint, ProjectileType _projectileType) where T : ProjectileController
         {
             // Setting Variables
             projectileOwnerActor = _projectileOwnerActor;
@@ -39,7 +39,7 @@ namespace ServiceLocator.Projectile
             projectileType = _projectileType;
 
             // Fetching Item
-            var item = GetItem<ProjectileController>();
+            var item = GetItem<T>();
 
             // Fetching Index
             int projectileIndex = GetProjectileIndex();
