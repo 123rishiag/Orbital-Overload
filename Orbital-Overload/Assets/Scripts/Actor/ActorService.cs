@@ -57,9 +57,6 @@ namespace ServiceLocator.Actor
 
         private void CreatePlayer()
         {
-            // Fetching Random Index
-            int actorIndex = Random.Range(0, actorConfig.enemyData.Length);
-
             // Fetching Spawn Position
             Vector2 spawnPosition = new Vector2(0f, 0f);
             playerActorController = new PlayerActorController(
@@ -138,6 +135,26 @@ namespace ServiceLocator.Actor
                 var actorController = actorPool.pooledItems[i].Item;
                 actorController.FixedUpdate();
             }
+        }
+
+        public void Reset()
+        {
+            // Disabling All Actors
+            for (int i = actorPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                // Skipping if the pooled item's isUsed is false
+                if (!actorPool.pooledItems[i].isUsed)
+                {
+                    continue;
+                }
+
+                var actorController = actorPool.pooledItems[i].Item;
+                ReturnActorToPool(actorController);
+            }
+
+            // Resetting Player
+            Vector2 spawnPosition = new Vector2(0f, 0f);
+            playerActorController.Reset(actorConfig.playerData, spawnPosition);
         }
 
         private void ReturnActorToPool(ActorController _actorToReturn)

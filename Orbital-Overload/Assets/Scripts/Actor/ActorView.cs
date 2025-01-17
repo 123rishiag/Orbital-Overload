@@ -46,8 +46,10 @@ namespace ServiceLocator.Actor
             {
                 // Avoid collision with the owner
                 ProjectileView projectileView = _collider.gameObject.GetComponent<ProjectileView>();
-                if (projectileView.projectileController.GetProjectileModel().ProjectileOwnerActor ==
-                    actorController.GetActorModel().ActorType) return;
+                if ((projectileView.projectileController.GetProjectileModel().ProjectileOwnerActor == ActorType.Player)
+                    && (actorController.GetActorModel().ActorType == ActorType.Player)) return;
+                if ((projectileView.projectileController.GetProjectileModel().ProjectileOwnerActor != ActorType.Player)
+                    && (actorController.GetActorModel().ActorType != ActorType.Player)) return;
 
                 if (!actorController.GetActorModel().IsShieldActive)
                 {

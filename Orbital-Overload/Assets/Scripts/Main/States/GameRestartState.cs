@@ -1,5 +1,3 @@
-using UnityEngine.SceneManagement;
-
 namespace ServiceLocator.Main
 {
     public class GameRestartState<T> : IGameState where T : GameController
@@ -11,7 +9,7 @@ namespace ServiceLocator.Main
 
         public void OnStateEnter()
         {
-            SceneManager.LoadScene(0); // Reload 0th scene
+            Owner.Reset();
             stateMachine.ChangeState(GameState.Game_Play);
         }
         public void Update() { }

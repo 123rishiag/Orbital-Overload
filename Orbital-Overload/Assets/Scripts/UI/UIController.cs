@@ -25,6 +25,11 @@ namespace ServiceLocator.UI
             uiView.mainMenuMuteButton.onClick.AddListener(_gameController.MuteGame); // Add listener to mute button
         }
 
+        public void Reset()
+        {
+            uiView.HidePowerUpText();
+        }
+
         // Getters
         public UIView GetUIView() => uiView;
     }

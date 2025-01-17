@@ -33,6 +33,11 @@ namespace ServiceLocator.Spawn
             }
         }
 
+        public void Reset()
+        {
+            spawnTimer = spawnInterval;
+        }
+
         public Vector2 CalculateSpawnPosition(Vector2 _position)
         {
             // Calculate spawn position relative to the player

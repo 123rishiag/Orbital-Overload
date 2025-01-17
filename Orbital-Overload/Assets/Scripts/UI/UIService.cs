@@ -20,6 +20,11 @@ namespace ServiceLocator.UI
             uiController = new UIController(uiCanvas, _gameController);
         }
 
+        public void Reset()
+        {
+            uiController.Reset();
+        }
+
         // Getters
         public UIController GetUIController()
         {

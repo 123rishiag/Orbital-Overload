@@ -43,5 +43,14 @@ namespace ServiceLocator.Spawn
                 controller.Update(playerPosition);
             }
         }
+
+        public void Reset()
+        {
+            // Resetting All Spawners
+            for (int i = spawnControllers.Count - 1; i >= 0; i--)
+            {
+                spawnControllers[i].Reset();
+            }
+        }
     }
 }

@@ -7,12 +7,19 @@ namespace ServiceLocator.Vision
         // Private Variables
         private Camera mainCamera; // Main camera reference
         private float cameraFollowSpeed; // Speed at which the camera follows the player
+        private Transform cameraDefaultTransform;
 
         public CameraService(Camera _camera, float _cameraFollowSpeed)
         {
             // Setting Variables
             mainCamera = _camera;
             cameraFollowSpeed = _cameraFollowSpeed;
+            cameraDefaultTransform = _camera.transform;
+        }
+
+        public void Reset()
+        {
+            mainCamera.transform.position = cameraDefaultTransform.position;
         }
 
         public void FollowCameraTowardsPosition(Vector3 _position)

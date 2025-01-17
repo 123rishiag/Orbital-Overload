@@ -100,6 +100,22 @@ namespace ServiceLocator.PowerUp
             }
         }
 
+        public void Reset()
+        {
+            // Disabling All PowerUps
+            for (int i = powerUpPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                // Skipping if the pooled item's isUsed is false
+                if (!powerUpPool.pooledItems[i].isUsed)
+                {
+                    continue;
+                }
+
+                var powerUpController = powerUpPool.pooledItems[i].Item;
+                ReturnPowerUpToPool(powerUpController);
+            }
+        }
+
         private void ReturnPowerUpToPool(PowerUpController _powerUpToReturn)
         {
             _powerUpToReturn.GetPowerUpView().HideView();
