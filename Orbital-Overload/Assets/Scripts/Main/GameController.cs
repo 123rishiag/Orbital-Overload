@@ -61,6 +61,16 @@ namespace ServiceLocator.Main
             actorService.Init(soundService, uiService, inputService, spawnService, projectileService);
         }
 
+        public void Reset()
+        {
+            uiService.Reset();
+            cameraService.Reset();
+            spawnService.Reset();
+            projectileService.Reset();
+            powerUpService.Reset();
+            actorService.Reset();
+        }
+
         public void Update()
         {
             gameStateMachine.Update();

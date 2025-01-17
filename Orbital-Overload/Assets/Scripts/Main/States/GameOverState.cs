@@ -19,7 +19,7 @@ namespace ServiceLocator.Main
         public void LateUpdate() { }
         public void OnStateExit()
         {
-            Owner.GetUIService().GetUIController().GetUIView().gameOverMenuPanel.SetActive(true); // Show Game Over Menu
+            Owner.GetUIService().GetUIController().GetUIView().gameOverMenuPanel.SetActive(false); // Hide Game Over Menu
         }
     }
 }

@@ -75,6 +75,22 @@ namespace ServiceLocator.Projectile
             }
         }
 
+        public void Reset()
+        {
+            // Disabling All Projectiles
+            for (int i = projectilePool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                // Skipping if the pooled item's isUsed is false
+                if (!projectilePool.pooledItems[i].isUsed)
+                {
+                    continue;
+                }
+
+                var projectileController = projectilePool.pooledItems[i].Item;
+                ReturnProjectileToPool(projectileController);
+            }
+        }
+
         public void Shoot(
             ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, ProjectileType _projectileType)
         {
