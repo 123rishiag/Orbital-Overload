@@ -70,7 +70,23 @@ namespace ServiceLocator.Actor
         }
         private void CreateEnemy(Vector2 _spawnPosition)
         {
-            actorPool.GetActor(_spawnPosition);
+            // Fetching Random Index
+            int enemyIndex = Random.Range(0, actorConfig.enemyData.Length);
+            ActorType actorType = actorConfig.enemyData[enemyIndex].actorType;
+
+            // Fetching Actor
+            switch (actorType)
+            {
+                case ActorType.Normal_Enemy:
+                    actorPool.GetActor<EnemyActorController>(_spawnPosition, actorType);
+                    break;
+                case ActorType.Fast_Enemy:
+                    actorPool.GetActor<EnemyActorController>(_spawnPosition, actorType);
+                    break;
+                default:
+                    Debug.LogWarning($"Unhandled ActorType: {actorType}");
+                    break;
+            }
         }
 
         public void Update()

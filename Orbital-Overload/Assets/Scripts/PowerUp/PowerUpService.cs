@@ -46,7 +46,35 @@ namespace ServiceLocator.PowerUp
 
         private void CreatePowerUp(Vector2 _spawnPosition)
         {
-            powerUpPool.GetPowerUp(_spawnPosition);
+            // Fetching Random Index
+            int powerUpIndex = Random.Range(0, powerUpConfig.powerUpData.Length);
+            PowerUpType powerUpType = powerUpConfig.powerUpData[powerUpIndex].powerUpType;
+
+            // Fetching PowerUp
+            switch (powerUpType)
+            {
+                case PowerUpType.HealthPick:
+                    powerUpPool.GetPowerUp<HealthPickPowerUpController>(_spawnPosition, powerUpType);
+                    break;
+                case PowerUpType.HomingOrbs:
+                    powerUpPool.GetPowerUp<HomingOrbsPowerUpController>(_spawnPosition, powerUpType);
+                    break;
+                case PowerUpType.RapidFire:
+                    powerUpPool.GetPowerUp<RapidFirePowerUpController>(_spawnPosition, powerUpType);
+                    break;
+                case PowerUpType.Shield:
+                    powerUpPool.GetPowerUp<ShieldPowerUpController>(_spawnPosition, powerUpType);
+                    break;
+                case PowerUpType.SlowMotion:
+                    powerUpPool.GetPowerUp<SlowMotionPowerUpController>(_spawnPosition, powerUpType);
+                    break;
+                case PowerUpType.Teleport:
+                    powerUpPool.GetPowerUp<TeleportPowerUpController>(_spawnPosition, powerUpType);
+                    break;
+                default:
+                    Debug.LogWarning($"Unhandled PowerUpType: {powerUpType}");
+                    break;
+            }
         }
         public void Update()
         {

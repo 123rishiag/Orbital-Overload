@@ -34,7 +34,7 @@ MonoBehaviour:
     moveSpeed: 3
     shootSpeed: 300
     shootCooldown: 0.7
-  - actorType: 1
+  - actorType: 2
     actorColor: {r: 0.84705883, g: 0.7490196, b: 0.84705883, a: 1}
     actorShooterColor: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
     maxHealth: 1
