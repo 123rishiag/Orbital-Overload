@@ -14,10 +14,10 @@ namespace ServiceLocator.UI
             uiCanvas = _uiCanvas;
         }
 
-        public void Init(GameService _gameService)
+        public void Init(GameController _gameController)
         {
             // Setting Variables
-            uiController = new UIController(uiCanvas, _gameService);
+            uiController = new UIController(uiCanvas, _gameController);
         }
 
         // Getters
