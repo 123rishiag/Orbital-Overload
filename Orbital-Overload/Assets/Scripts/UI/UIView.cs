@@ -1,3 +1,4 @@
+using ServiceLocator.PowerUp;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,10 +39,17 @@ namespace ServiceLocator.UI
         {
             scoreText.text = "Score: " + _score;
         }
-        public void UpdatePowerUpText(string _text)
+        public void UpdatePowerUpText(PowerUpType _powerUpType, float _powerUpDuration)
         {
+            if (_powerUpType == PowerUpType.HealthPick || _powerUpType == PowerUpType.Teleport)
+            {
+                powerUpText.text = _powerUpType.ToString() + "ed.";
+            }
+            else
+            {
+                powerUpText.text = _powerUpType.ToString() + " activated for " + _powerUpDuration.ToString() + " seconds.";
+            }
             powerUpBar.SetActive(true);
-            powerUpText.text = _text; // Display power-up text
         }
         public void HidePowerUpText()
         {

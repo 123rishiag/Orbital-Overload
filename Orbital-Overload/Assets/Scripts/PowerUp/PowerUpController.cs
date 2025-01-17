@@ -1,6 +1,5 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Main;
-using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using System.Collections;
@@ -8,16 +7,16 @@ using UnityEngine;
 
 namespace ServiceLocator.PowerUp
 {
-    public class PowerUpController
+    public abstract class PowerUpController
     {
         // Private Variables
-        private PowerUpModel powerUpModel;
-        private PowerUpView powerUpView;
+        protected PowerUpModel powerUpModel;
+        protected PowerUpView powerUpView;
 
         // Private Services
-        private GameService gameService;
-        private SoundService soundService;
-        private UIService uiService;
+        protected GameService gameService;
+        protected SoundService soundService;
+        protected UIService uiService;
 
         public PowerUpController(PowerUpData _powerUpData, PowerUpView _powerUpPrefab,
             Transform _powerUpParentPanel, Vector2 _spawnPosition,
@@ -43,6 +42,9 @@ namespace ServiceLocator.PowerUp
             powerUpView.ShowView();
         }
 
+        protected abstract void EnablePowerUp(ActorController _actorController);
+        protected abstract void DisablePowerUp(ActorController _actorController);
+
         public void ActivatePowerUp(ActorController _actorController)
         {
             gameService.StartManagedCoroutine(PowerUp(_actorController)); // Activate power-up effect
@@ -50,51 +52,11 @@ namespace ServiceLocator.PowerUp
 
         private IEnumerator PowerUp(ActorController _actorController)
         {
-            string powerUpText;
-            if (powerUpModel.PowerUpType == PowerUpType.HealthPick || powerUpModel.PowerUpType == PowerUpType.Teleport)
-            {
-                powerUpText = powerUpModel.PowerUpType.ToString() + "ed.";
-            }
-            else
-            {
-                powerUpText = powerUpModel.PowerUpType.ToString() + " activated for " + powerUpModel.PowerUpDuration.ToString() + " seconds.";
-            }
             soundService.PlaySoundEffect(SoundType.PowerUpPickup);
-            uiService.GetUIController().GetUIView().UpdatePowerUpText(powerUpText);
-            switch (powerUpModel.PowerUpType)
-            {
-                case PowerUpType.HealthPick:
-                    _actorController.IncreaseHealth((int)powerUpModel.PowerUpValue); // Increase health
-                    yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    break;
-                case PowerUpType.HomingOrbs:
-                    _actorController.GetActorModel().ProjectileType = ProjectileType.Homing_Bullet; // Activate homing projectiles
-                    yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _actorController.GetActorModel().ProjectileType = ProjectileType.Normal_Bullet; // Deactivate homing projectiles
-                    break;
-                case PowerUpType.RapidFire:
-                    _actorController.GetActorModel().ShootCooldown /= powerUpModel.PowerUpValue; // Increase fire rate
-                    yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _actorController.GetActorModel().ShootCooldown *= powerUpModel.PowerUpValue; // Reset fire rate
-                    break;
-                case PowerUpType.Shield:
-                    _actorController.GetActorModel().IsShieldActive = true; // Activate shield
-                    yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    _actorController.GetActorModel().IsShieldActive = false; // Deactivate shield
-                    break;
-                case PowerUpType.SlowMotion:
-                    Time.timeScale = powerUpModel.PowerUpValue; // Slow down time
-                    yield return new WaitForSecondsRealtime(powerUpModel.PowerUpDuration);
-                    Time.timeScale = 1f; // Reset time
-                    break;
-                case PowerUpType.Teleport:
-                    _actorController.Teleport(powerUpModel.PowerUpValue); // Teleport player
-                    yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
-                    break;
-                default:
-                    yield return new WaitForSeconds(1);
-                    break;
-            }
+            uiService.GetUIController().GetUIView().UpdatePowerUpText(powerUpModel.PowerUpType, powerUpModel.PowerUpDuration);
+            EnablePowerUp(_actorController);
+            yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
+            DisablePowerUp(_actorController);
             uiService.GetUIController().GetUIView().HidePowerUpText(); // Hide power-up text
         }
 

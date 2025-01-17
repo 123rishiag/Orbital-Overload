@@ -3,6 +3,7 @@ using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using ServiceLocator.Utility;
+using System;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -14,6 +15,7 @@ namespace ServiceLocator.Actor
         private Transform actorParentPanel;
 
         private Vector2 spawnPosition;
+        private ActorType actorType;
 
         // Private Services
         private SoundService soundService;
@@ -38,16 +40,17 @@ namespace ServiceLocator.Actor
             actorService = _actorService;
         }
 
-        public ActorController GetActor(Vector2 _spawnPosition)
+        public ActorController GetActor<T>(Vector2 _spawnPosition, ActorType _actorType) where T : ActorController
         {
             // Setting Variables
             spawnPosition = _spawnPosition;
+            actorType = _actorType;
 
             // Fetching Item
-            var item = GetItem<ActorController>();
+            var item = GetItem<T>();
 
             // Fetching Index
-            int actorIndex = GetRandomActorIndex();
+            int actorIndex = GetActorIndex();
 
             // Resetting Item Properties
             item.Reset(actorConfig.enemyData[actorIndex], spawnPosition);
@@ -58,21 +61,34 @@ namespace ServiceLocator.Actor
         protected override ActorController CreateItem<T>()
         {
             // Fetching Index
-            int actorIndex = GetRandomActorIndex();
+            int actorIndex = GetActorIndex();
 
             // Creating Controller
-            return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
-                actorParentPanel, spawnPosition,
-                actorConfig.enemyAwayFromPlayerMinDistance,
-                soundService, uiService, inputService, projectileService, actorService
-            );
+            switch (actorType)
+            {
+                case ActorType.Normal_Enemy:
+                    return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
+                        actorParentPanel, spawnPosition,
+                        actorConfig.enemyAwayFromPlayerMinDistance,
+                        soundService, uiService, inputService, projectileService, actorService
+                        );
+                case ActorType.Fast_Enemy:
+                    return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
+                        actorParentPanel, spawnPosition,
+                        actorConfig.enemyAwayFromPlayerMinDistance,
+                        soundService, uiService, inputService, projectileService, actorService
+                        );
+                default:
+                    Debug.LogWarning($"Unhandled ActorType: {actorType}");
+                    return null;
+            }
         }
 
         // Getters
-        private int GetRandomActorIndex()
+        private int GetActorIndex()
         {
-            // Fetching Random Index
-            return Random.Range(0, actorConfig.enemyData.Length);
+            // Fetching Index
+            return Array.FindIndex(actorConfig.enemyData, data => data.actorType == actorType);
         }
     }
 }

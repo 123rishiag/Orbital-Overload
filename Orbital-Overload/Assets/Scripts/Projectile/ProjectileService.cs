@@ -78,6 +78,7 @@ namespace ServiceLocator.Projectile
         public void Shoot(
             ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, ProjectileType _projectileType)
         {
+            // Fetching Projectile
             switch (_projectileType)
             {
                 case ProjectileType.Normal_Bullet:

@@ -3,6 +3,7 @@ namespace ServiceLocator.Actor
     public enum ActorType
     {
         Player,
-        Enemy
+        Normal_Enemy,
+        Fast_Enemy
     }
 }
