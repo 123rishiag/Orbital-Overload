@@ -31,6 +31,11 @@ namespace ServiceLocator.Main
         [SerializeField] private PowerUpConfig powerUpConfig;
         [SerializeField] private ActorConfig actorConfig;
 
+        [Header("Object Pool Parent Panels")]
+        [SerializeField] private Transform projectileParentPanel;
+        [SerializeField] private Transform powerUpParentPanel;
+        [SerializeField] private Transform actorParentPanel;
+
         // Private Variables
         private GameController gameController;
 
@@ -58,9 +63,9 @@ namespace ServiceLocator.Main
             inputService = new InputService();
             cameraService = new CameraService(mainCamera, cameraFollowSpeed);
             spawnService = new SpawnService();
-            projectileService = new ProjectileService(projectileConfig);
-            powerUpService = new PowerUpService(powerUpConfig);
-            actorService = new ActorService(actorConfig);
+            projectileService = new ProjectileService(projectileConfig, projectileParentPanel);
+            powerUpService = new PowerUpService(powerUpConfig, powerUpParentPanel);
+            actorService = new ActorService(actorConfig, actorParentPanel);
         }
 
         private void InjectDependencies()
@@ -79,6 +84,7 @@ namespace ServiceLocator.Main
             inputService.Update();
             spawnService.Update();
             projectileService.Update();
+            powerUpService.Update();
             actorService.Update();
         }
 

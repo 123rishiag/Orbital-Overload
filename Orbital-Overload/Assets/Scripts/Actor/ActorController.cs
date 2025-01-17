@@ -25,13 +25,14 @@ namespace ServiceLocator.Actor
         protected ProjectileService projectileService;
         protected ActorService actorService;
 
-        public ActorController(ActorData _actorData, ActorView _actorPrefab, Vector2 _spawnPosition,
+        public ActorController(ActorData _actorData, ActorView _actorPrefab,
+            Transform _actorParentPanel, Vector2 _spawnPosition,
             SoundService _soundService, UIService _uiService, InputService _inputService,
             ProjectileService _projectileService, ActorService _actorService)
         {
             // Setting Variables
             actorModel = new ActorModel(_actorData);
-            actorView = Object.Instantiate(_actorPrefab, _spawnPosition, Quaternion.identity).
+            actorView = Object.Instantiate(_actorPrefab, _spawnPosition, Quaternion.identity, _actorParentPanel).
                 GetComponent<ActorView>();
             actorView.Init(this);
 

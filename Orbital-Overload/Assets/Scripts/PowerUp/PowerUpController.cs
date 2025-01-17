@@ -19,19 +19,28 @@ namespace ServiceLocator.PowerUp
         private SoundService soundService;
         private UIService uiService;
 
-        public PowerUpController(PowerUpConfig _powerUpConfig, Vector2 _spawnPosition, int _powerUpIndex,
+        public PowerUpController(PowerUpData _powerUpData, PowerUpView _powerUpPrefab,
+            Transform _powerUpParentPanel, Vector2 _spawnPosition,
             GameService _gameService, SoundService _soundService, UIService _uiService)
         {
             // Setting Variables
-            powerUpModel = new PowerUpModel(_powerUpConfig.powerUpData[_powerUpIndex]);
-            powerUpView = Object.Instantiate(_powerUpConfig.powerUpPrefab, _spawnPosition, Quaternion.identity).
+            powerUpModel = new PowerUpModel(_powerUpData);
+            powerUpView = Object.Instantiate(_powerUpPrefab, _spawnPosition, Quaternion.identity, _powerUpParentPanel).
                 GetComponent<PowerUpView>();
-            powerUpView.Init(this, powerUpModel.PowerUpColor);
+            powerUpView.Init(this);
 
             // Setting Services
             gameService = _gameService;
             soundService = _soundService;
             uiService = _uiService;
+        }
+
+        public void Reset(PowerUpData _powerUpData, Vector2 _spawnPosition)
+        {
+            powerUpModel.Reset(_powerUpData);
+            powerUpView.Reset();
+            powerUpView.SetPosition(_spawnPosition);
+            powerUpView.ShowView();
         }
 
         public void ActivatePowerUp(ActorController _actorController)
@@ -87,6 +96,17 @@ namespace ServiceLocator.PowerUp
                     break;
             }
             uiService.GetUIController().GetUIView().HidePowerUpText(); // Hide power-up text
+        }
+
+        public bool IsActive()
+        {
+            if (!powerUpView.gameObject.activeInHierarchy) return false;
+            Vector3 screenPoint = Camera.main.WorldToViewportPoint(powerUpView.transform.position);
+            if (screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1)
+            {
+                return false;
+            }
+            return true;
         }
 
         // Getters
