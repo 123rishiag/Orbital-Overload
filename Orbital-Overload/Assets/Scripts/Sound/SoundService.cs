@@ -29,18 +29,14 @@ namespace ServiceLocator.Sound
         public void MuteGame()
         {
             isMute = !isMute; // Toggle mute
-            SetVolume(isMute ? 0.0f : sfxVolume, bgVolume);
+            SetVolume();
         }
 
-        public void SetVolume(float _sfxVolume, float _bgVolume)
+        public void SetVolume()
         {
-            sfxVolume = _sfxVolume == 0.0f ? sfxSource.volume : _sfxVolume;
-            sfxSource.volume = _sfxVolume;
-
-            bgVolume = _bgVolume == 0.0f ? bgSource.volume : _bgVolume;
-            bgSource.volume = _bgVolume;
+            sfxSource.volume = isMute ? 0.0f : sfxVolume;
+            bgSource.volume = isMute ? 0.0f : bgVolume;
         }
-
 
         public void PlaySoundEffect(SoundType _soundType)
         {
@@ -78,5 +74,8 @@ namespace ServiceLocator.Sound
                 return sound.soundClip;
             return null;
         }
+
+        // Getters
+        public bool IsMute() => isMute;
     }
 }

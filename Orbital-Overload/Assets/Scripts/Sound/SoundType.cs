@@ -11,6 +11,6 @@ namespace ServiceLocator.Sound
         ProjectileShoot,
         GamePause,
         GameOver,
-        GameStart
+        GamePlay
     }
 }

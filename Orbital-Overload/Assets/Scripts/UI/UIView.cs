@@ -55,5 +55,9 @@ namespace ServiceLocator.UI
         {
             powerUpBar.SetActive(false);
         }
+        public void SetMuteButtonText(bool _isMute)
+        {
+            mainMenuMuteButtonText.text = _isMute ? "Mute: Off" : "Mute: On"; // Toggle mute text
+        }
     }
 }
