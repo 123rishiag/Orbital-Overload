@@ -11,12 +11,14 @@ namespace ServiceLocator.Actor
         // Private Variables
         public float enemyAwayFromPlayerMinDistance; // Minimum distance from player enemy should maintain
 
-        public EnemyActorController(ActorData _actorData, ActorView _actorPrefab, Vector2 _spawnPosition,
+        public EnemyActorController(ActorData _actorData, ActorView _actorPrefab,
+            Transform _actorParentPanel, Vector2 _spawnPosition,
             float _enemyAwayFromPlayerMinDistance,
             SoundService _soundService, UIService _uiService, InputService _inputService,
             ProjectileService _projectileService, ActorService _actorService) :
 
-            base(_actorData, _actorPrefab, _spawnPosition,
+            base(_actorData, _actorPrefab,
+                _actorParentPanel, _spawnPosition,
                 _soundService, _uiService, _inputService,
                 _projectileService, _actorService)
         {

@@ -6,6 +6,11 @@ namespace ServiceLocator.PowerUp
     {
         public PowerUpModel(PowerUpData _powerUpData)
         {
+            Reset(_powerUpData);
+        }
+
+        public void Reset(PowerUpData _powerUpData)
+        {
             PowerUpType = _powerUpData.powerUpType;
             PowerUpColor = _powerUpData.powerUpColor;
             PowerUpDuration = _powerUpData.powerUpDuration;

@@ -8,16 +8,18 @@ namespace ServiceLocator.Projectile
     {
         // Private Variables
         private ProjectileConfig projectileConfig;
+        private Transform projectileParentPanel;
         private ProjectilePool projectilePool;
 
         // Private Services
         private SoundService soundService;
         private ActorService actorService;
 
-        public ProjectileService(ProjectileConfig _projectileConfig)
+        public ProjectileService(ProjectileConfig _projectileConfig, Transform _projectileParentPanel)
         {
             // Setting Variables
             projectileConfig = _projectileConfig;
+            projectileParentPanel = _projectileParentPanel;
         }
 
         public void Init(SoundService _soundService, ActorService _actorService)
@@ -27,7 +29,7 @@ namespace ServiceLocator.Projectile
             actorService = _actorService;
 
             // Setting Elements
-            projectilePool = new ProjectilePool(projectileConfig, soundService, actorService);
+            projectilePool = new ProjectilePool(projectileConfig, projectileParentPanel, soundService, actorService);
         }
 
         public void Update()

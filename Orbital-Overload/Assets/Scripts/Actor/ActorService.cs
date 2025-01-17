@@ -13,6 +13,8 @@ namespace ServiceLocator.Actor
     {
         // Private Variables
         private ActorConfig actorConfig;
+        private Transform actorParentPanel;
+
         private ActorPool actorPool;
         private ActorController playerActorController;
 
@@ -23,10 +25,11 @@ namespace ServiceLocator.Actor
         private SpawnService spawnService;
         private ProjectileService projectileService;
 
-        public ActorService(ActorConfig _actorConfig)
+        public ActorService(ActorConfig _actorConfig, Transform _actorParentPanel)
         {
             // Setting Variables
             actorConfig = _actorConfig;
+            actorParentPanel = _actorParentPanel;
         }
 
         public void Init(SoundService _soundService, UIService _uiService, InputService _inputService,
@@ -43,9 +46,9 @@ namespace ServiceLocator.Actor
             CreatePlayer();
 
             // Creating Object Pool for enemies
-            actorPool = new ActorPool(actorConfig,
-                _soundService, _uiService, _inputService,
-            _projectileService, this);
+            actorPool = new ActorPool(actorConfig, actorParentPanel,
+                soundService, uiService, inputService,
+            projectileService, this);
 
             // Creating spawn controller for enemies
             spawnService.CreateSpawnController(actorConfig.enemySpawnInterval, actorConfig.enemySpawnRadius,
@@ -60,7 +63,8 @@ namespace ServiceLocator.Actor
             // Fetching Spawn Position
             Vector2 spawnPosition = new Vector2(0f, 0f);
             playerActorController = new PlayerActorController(
-                actorConfig.playerData, actorConfig.actorPrefab, spawnPosition,
+                actorConfig.playerData, actorConfig.actorPrefab,
+                actorParentPanel, spawnPosition,
                 actorConfig.playerCasualMoveSpeed,
                 soundService, uiService, inputService, projectileService, this);
         }

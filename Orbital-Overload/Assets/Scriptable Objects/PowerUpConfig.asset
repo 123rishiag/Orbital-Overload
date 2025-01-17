@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63aafd6ba5cd47b499a3f340224c59f6, type: 3}
   m_Name: PowerUpConfig
   m_EditorClassIdentifier: 
-  powerUpPrefab: {fileID: 2889606260969706577, guid: 91e6dc4249a206c4395e3455fb0f65a1, type: 3}
+  powerUpPrefab: {fileID: 3812084826898942299, guid: 91e6dc4249a206c4395e3455fb0f65a1, type: 3}
   powerUpSpawnInterval: 10
   powerUpSpawnRadius: 5
   powerUpAwayFromPlayerSpawnDistance: 1

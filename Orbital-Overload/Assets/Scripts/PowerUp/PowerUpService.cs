@@ -2,7 +2,6 @@ using ServiceLocator.Main;
 using ServiceLocator.Sound;
 using ServiceLocator.Spawn;
 using ServiceLocator.UI;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ServiceLocator.PowerUp
@@ -11,8 +10,8 @@ namespace ServiceLocator.PowerUp
     {
         // Private Variables
         private PowerUpConfig powerUpConfig;
-        private List<PowerUpController> powerUps;
-        private float powerUpSpawnTimer;
+        private Transform powerUpParentPanel;
+        private PowerUpPool powerUpPool;
 
         // Private Services
         private GameService gameService;
@@ -20,12 +19,11 @@ namespace ServiceLocator.PowerUp
         private UIService uiService;
         private SpawnService spawnService;
 
-        public PowerUpService(PowerUpConfig _powerUpConfig)
+        public PowerUpService(PowerUpConfig _powerUpConfig, Transform _powerUpParentPanel)
         {
             // Setting Variables
             powerUpConfig = _powerUpConfig;
-            powerUps = new List<PowerUpController>();
-            powerUpSpawnTimer = powerUpConfig.powerUpSpawnInterval;
+            powerUpParentPanel = _powerUpParentPanel;
         }
 
         public void Init(GameService _gameService, SoundService _soundService, UIService _uiService, SpawnService _spawnService)
@@ -36,6 +34,11 @@ namespace ServiceLocator.PowerUp
             uiService = _uiService;
             spawnService = _spawnService;
 
+            // Setting Elements
+
+            // Creating Object Pool for powerups
+            powerUpPool = new PowerUpPool(powerUpConfig, powerUpParentPanel, gameService, soundService, uiService);
+
             // Creating spawn controller for powerups
             spawnService.CreateSpawnController(powerUpConfig.powerUpSpawnInterval, powerUpConfig.powerUpSpawnRadius,
                 powerUpConfig.powerUpAwayFromPlayerSpawnDistance, CreatePowerUp);
@@ -43,13 +46,36 @@ namespace ServiceLocator.PowerUp
 
         private void CreatePowerUp(Vector2 _spawnPosition)
         {
-            // Fetching Random Index
-            int powerUpIndex = Random.Range(0, powerUpConfig.powerUpData.Length);
+            powerUpPool.GetPowerUp(_spawnPosition);
+        }
+        public void Update()
+        {
+            ProcessPowerUpUpdate();
+        }
 
-            // Creating Controller
-            PowerUpController powerUpController = new PowerUpController(powerUpConfig, _spawnPosition, powerUpIndex,
-                gameService, soundService, uiService);
-            powerUps.Add(powerUpController);
+        private void ProcessPowerUpUpdate()
+        {
+            for (int i = powerUpPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                // Skipping if the pooled item's isUsed is false
+                if (!powerUpPool.pooledItems[i].isUsed)
+                {
+                    continue;
+                }
+
+                var powerUpController = powerUpPool.pooledItems[i].Item;
+
+                if (!powerUpController.IsActive())
+                {
+                    ReturnPowerUpToPool(powerUpController);
+                }
+            }
+        }
+
+        private void ReturnPowerUpToPool(PowerUpController _powerUpToReturn)
+        {
+            _powerUpToReturn.GetPowerUpView().HideView();
+            powerUpPool.ReturnItem(_powerUpToReturn);
         }
     }
 }

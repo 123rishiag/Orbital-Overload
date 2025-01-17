@@ -7,7 +7,7 @@ namespace ServiceLocator.PowerUp
 
     public class PowerUpConfig : ScriptableObject
     {
-        public GameObject powerUpPrefab; // Prefab for power-up
+        public PowerUpView powerUpPrefab; // Prefab for power-up
         public float powerUpSpawnInterval; // Time interval between spawns
         public float powerUpSpawnRadius; // Radius within which power-ups spawn
         public float powerUpAwayFromPlayerSpawnDistance; // Minimum distance from player to spawn

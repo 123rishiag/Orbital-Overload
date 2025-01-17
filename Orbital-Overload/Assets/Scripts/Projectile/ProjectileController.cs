@@ -14,14 +14,14 @@ namespace ServiceLocator.Projectile
         protected SoundService soundService;
         protected ActorService actorService;
 
-        public ProjectileController(ProjectileData _projectileData,
-            ProjectileView _projectilePrefab, ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint,
+        public ProjectileController(ProjectileData _projectileData, ProjectileView _projectilePrefab,
+            Transform _projectileParentPanel, ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint,
             SoundService _soundService, ActorService _actorService)
         {
             projectileModel =
                 new ProjectileModel(_projectileData, _projectileOwnerActor, _shootSpeed);
-            projectileView = Object.Instantiate(_projectilePrefab, _shootPoint.position, _shootPoint.rotation).
-                GetComponent<ProjectileView>();
+            projectileView = Object.Instantiate(_projectilePrefab, _shootPoint.position, _shootPoint.rotation,
+                _projectileParentPanel).GetComponent<ProjectileView>();
             projectileView.Init(this);
 
             // Setting Services
