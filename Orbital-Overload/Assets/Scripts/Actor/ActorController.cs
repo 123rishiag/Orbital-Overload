@@ -2,7 +2,6 @@ using ServiceLocator.Control;
 using ServiceLocator.Event;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
-using ServiceLocator.UI;
 using ServiceLocator.Vision;
 using UnityEngine;
 
@@ -47,6 +46,9 @@ namespace ServiceLocator.Actor
             inputService = _inputService;
             projectileService = _projectileService;
             actorService = _actorService;
+
+            // Update UI
+            UpdateUI();
         }
 
         public void Reset(ActorData _actorData, Vector2 _spawnPosition)
@@ -55,6 +57,7 @@ namespace ServiceLocator.Actor
             actorView.Reset();
             actorView.SetPosition(_spawnPosition);
             actorView.ShowView();
+            UpdateUI();
         }
 
         public void Update()
@@ -119,25 +122,22 @@ namespace ServiceLocator.Actor
             actorView.transform.position = newPosition; // Teleport player
         }
 
-        public void AddScore(int _score)
-        {
-            actorService.GetPlayerActorController().GetActorModel().CurrentScore += _score; // Increase score
-            eventService.OnGetUIControllerEvent.Invoke<UIController>().GetUIView().UpdateScoreText(
-                actorService.GetPlayerActorController().GetActorModel().CurrentScore
-                );
-        }
+        public virtual void AddScore(int _score) { }
 
         public virtual void DecreaseHealth()
         {
-            actorModel.CurrentHealth -= 1; // Decrease health
-            if (actorModel.CurrentHealth < 0)
+            if (!actorModel.IsShieldActive)
             {
-                actorModel.CurrentHealth = 0;
+                actorModel.CurrentHealth -= 1; // Decrease health
+                if (actorModel.CurrentHealth < 0)
+                {
+                    actorModel.CurrentHealth = 0;
+                }
+                eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHurt);
             }
-            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHurt);
         }
 
-        public void IncreaseHealth(int _increaseHealth)
+        public virtual void IncreaseHealth(int _increaseHealth)
         {
             actorModel.CurrentHealth += _increaseHealth; // Increase health
             if (actorModel.CurrentHealth > actorModel.MaxHealth)
@@ -149,6 +149,14 @@ namespace ServiceLocator.Actor
                 eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHeal); // Play heal sound effect
             }
         }
+        protected void UpdateUI()
+        {
+            UpdateHealthUI();
+            UpdateScoreUI();
+        }
+
+        public virtual void UpdateHealthUI() { }
+        public virtual void UpdateScoreUI() { }
 
         public bool IsAlive() => (actorModel.CurrentHealth > 0);
 
