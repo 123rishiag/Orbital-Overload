@@ -133,8 +133,8 @@ namespace ServiceLocator.Actor
                 {
                     actorModel.CurrentHealth = 0;
                 }
-                eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHurt);
             }
+            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHurt);
         }
 
         public virtual void IncreaseHealth(int _increaseHealth)
