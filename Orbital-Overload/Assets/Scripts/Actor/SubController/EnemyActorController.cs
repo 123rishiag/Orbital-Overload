@@ -1,7 +1,6 @@
 using ServiceLocator.Control;
+using ServiceLocator.Event;
 using ServiceLocator.Projectile;
-using ServiceLocator.Sound;
-using ServiceLocator.UI;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -14,12 +13,12 @@ namespace ServiceLocator.Actor
         public EnemyActorController(ActorData _actorData, ActorView _actorPrefab,
             Transform _actorParentPanel, Vector2 _spawnPosition,
             float _enemyAwayFromPlayerMinDistance,
-            SoundService _soundService, UIService _uiService, InputService _inputService,
+            EventService _eventService, InputService _inputService,
             ProjectileService _projectileService, ActorService _actorService) :
 
             base(_actorData, _actorPrefab,
                 _actorParentPanel, _spawnPosition,
-                _soundService, _uiService, _inputService,
+                _eventService, _inputService,
                 _projectileService, _actorService)
         {
             // Setting Variables

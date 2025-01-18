@@ -1,7 +1,5 @@
-using ServiceLocator.Main;
-using ServiceLocator.Sound;
+using ServiceLocator.Event;
 using ServiceLocator.Spawn;
-using ServiceLocator.UI;
 using UnityEngine;
 
 namespace ServiceLocator.PowerUp
@@ -14,9 +12,6 @@ namespace ServiceLocator.PowerUp
         private PowerUpPool powerUpPool;
 
         // Private Services
-        private GameService gameService;
-        private SoundService soundService;
-        private UIService uiService;
         private SpawnService spawnService;
 
         public PowerUpService(PowerUpConfig _powerUpConfig, Transform _powerUpParentPanel)
@@ -26,18 +21,15 @@ namespace ServiceLocator.PowerUp
             powerUpParentPanel = _powerUpParentPanel;
         }
 
-        public void Init(GameService _gameService, SoundService _soundService, UIService _uiService, SpawnService _spawnService)
+        public void Init(EventService _eventService, SpawnService _spawnService)
         {
             // Setting Services
-            gameService = _gameService;
-            soundService = _soundService;
-            uiService = _uiService;
             spawnService = _spawnService;
 
             // Setting Elements
 
             // Creating Object Pool for powerups
-            powerUpPool = new PowerUpPool(powerUpConfig, powerUpParentPanel, gameService, soundService, uiService);
+            powerUpPool = new PowerUpPool(powerUpConfig, powerUpParentPanel, _eventService);
 
             // Creating spawn controller for powerups
             spawnService.CreateSpawnController(powerUpConfig.powerUpSpawnInterval, powerUpConfig.powerUpSpawnRadius,

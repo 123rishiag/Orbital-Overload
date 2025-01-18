@@ -1,7 +1,7 @@
 using ServiceLocator.Control;
+using ServiceLocator.Event;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
-using ServiceLocator.UI;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -19,15 +19,14 @@ namespace ServiceLocator.Actor
         protected Vector2 mouseDirection; // Direction of the mouse
 
         // Private Services
-        protected SoundService soundService;
-        protected UIService uiService;
+        protected EventService eventService;
         protected InputService inputService;
         protected ProjectileService projectileService;
         protected ActorService actorService;
 
         public ActorController(ActorData _actorData, ActorView _actorPrefab,
             Transform _actorParentPanel, Vector2 _spawnPosition,
-            SoundService _soundService, UIService _uiService, InputService _inputService,
+            EventService _eventService, InputService _inputService,
             ProjectileService _projectileService, ActorService _actorService)
         {
             // Setting Variables
@@ -42,8 +41,7 @@ namespace ServiceLocator.Actor
             mouseDirection = Vector2.zero;
 
             // Setting Services
-            soundService = _soundService;
-            uiService = _uiService;
+            eventService = _eventService;
             inputService = _inputService;
             projectileService = _projectileService;
             actorService = _actorService;
@@ -124,7 +122,7 @@ namespace ServiceLocator.Actor
             {
                 actorModel.CurrentHealth = 0;
             }
-            soundService.PlaySoundEffect(SoundType.ActorHurt);
+            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHurt);
         }
 
         public void IncreaseHealth(int _increaseHealth)
@@ -136,7 +134,7 @@ namespace ServiceLocator.Actor
             }
             else
             {
-                soundService.PlaySoundEffect(SoundType.ActorHeal); // Play heal sound effect
+                eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHeal); // Play heal sound effect
             }
         }
 

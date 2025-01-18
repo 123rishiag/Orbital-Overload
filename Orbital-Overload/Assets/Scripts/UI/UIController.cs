@@ -1,3 +1,4 @@
+using ServiceLocator.Event;
 using ServiceLocator.Main;
 
 namespace ServiceLocator.UI
@@ -6,29 +7,42 @@ namespace ServiceLocator.UI
     {
         // Private Variables
         private UIView uiView;
+        private GameController gameController;
 
-        public UIController(UIView _uiCanvas, GameController _gameController)
+        public UIController(UIView _uiCanvas, EventService _eventService)
         {
             // Setting Variables
             uiView = _uiCanvas.GetComponent<UIView>();
             uiView.gameObject.SetActive(true);
+            gameController = _eventService.OnGetGameControllerEvent.Invoke<GameController>();
 
             // Adding Listeners
-            uiView.pauseMenuResumeButton.onClick.AddListener(_gameController.PlayGame); // Add listener to resume button
-            uiView.pauseMenuMainMenuButton.onClick.AddListener(_gameController.MainMenu); // Add listener to main menu button
+            uiView.pauseMenuResumeButton.onClick.AddListener(gameController.PlayGame);
+            uiView.pauseMenuMainMenuButton.onClick.AddListener(gameController.MainMenu);
 
-            uiView.gameOverMenuRestartButton.onClick.AddListener(_gameController.RestartGame); // Add listener to restart button
-            uiView.gameOverMenuMainMenuButton.onClick.AddListener(_gameController.MainMenu); // Add listener to another main menu button
+            uiView.gameOverMenuRestartButton.onClick.AddListener(gameController.RestartGame);
+            uiView.gameOverMenuMainMenuButton.onClick.AddListener(gameController.MainMenu);
 
-            uiView.mainMenuPlayButton.onClick.AddListener(_gameController.PlayGame); // Add listener to play button
-            uiView.mainMenuQuitButton.onClick.AddListener(_gameController.QuitGame); // Add listener to quit button
-            uiView.mainMenuMuteButton.onClick.AddListener(_gameController.MuteGame); // Add listener to mute button
+            uiView.mainMenuPlayButton.onClick.AddListener(gameController.PlayGame);
+            uiView.mainMenuQuitButton.onClick.AddListener(gameController.QuitGame);
+            uiView.mainMenuMuteButton.onClick.AddListener(gameController.MuteGame);
         }
 
-        public void Reset()
+        public void Destroy()
         {
-            uiView.HidePowerUpText();
+            // Removing Listeners
+            uiView.pauseMenuResumeButton.onClick.RemoveListener(gameController.PlayGame);
+            uiView.pauseMenuMainMenuButton.onClick.RemoveListener(gameController.MainMenu);
+
+            uiView.gameOverMenuRestartButton.onClick.RemoveListener(gameController.RestartGame);
+            uiView.gameOverMenuMainMenuButton.onClick.RemoveListener(gameController.MainMenu);
+
+            uiView.mainMenuPlayButton.onClick.RemoveListener(gameController.PlayGame);
+            uiView.mainMenuQuitButton.onClick.RemoveListener(gameController.QuitGame);
+            uiView.mainMenuMuteButton.onClick.RemoveListener(gameController.MuteGame);
         }
+
+        public void Reset() => uiView.HidePowerUpText();
 
         // Getters
         public UIView GetUIView() => uiView;

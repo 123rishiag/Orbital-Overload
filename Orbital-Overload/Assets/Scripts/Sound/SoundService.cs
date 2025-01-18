@@ -1,3 +1,4 @@
+using ServiceLocator.Event;
 using System;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ namespace ServiceLocator.Sound
         private float sfxVolume;
         private float bgVolume;
 
+        // Private Services
+        private EventService eventService;
+
         public SoundService(SoundConfig _soundConfig, AudioSource _sfxSource, AudioSource _bgSource)
         {
             // Setting Variables
@@ -24,6 +28,21 @@ namespace ServiceLocator.Sound
             PlayBackgroundMusic(SoundType.BackgroundMusic, true);
             sfxVolume = sfxSource.volume;
             bgVolume = bgSource.volume;
+        }
+
+        public void Init(EventService _eventService)
+        {
+            // Setting Services
+            eventService = _eventService;
+
+            // Adding Listeners
+            eventService.OnPlaySoundEffectEvent.AddListener(PlaySoundEffect);
+        }
+
+        public void Destroy()
+        {
+            // Removing Listeners
+            eventService.OnPlaySoundEffectEvent.RemoveListener(PlaySoundEffect);
         }
 
         public void MuteGame()

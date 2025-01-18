@@ -1,11 +1,13 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Control;
+using ServiceLocator.Event;
 using ServiceLocator.PowerUp;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.Spawn;
 using ServiceLocator.UI;
 using ServiceLocator.Vision;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +20,7 @@ namespace ServiceLocator.Main
 
         // Services
         private GameService gameService;
+        private EventService eventService;
         private SoundService soundService;
         private UIService uiService;
         private InputService inputService;
@@ -32,16 +35,30 @@ namespace ServiceLocator.Main
             // Setting Services
             gameService = _gameService;
             CreateServices();
-            InjectDependencies();
+
+            // Adding Listeners
+            eventService.OnGetGameControllerEvent.AddListener(GetGameController);
 
             // Setting Elements
+            InjectDependencies();
             CreateStateMachine();
             gameStateMachine.ChangeState(GameState.Game_Start);
+        }
+
+        public void Destroy()
+        {
+            // Calling Service's Destroy
+            soundService.Destroy();
+            uiService.Destroy();
+
+            // Removing Listeners
+            eventService.OnGetGameControllerEvent.RemoveListener(GetGameController);
         }
 
         private void CreateStateMachine() => gameStateMachine = new GameStateMachine(this);
         private void CreateServices()
         {
+            eventService = new EventService();
             soundService = new SoundService(gameService.soundConfig, gameService.sfxSource, gameService.bgSource);
             uiService = new UIService(gameService.uiCanvas);
             inputService = new InputService();
@@ -54,11 +71,12 @@ namespace ServiceLocator.Main
 
         private void InjectDependencies()
         {
-            uiService.Init(this);
+            soundService.Init(eventService);
+            uiService.Init(eventService);
             spawnService.Init(actorService);
-            projectileService.Init(soundService, actorService);
-            powerUpService.Init(gameService, soundService, uiService, spawnService);
-            actorService.Init(soundService, uiService, inputService, spawnService, projectileService);
+            projectileService.Init(eventService, actorService);
+            powerUpService.Init(eventService, spawnService);
+            actorService.Init(eventService, inputService, spawnService, projectileService);
         }
 
         public void Reset()
@@ -113,8 +131,15 @@ namespace ServiceLocator.Main
             soundService.PlaySoundEffect(SoundType.ButtonClick); // Play button click sound effect
         }
 
+        public void StartManagedCoroutine(IEnumerator _coroutine)
+        {
+            gameService.StartCoroutine(_coroutine);
+        }
+
         // Getters
+        public GameController GetGameController() => this;
         public GameService GetGameService() => gameService;
+        public EventService GetEventService() => eventService;
         public SoundService GetSoundService() => soundService;
         public UIService GetUIService() => uiService;
         public InputService GetInputService() => inputService;

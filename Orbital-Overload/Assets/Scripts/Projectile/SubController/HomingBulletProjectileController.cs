@@ -1,5 +1,5 @@
 using ServiceLocator.Actor;
-using ServiceLocator.Sound;
+using ServiceLocator.Event;
 using UnityEngine;
 
 namespace ServiceLocator.Projectile
@@ -9,11 +9,11 @@ namespace ServiceLocator.Projectile
         private ActorView nearestEnemy; // Target enemy for homing projectiles
         public HomingBulletProjectileController(ProjectileData _projectileData, ProjectileView _projectilePrefab,
             Transform _projectileParentPanel, ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint,
-            SoundService _soundService, ActorService _actorService) :
+            EventService _eventService, ActorService _actorService) :
 
             base(_projectileData, _projectilePrefab,
                 _projectileParentPanel, _projectileOwnerActor, _shootSpeed, _shootPoint,
-            _soundService, _actorService)
+            _eventService, _actorService)
         { }
 
         public override void Update()

@@ -1,4 +1,5 @@
 using ServiceLocator.Actor;
+using ServiceLocator.Event;
 using ServiceLocator.Main;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
@@ -14,13 +15,11 @@ namespace ServiceLocator.PowerUp
         protected PowerUpView powerUpView;
 
         // Private Services
-        protected GameService gameService;
-        protected SoundService soundService;
-        protected UIService uiService;
+        protected EventService eventService;
 
         public PowerUpController(PowerUpData _powerUpData, PowerUpView _powerUpPrefab,
             Transform _powerUpParentPanel, Vector2 _spawnPosition,
-            GameService _gameService, SoundService _soundService, UIService _uiService)
+            EventService _eventService)
         {
             // Setting Variables
             powerUpModel = new PowerUpModel(_powerUpData);
@@ -29,9 +28,7 @@ namespace ServiceLocator.PowerUp
             powerUpView.Init(this);
 
             // Setting Services
-            gameService = _gameService;
-            soundService = _soundService;
-            uiService = _uiService;
+            eventService = _eventService;
         }
 
         public void Reset(PowerUpData _powerUpData, Vector2 _spawnPosition)
@@ -47,17 +44,20 @@ namespace ServiceLocator.PowerUp
 
         public void ActivatePowerUp(ActorController _actorController)
         {
-            gameService.StartManagedCoroutine(PowerUp(_actorController)); // Activate power-up effect
+            eventService.OnGetGameControllerEvent.Invoke<GameController>().
+                StartManagedCoroutine(PowerUp(_actorController)); // Activate power-up effect
         }
 
         private IEnumerator PowerUp(ActorController _actorController)
         {
-            soundService.PlaySoundEffect(SoundType.PowerUpPickup);
-            uiService.GetUIController().GetUIView().UpdatePowerUpText(powerUpModel.PowerUpType, powerUpModel.PowerUpDuration);
+            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.PowerUpPickup);
+            eventService.OnGetUIControllerEvent.Invoke<UIController>().
+                GetUIView().UpdatePowerUpText(powerUpModel.PowerUpType, powerUpModel.PowerUpDuration); // Show power-up text
             EnablePowerUp(_actorController);
             yield return new WaitForSeconds(powerUpModel.PowerUpDuration);
             DisablePowerUp(_actorController);
-            uiService.GetUIController().GetUIView().HidePowerUpText(); // Hide power-up text
+            eventService.OnGetUIControllerEvent.Invoke<UIController>().
+                GetUIView().HidePowerUpText(); // Hide power-up text
         }
 
         public bool IsActive()

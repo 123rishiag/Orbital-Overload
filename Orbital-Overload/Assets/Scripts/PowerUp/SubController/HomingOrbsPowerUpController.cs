@@ -1,8 +1,6 @@
 using ServiceLocator.Actor;
-using ServiceLocator.Main;
+using ServiceLocator.Event;
 using ServiceLocator.Projectile;
-using ServiceLocator.Sound;
-using ServiceLocator.UI;
 using UnityEngine;
 
 namespace ServiceLocator.PowerUp
@@ -11,11 +9,11 @@ namespace ServiceLocator.PowerUp
     {
         public HomingOrbsPowerUpController(PowerUpData _powerUpData, PowerUpView _powerUpPrefab,
             Transform _powerUpParentPanel, Vector2 _spawnPosition,
-            GameService _gameService, SoundService _soundService, UIService _uiService) :
+            EventService _eventService) :
 
             base(_powerUpData, _powerUpPrefab,
             _powerUpParentPanel, _spawnPosition,
-            _gameService, _soundService, _uiService)
+            _eventService)
         { }
 
         protected override void EnablePowerUp(ActorController _actorController)
