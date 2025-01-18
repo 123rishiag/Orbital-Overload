@@ -8,12 +8,14 @@ namespace ServiceLocator.Actor
         [SerializeField] public Transform shootPoint; // Point from where projectiles are shot
         [SerializeField] public SpriteRenderer actorSprite; // Actor Sprite
         [SerializeField] public SpriteRenderer actorShooterSprite; // Actor's Shooter Sprite
+        [SerializeField] private Animator actorAnimator; // Actor's Animator
         [SerializeField] private Animator shooterAnimator; // Actor's Shooter Animator
 
         [HideInInspector]
         public ActorController actorController;
 
         // Private Variables
+        private static readonly int IDLE_HASH = Animator.StringToHash("Idle");
         private static readonly int SHOOT_HASH = Animator.StringToHash("Shoot");
 
         public void Init(ActorController _actorController)
@@ -43,7 +45,10 @@ namespace ServiceLocator.Actor
         {
             gameObject.SetActive(false);
         }
-
+        public void IdleAnimation()
+        {
+            actorAnimator.Play(IDLE_HASH, 0, 0f);
+        }
         public void ShootAnimation()
         {
             shooterAnimator.Play(SHOOT_HASH, 0, 0f);

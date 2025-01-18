@@ -77,6 +77,7 @@ namespace ServiceLocator.Actor
         {
             Vector2 moveVector = new Vector2(moveX, moveY) * actorModel.MoveSpeed * Time.fixedDeltaTime;
             actorView.transform.Translate(moveVector, Space.World); // Move player
+            //actorView.IdleAnimation();
         }
         private void Shoot()
         {

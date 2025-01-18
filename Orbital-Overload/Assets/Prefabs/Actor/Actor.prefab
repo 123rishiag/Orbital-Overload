@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8364136493840385820}
   - component: {fileID: 7097769079628687403}
   - component: {fileID: 2269811123762063804}
-  - component: {fileID: 4790065000115774352}
+  - component: {fileID: 6713968534537352107}
   m_Layer: 6
   m_Name: Shooter
   m_TagString: Untagged
@@ -132,7 +132,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!95 &4790065000115774352
+--- !u!95 &6713968534537352107
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 7754871150818196846}
   - component: {fileID: 3818493593238482407}
   - component: {fileID: 3149009284950446537}
+  - component: {fileID: 2793174044748980137}
   m_Layer: 6
   m_Name: Actor
   m_TagString: Actor
@@ -290,7 +291,29 @@ MonoBehaviour:
   shootPoint: {fileID: 4830572363492128675}
   actorSprite: {fileID: 7754871150818196846}
   actorShooterSprite: {fileID: 7097769079628687403}
-  shooterAnimator: {fileID: 4790065000115774352}
+  actorAnimator: {fileID: 2793174044748980137}
+  shooterAnimator: {fileID: 6713968534537352107}
+--- !u!95 &2793174044748980137
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264170587383386023}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5b52d36cd9dbcac48ba0db27c19ac598, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6922597243742180474
 GameObject:
   m_ObjectHideFlags: 0
