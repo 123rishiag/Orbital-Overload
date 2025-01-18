@@ -30,14 +30,37 @@ namespace ServiceLocator.UI
         [SerializeField] public Button mainMenuMuteButton; // Button to mute/unmute the game
         [SerializeField] public TMP_Text mainMenuMuteButtonText; // Text of mute button
 
+        [Header("Animator")]
+        [SerializeField] private Animator uiAnimator; // UI's Animator
+
+        // Private Variables
+        private static readonly int HEALTH_BAR_HASH = Animator.StringToHash("HealthBar");
+        private static readonly int SCORE_BAR_HASH = Animator.StringToHash("ScoreBar");
+        private static readonly int POWERUP_BAR_HASH = Animator.StringToHash("PowerUpBar");
+
+        private void HealthBarAnimation()
+        {
+            uiAnimator.Play(HEALTH_BAR_HASH, 0, 0f);
+        }
+        private void ScoreBarAnimation()
+        {
+            uiAnimator.Play(SCORE_BAR_HASH, 0, 0f);
+        }
+        private void PowerUpBarAnimation()
+        {
+            uiAnimator.Play(POWERUP_BAR_HASH, 0, 0f);
+        }
+
         // Setters
         public void UpdateHealthText(int _health)
         {
             healthText.text = "Health: " + _health; // Display health
+            HealthBarAnimation();
         }
         public void UpdateScoreText(int _score)
         {
             scoreText.text = "Score: " + _score;
+            ScoreBarAnimation();
         }
         public void UpdatePowerUpText(PowerUpType _powerUpType, float _powerUpDuration)
         {
@@ -50,6 +73,7 @@ namespace ServiceLocator.UI
                 powerUpText.text = _powerUpType.ToString() + " activated for " + _powerUpDuration.ToString() + " seconds.";
             }
             powerUpBar.SetActive(true);
+            PowerUpBarAnimation();
         }
         public void HidePowerUpText()
         {

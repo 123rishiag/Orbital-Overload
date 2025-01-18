@@ -2,6 +2,7 @@ using ServiceLocator.Control;
 using ServiceLocator.Event;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
+using ServiceLocator.UI;
 using ServiceLocator.Vision;
 using UnityEngine;
 
@@ -56,7 +57,7 @@ namespace ServiceLocator.Actor
             actorView.ShowView();
         }
 
-        public virtual void Update()
+        public void Update()
         {
             MovementInput(); // Handle movement input
             ShootInput(); // Handle shoot input
@@ -121,6 +122,9 @@ namespace ServiceLocator.Actor
         public void AddScore(int _score)
         {
             actorService.GetPlayerActorController().GetActorModel().CurrentScore += _score; // Increase score
+            eventService.OnGetUIControllerEvent.Invoke<UIController>().GetUIView().UpdateScoreText(
+                actorService.GetPlayerActorController().GetActorModel().CurrentScore
+                );
         }
 
         public virtual void DecreaseHealth()
