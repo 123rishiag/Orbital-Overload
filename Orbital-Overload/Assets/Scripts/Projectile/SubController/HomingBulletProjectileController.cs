@@ -28,7 +28,7 @@ namespace ServiceLocator.Projectile
 
         private void FindNearestEnemy()
         {
-            if (projectileModel.ProjectileType == ProjectileType.Homing_Bullet && nearestEnemy == null)
+            if (projectileModel.ProjectileType == ProjectileType.Homing_Bullet)
             {
                 ActorView nearestActor = null;
                 float minDistance = Mathf.Infinity;
