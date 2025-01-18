@@ -3,6 +3,7 @@ using ServiceLocator.PowerUp;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
+using ServiceLocator.Vision;
 using UnityEngine;
 
 namespace ServiceLocator.Main
@@ -20,9 +21,9 @@ namespace ServiceLocator.Main
 
         [Header("Camera Components")]
         [SerializeField] public Camera mainCamera; // Main camera reference
-        [SerializeField] public float cameraFollowSpeed; // Speed at which the camera follows the player
 
         [Header("Game Configs")]
+        [SerializeField] public CameraConfig cameraConfig;
         [SerializeField] public ProjectileConfig projectileConfig;
         [SerializeField] public PowerUpConfig powerUpConfig;
         [SerializeField] public ActorConfig actorConfig;

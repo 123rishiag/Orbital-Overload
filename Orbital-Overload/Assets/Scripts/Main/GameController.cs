@@ -50,6 +50,7 @@ namespace ServiceLocator.Main
             // Calling Service's Destroy
             soundService.Destroy();
             uiService.Destroy();
+            cameraService.Destroy();
 
             // Removing Listeners
             eventService.OnGetGameControllerEvent.RemoveListener(GetGameController);
@@ -62,7 +63,7 @@ namespace ServiceLocator.Main
             soundService = new SoundService(gameService.soundConfig, gameService.sfxSource, gameService.bgSource);
             uiService = new UIService(gameService.uiCanvas);
             inputService = new InputService();
-            cameraService = new CameraService(gameService.mainCamera, gameService.cameraFollowSpeed);
+            cameraService = new CameraService(gameService.cameraConfig, gameService.mainCamera);
             spawnService = new SpawnService();
             projectileService = new ProjectileService(gameService.projectileConfig, gameService.projectileParentPanel);
             powerUpService = new PowerUpService(gameService.powerUpConfig, gameService.powerUpParentPanel);
@@ -73,6 +74,7 @@ namespace ServiceLocator.Main
         {
             soundService.Init(eventService);
             uiService.Init(eventService);
+            cameraService.Init(eventService);
             spawnService.Init(actorService);
             projectileService.Init(eventService, actorService);
             powerUpService.Init(eventService, spawnService);
