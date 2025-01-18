@@ -8,9 +8,13 @@ namespace ServiceLocator.Actor
         [SerializeField] public Transform shootPoint; // Point from where projectiles are shot
         [SerializeField] public SpriteRenderer actorSprite; // Actor Sprite
         [SerializeField] public SpriteRenderer actorShooterSprite; // Actor's Shooter Sprite
+        [SerializeField] private Animator shooterAnimator; // Actor's Shooter Animator
 
         [HideInInspector]
         public ActorController actorController;
+
+        // Private Variables
+        private static readonly int SHOOT_HASH = Animator.StringToHash("Shoot");
 
         public void Init(ActorController _actorController)
         {
@@ -38,6 +42,11 @@ namespace ServiceLocator.Actor
         public void HideView()
         {
             gameObject.SetActive(false);
+        }
+
+        public void ShootAnimation()
+        {
+            shooterAnimator.Play(SHOOT_HASH, 0, 0f);
         }
 
         private void OnTriggerEnter2D(Collider2D _collider)

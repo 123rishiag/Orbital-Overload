@@ -84,6 +84,7 @@ namespace ServiceLocator.Actor
                 lastShootTime = Time.time; // Update last shoot time
                 projectileService.Shoot(actorModel.ActorType, actorModel.ShootSpeed, actorView.shootPoint,
                     actorModel.ProjectileType);
+                actorView.ShootAnimation();
             }
         }
 
