@@ -2,6 +2,7 @@ using ServiceLocator.Control;
 using ServiceLocator.Event;
 using ServiceLocator.Projectile;
 using ServiceLocator.UI;
+using ServiceLocator.Vision;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -58,6 +59,12 @@ namespace ServiceLocator.Actor
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(inputService.GetMousePosition);
             mousePosition.z = 0f; // Ensure z is zero for 2D
             mouseDirection = (mousePosition - actorView.transform.position).normalized;
+        }
+
+        public override void DecreaseHealth()
+        {
+            base.DecreaseHealth();
+            eventService.OnDoShakeScreenEvent.Invoke(CameraShakeType.Normal);
         }
     }
 }

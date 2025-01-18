@@ -1674,7 +1674,7 @@ MonoBehaviour:
   bgSource: {fileID: 835171782}
   uiCanvas: {fileID: 1161684383}
   mainCamera: {fileID: 519420031}
-  cameraFollowSpeed: 2
+  cameraConfig: {fileID: 11400000, guid: addfdb8a96f31314e9c89c9549f1fe11, type: 2}
   projectileConfig: {fileID: 11400000, guid: 72499fc64374733438a28faf35c087d8, type: 2}
   powerUpConfig: {fileID: 11400000, guid: 097c34bfea765904ba1e74e8f971708f, type: 2}
   actorConfig: {fileID: 11400000, guid: 3211f33605f5d0a4fa6a3ea7b9fac3da, type: 2}

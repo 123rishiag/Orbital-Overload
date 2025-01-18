@@ -1,6 +1,7 @@
 using ServiceLocator.Main;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
+using ServiceLocator.Vision;
 using System;
 
 namespace ServiceLocator.Event
@@ -16,11 +17,15 @@ namespace ServiceLocator.Event
         // Function to return UIController - UI Service
         public EventController<Func<UIController>> OnGetUIControllerEvent { get; private set; }
 
+        // Method to Play a Shake Screen - Camera Service
+        public EventController<Action<CameraShakeType>> OnDoShakeScreenEvent { get; private set; }
+
         public EventService()
         {
             OnGetGameControllerEvent = new EventController<Func<GameController>>();
             OnPlaySoundEffectEvent = new EventController<Action<SoundType>>();
             OnGetUIControllerEvent = new EventController<Func<UIController>>();
+            OnDoShakeScreenEvent = new EventController<Action<CameraShakeType>>();
         }
     }
 }

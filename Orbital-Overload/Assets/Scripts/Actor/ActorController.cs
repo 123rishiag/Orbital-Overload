@@ -2,6 +2,7 @@ using ServiceLocator.Control;
 using ServiceLocator.Event;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
+using ServiceLocator.Vision;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -84,8 +85,13 @@ namespace ServiceLocator.Actor
                 lastShootTime = Time.time; // Update last shoot time
                 projectileService.Shoot(actorModel.ActorType, actorModel.ShootSpeed, actorView.shootPoint,
                     actorModel.ProjectileType);
-                actorView.ShootAnimation();
+                ShootAnimation();
             }
+        }
+        private void ShootAnimation()
+        {
+            actorView.ShootAnimation();
+            eventService.OnDoShakeScreenEvent.Invoke(CameraShakeType.Weak);
         }
 
         private void Rotate()
@@ -116,7 +122,7 @@ namespace ServiceLocator.Actor
             actorService.GetPlayerActorController().GetActorModel().CurrentScore += _score; // Increase score
         }
 
-        public void DecreaseHealth()
+        public virtual void DecreaseHealth()
         {
             actorModel.CurrentHealth -= 1; // Decrease health
             if (actorModel.CurrentHealth < 0)
