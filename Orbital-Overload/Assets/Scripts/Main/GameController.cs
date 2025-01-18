@@ -133,9 +133,14 @@ namespace ServiceLocator.Main
             soundService.PlaySoundEffect(SoundType.ButtonClick); // Play button click sound effect
         }
 
-        public void StartManagedCoroutine(IEnumerator _coroutine)
+        public Coroutine StartManagedCoroutine(IEnumerator _coroutine)
         {
-            gameService.StartCoroutine(_coroutine);
+            return gameService.StartCoroutine(_coroutine);
+        }
+
+        public void StopManagedCoroutine(Coroutine _coroutine)
+        {
+            gameService.StopCoroutine(_coroutine);
         }
 
         // Getters
