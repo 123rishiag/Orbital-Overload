@@ -53,8 +53,10 @@ namespace ServiceLocator.Projectile
             {
                 // Avoid collision with the owner
                 ActorView actorView = _collider.gameObject.GetComponent<ActorView>();
-                if (actorView.actorController.GetActorModel().ActorType ==
-                    projectileController.GetProjectileModel().ProjectileOwnerActor) return;
+                if ((actorView.actorController.GetActorModel().ActorType == ActorType.Player)
+                    && (projectileController.GetProjectileModel().ProjectileOwnerActor == ActorType.Player)) return;
+                if ((actorView.actorController.GetActorModel().ActorType != ActorType.Player)
+                    && (projectileController.GetProjectileModel().ProjectileOwnerActor != ActorType.Player)) return;
 
                 HideView();
             }
