@@ -48,5 +48,11 @@ namespace ServiceLocator.Actor
             Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetPosition();
             mouseDirection = (playerPosition - (Vector2)actorView.transform.position).normalized;
         }
+
+        public override void AddScore(int _score)
+        {
+            actorService.GetPlayerActorController().GetActorModel().CurrentScore += _score; // Increase score
+            actorService.GetPlayerActorController().UpdateScoreUI();
+        }
     }
 }

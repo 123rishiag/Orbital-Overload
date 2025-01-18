@@ -65,15 +65,8 @@ namespace ServiceLocator.Actor
                 if ((projectileView.projectileController.GetProjectileModel().ProjectileOwnerActor != ActorType.Player)
                     && (actorController.GetActorModel().ActorType != ActorType.Player)) return;
 
-                if (!actorController.GetActorModel().IsShieldActive)
-                {
-                    actorController.DecreaseHealth(); // Decrease actor's health on hit
-                }
-
-                if (actorController.GetActorModel().ActorType != ActorType.Player)
-                {
-                    actorController.AddScore(projectileView.projectileController.GetProjectileModel().HitScore);
-                }
+                actorController.DecreaseHealth(); // Decrease actor's health on hit
+                actorController.AddScore(projectileView.projectileController.GetProjectileModel().HitScore);
             }
         }
 

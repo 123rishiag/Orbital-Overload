@@ -26,9 +26,6 @@ namespace ServiceLocator.Actor
             // Setting Variables
             isShooting = false;
             playerCasualMoveSpeed = _playerCasualMoveSpeed;
-
-            // Update UI
-            UpdateHealthUI();
         }
         protected override void MovementInput()
         {
@@ -59,14 +56,27 @@ namespace ServiceLocator.Actor
 
         public override void DecreaseHealth()
         {
-            base.DecreaseHealth();
-            eventService.OnDoShakeScreenEvent.Invoke(CameraShakeType.Normal);
+            if (!actorModel.IsShieldActive)
+            {
+                base.DecreaseHealth();
+                eventService.OnDoShakeScreenEvent.Invoke(CameraShakeType.Normal);
+                UpdateHealthUI();
+            }
+        }
+
+        public override void IncreaseHealth(int _increaseHealth)
+        {
+            base.IncreaseHealth(_increaseHealth);
             UpdateHealthUI();
         }
 
-        private void UpdateHealthUI()
+        public override void UpdateHealthUI()
         {
             eventService.OnGetUIControllerEvent.Invoke<UIController>().GetUIView().UpdateHealthText(actorModel.CurrentHealth);
+        }
+        public override void UpdateScoreUI()
+        {
+            eventService.OnGetUIControllerEvent.Invoke<UIController>().GetUIView().UpdateScoreText(actorModel.CurrentScore);
         }
     }
 }

@@ -6,9 +6,11 @@ namespace ServiceLocator.PowerUp
     public class PowerUpView : MonoBehaviour
     {
         [SerializeField] public SpriteRenderer powerUpSprite;
+        [SerializeField] private Animator powerUpAnimator; // PowerUp Animator
 
         // Private Variables
         private PowerUpController powerUpController;
+        private static readonly int IDLE_HASH = Animator.StringToHash("Idle");
 
         public void Init(PowerUpController _powerUpController)
         {
@@ -36,6 +38,11 @@ namespace ServiceLocator.PowerUp
         public void HideView()
         {
             gameObject.SetActive(false);
+        }
+
+        public void IdleAnimation()
+        {
+            powerUpAnimator.Play(IDLE_HASH, 0, 0f);
         }
 
         private void OnTriggerEnter2D(Collider2D _collider)
