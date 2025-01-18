@@ -1,8 +1,7 @@
 using ServiceLocator.Control;
+using ServiceLocator.Event;
 using ServiceLocator.Projectile;
-using ServiceLocator.Sound;
 using ServiceLocator.Spawn;
-using ServiceLocator.UI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,8 +18,7 @@ namespace ServiceLocator.Actor
         private ActorController playerActorController;
 
         // Private Services
-        private SoundService soundService;
-        private UIService uiService;
+        private EventService eventService;
         private InputService inputService;
         private SpawnService spawnService;
         private ProjectileService projectileService;
@@ -32,12 +30,11 @@ namespace ServiceLocator.Actor
             actorParentPanel = _actorParentPanel;
         }
 
-        public void Init(SoundService _soundService, UIService _uiService, InputService _inputService,
+        public void Init(EventService _eventService, InputService _inputService,
             SpawnService _spawnService, ProjectileService _projectileService)
         {
             // Setting Services
-            soundService = _soundService;
-            uiService = _uiService;
+            eventService = _eventService;
             inputService = _inputService;
             spawnService = _spawnService;
             projectileService = _projectileService;
@@ -47,8 +44,8 @@ namespace ServiceLocator.Actor
 
             // Creating Object Pool for enemies
             actorPool = new ActorPool(actorConfig, actorParentPanel,
-                soundService, uiService, inputService,
-            projectileService, this);
+                eventService, inputService,
+                projectileService, this);
 
             // Creating spawn controller for enemies
             spawnService.CreateSpawnController(actorConfig.enemySpawnInterval, actorConfig.enemySpawnRadius,
@@ -63,7 +60,7 @@ namespace ServiceLocator.Actor
                 actorConfig.playerData, actorConfig.actorPrefab,
                 actorParentPanel, spawnPosition,
                 actorConfig.playerCasualMoveSpeed,
-                soundService, uiService, inputService, projectileService, this);
+                eventService, inputService, projectileService, this);
         }
         private void CreateEnemy(Vector2 _spawnPosition)
         {

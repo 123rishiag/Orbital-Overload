@@ -1,5 +1,5 @@
 using ServiceLocator.Actor;
-using ServiceLocator.Sound;
+using ServiceLocator.Event;
 using UnityEngine;
 
 namespace ServiceLocator.Projectile
@@ -11,10 +11,6 @@ namespace ServiceLocator.Projectile
         private Transform projectileParentPanel;
         private ProjectilePool projectilePool;
 
-        // Private Services
-        private SoundService soundService;
-        private ActorService actorService;
-
         public ProjectileService(ProjectileConfig _projectileConfig, Transform _projectileParentPanel)
         {
             // Setting Variables
@@ -22,14 +18,10 @@ namespace ServiceLocator.Projectile
             projectileParentPanel = _projectileParentPanel;
         }
 
-        public void Init(SoundService _soundService, ActorService _actorService)
+        public void Init(EventService _eventService, ActorService _actorService)
         {
-            // Setting Services
-            soundService = _soundService;
-            actorService = _actorService;
-
             // Setting Elements
-            projectilePool = new ProjectilePool(projectileConfig, projectileParentPanel, soundService, actorService);
+            projectilePool = new ProjectilePool(projectileConfig, projectileParentPanel, _eventService, _actorService);
         }
 
         public void Update()

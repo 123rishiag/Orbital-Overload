@@ -1,7 +1,6 @@
 using ServiceLocator.Control;
+using ServiceLocator.Event;
 using ServiceLocator.Projectile;
-using ServiceLocator.Sound;
-using ServiceLocator.UI;
 using ServiceLocator.Utility;
 using System;
 using UnityEngine;
@@ -18,14 +17,13 @@ namespace ServiceLocator.Actor
         private ActorType actorType;
 
         // Private Services
-        private SoundService soundService;
-        private UIService uiService;
+        private EventService eventService;
         private InputService inputService;
         private ProjectileService projectileService;
         private ActorService actorService;
 
         public ActorPool(ActorConfig _actorConfig, Transform _actorParentPanel,
-            SoundService _soundService, UIService _uiService, InputService _inputService,
+            EventService _eventService, InputService _inputService,
             ProjectileService _projectileService, ActorService _actorService)
         {
             // Setting Variables
@@ -33,8 +31,7 @@ namespace ServiceLocator.Actor
             actorParentPanel = _actorParentPanel;
 
             // Setting Services
-            soundService = _soundService;
-            uiService = _uiService;
+            eventService = _eventService;
             inputService = _inputService;
             projectileService = _projectileService;
             actorService = _actorService;
@@ -70,13 +67,15 @@ namespace ServiceLocator.Actor
                     return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
                         actorParentPanel, spawnPosition,
                         actorConfig.enemyAwayFromPlayerMinDistance,
-                        soundService, uiService, inputService, projectileService, actorService
+                        eventService, inputService,
+                        projectileService, actorService
                         );
                 case ActorType.Fast_Enemy:
                     return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
                         actorParentPanel, spawnPosition,
                         actorConfig.enemyAwayFromPlayerMinDistance,
-                        soundService, uiService, inputService, projectileService, actorService
+                        eventService, inputService,
+                        projectileService, actorService
                         );
                 default:
                     Debug.LogWarning($"Unhandled ActorType: {actorType}");

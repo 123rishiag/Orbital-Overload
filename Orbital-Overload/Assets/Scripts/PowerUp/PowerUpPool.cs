@@ -1,6 +1,4 @@
-using ServiceLocator.Main;
-using ServiceLocator.Sound;
-using ServiceLocator.UI;
+using ServiceLocator.Event;
 using ServiceLocator.Utility;
 using System;
 using UnityEngine;
@@ -17,21 +15,17 @@ namespace ServiceLocator.PowerUp
         private PowerUpType powerUpType;
 
         // Private Services
-        private GameService gameService;
-        private SoundService soundService;
-        private UIService uiService;
+        private EventService eventService;
 
         public PowerUpPool(PowerUpConfig _powerUpConfig, Transform _powerUpParentPanel,
-            GameService _gameService, SoundService _soundService, UIService _uiService)
+            EventService _eventService)
         {
             // Setting Variables
             powerUpConfig = _powerUpConfig;
             powerUpParentPanel = _powerUpParentPanel;
 
             // Setting Services
-            gameService = _gameService;
-            soundService = _soundService;
-            uiService = _uiService;
+            eventService = _eventService;
         }
 
         public PowerUpController GetPowerUp<T>(Vector2 _spawnPosition, PowerUpType _powerUpType) where T : PowerUpController
@@ -63,32 +57,32 @@ namespace ServiceLocator.PowerUp
                 case PowerUpType.HealthPick:
                     return new HealthPickPowerUpController(powerUpConfig.powerUpData[powerUpIndex], powerUpConfig.powerUpPrefab,
                         powerUpParentPanel, spawnPosition,
-                        gameService, soundService, uiService
+                        eventService
                         );
                 case PowerUpType.HomingOrbs:
                     return new HomingOrbsPowerUpController(powerUpConfig.powerUpData[powerUpIndex], powerUpConfig.powerUpPrefab,
                         powerUpParentPanel, spawnPosition,
-                        gameService, soundService, uiService
+                        eventService
                         );
                 case PowerUpType.RapidFire:
                     return new RapidFirePowerUpController(powerUpConfig.powerUpData[powerUpIndex], powerUpConfig.powerUpPrefab,
                         powerUpParentPanel, spawnPosition,
-                        gameService, soundService, uiService
+                        eventService
                         );
                 case PowerUpType.Shield:
                     return new ShieldPowerUpController(powerUpConfig.powerUpData[powerUpIndex], powerUpConfig.powerUpPrefab,
                         powerUpParentPanel, spawnPosition,
-                        gameService, soundService, uiService
+                        eventService
                         );
                 case PowerUpType.SlowMotion:
                     return new SlowMotionPowerUpController(powerUpConfig.powerUpData[powerUpIndex], powerUpConfig.powerUpPrefab,
                         powerUpParentPanel, spawnPosition,
-                        gameService, soundService, uiService
+                        eventService
                         );
                 case PowerUpType.Teleport:
                     return new TeleportPowerUpController(powerUpConfig.powerUpData[powerUpIndex], powerUpConfig.powerUpPrefab,
                         powerUpParentPanel, spawnPosition,
-                        gameService, soundService, uiService
+                        eventService
                         );
                 default:
                     Debug.LogWarning($"Unhandled PowerUpType: {powerUpType}");

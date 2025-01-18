@@ -1,4 +1,5 @@
 using ServiceLocator.Actor;
+using ServiceLocator.Event;
 using ServiceLocator.Sound;
 using UnityEngine;
 
@@ -11,12 +12,12 @@ namespace ServiceLocator.Projectile
         protected ProjectileView projectileView;
 
         // Private Services
-        protected SoundService soundService;
+        protected EventService eventService;
         protected ActorService actorService;
 
         public ProjectileController(ProjectileData _projectileData, ProjectileView _projectilePrefab,
             Transform _projectileParentPanel, ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint,
-            SoundService _soundService, ActorService _actorService)
+            EventService _eventService, ActorService _actorService)
         {
             projectileModel =
                 new ProjectileModel(_projectileData, _projectileOwnerActor, _shootSpeed);
@@ -25,7 +26,7 @@ namespace ServiceLocator.Projectile
             projectileView.Init(this);
 
             // Setting Services
-            soundService = _soundService;
+            eventService = _eventService;
             actorService = _actorService;
 
             // Setting Elements
@@ -49,7 +50,7 @@ namespace ServiceLocator.Projectile
         private void ShootProjectile(Transform _shootPoint, float _shootSpeed)
         {
             projectileView.rigidBody.velocity = _shootPoint.up * _shootSpeed * Time.fixedDeltaTime; // Set projectile velocity
-            soundService.PlaySoundEffect(SoundType.ProjectileShoot);
+            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ProjectileShoot);
         }
 
         public bool IsActive()

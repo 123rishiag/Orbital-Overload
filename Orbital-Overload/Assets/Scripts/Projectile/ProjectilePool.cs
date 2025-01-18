@@ -1,5 +1,5 @@
 using ServiceLocator.Actor;
-using ServiceLocator.Sound;
+using ServiceLocator.Event;
 using ServiceLocator.Utility;
 using System;
 using UnityEngine;
@@ -18,18 +18,18 @@ namespace ServiceLocator.Projectile
         private ProjectileType projectileType;
 
         // Private Services
-        private SoundService soundService;
+        private EventService eventService;
         private ActorService actorService;
 
         public ProjectilePool(ProjectileConfig _projectileConfig, Transform _projectileParentPanel,
-            SoundService _soundService, ActorService _actorService)
+            EventService _eventService, ActorService _actorService)
         {
             // Setting Variables
             projectileConfig = _projectileConfig;
             projectileParentPanel = _projectileParentPanel;
 
             // Setting Services
-            soundService = _soundService;
+            eventService = _eventService;
             actorService = _actorService;
         }
 
@@ -64,13 +64,13 @@ namespace ServiceLocator.Projectile
             switch (projectileType)
             {
                 case ProjectileType.Normal_Bullet:
-                    return new ProjectileController(projectileConfig.projectileData[projectileIndex], 
+                    return new ProjectileController(projectileConfig.projectileData[projectileIndex],
                         projectileConfig.projectilePrefab, projectileParentPanel, projectileOwnerActor, shootSpeed, shootPoint,
-                        soundService, actorService);
+                        eventService, actorService);
                 case ProjectileType.Homing_Bullet:
-                    return new HomingBulletProjectileController(projectileConfig.projectileData[projectileIndex], 
+                    return new HomingBulletProjectileController(projectileConfig.projectileData[projectileIndex],
                         projectileConfig.projectilePrefab, projectileParentPanel, projectileOwnerActor, shootSpeed, shootPoint,
-                        soundService, actorService);
+                        eventService, actorService);
                 default:
                     Debug.LogWarning($"Unhandled ProjectileType: {projectileType}");
                     return null;

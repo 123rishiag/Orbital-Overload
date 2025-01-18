@@ -1,4 +1,4 @@
-using ServiceLocator.Main;
+using ServiceLocator.Event;
 
 namespace ServiceLocator.UI
 {
@@ -8,27 +8,38 @@ namespace ServiceLocator.UI
         private UIView uiCanvas;
         private UIController uiController;
 
+        // Private Services
+        private EventService eventService;
+
         public UIService(UIView _uiCanvas)
         {
             // Setting Variables
             uiCanvas = _uiCanvas;
         }
 
-        public void Init(GameController _gameController)
+        public void Init(EventService _eventService)
         {
             // Setting Variables
-            uiController = new UIController(uiCanvas, _gameController);
+            uiController = new UIController(uiCanvas, _eventService);
+
+            // Setting Services
+            eventService = _eventService;
+
+            // Adding Listeners
+            eventService.OnGetUIControllerEvent.AddListener(GetUIController);
         }
 
-        public void Reset()
+        public void Destroy()
         {
-            uiController.Reset();
+            uiController.Destroy();
+
+            // Removing Listeners
+            eventService.OnGetUIControllerEvent.RemoveListener(GetUIController);
         }
+
+        public void Reset() => uiController.Reset();
 
         // Getters
-        public UIController GetUIController()
-        {
-            return uiController;
-        }
+        public UIController GetUIController() => uiController;
     }
 }

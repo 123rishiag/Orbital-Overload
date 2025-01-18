@@ -3,7 +3,6 @@ using ServiceLocator.PowerUp;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
-using System.Collections;
 using UnityEngine;
 
 namespace ServiceLocator.Main
@@ -34,6 +33,7 @@ namespace ServiceLocator.Main
         [SerializeField] public Transform actorParentPanel;
 
         // Private Variables
+
         private GameController gameController;
 
         private void Start()
@@ -54,12 +54,9 @@ namespace ServiceLocator.Main
             gameController.LateUpdate();
         }
 
-        public void StartManagedCoroutine(IEnumerator _coroutine)
+        public void OnDestroy()
         {
-            StartCoroutine(_coroutine);
+            gameController.Destroy();
         }
-
-        // Getters
-        public GameController GetGameController() => gameController;
     }
 }
