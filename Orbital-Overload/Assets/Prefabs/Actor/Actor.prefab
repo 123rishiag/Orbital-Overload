@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8364136493840385820}
   - component: {fileID: 7097769079628687403}
   - component: {fileID: 2269811123762063804}
+  - component: {fileID: 4790065000115774352}
   m_Layer: 6
   m_Name: Shooter
   m_TagString: Untagged
@@ -131,6 +132,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &4790065000115774352
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3084805159208963429}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ca2f9452486598e4db3ccbf1d4eab849, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4264170587383386023
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +290,7 @@ MonoBehaviour:
   shootPoint: {fileID: 4830572363492128675}
   actorSprite: {fileID: 7754871150818196846}
   actorShooterSprite: {fileID: 7097769079628687403}
+  shooterAnimator: {fileID: 4790065000115774352}
 --- !u!1 &6922597243742180474
 GameObject:
   m_ObjectHideFlags: 0
