@@ -7,8 +7,12 @@ namespace ServiceLocator.Projectile
     {
         [SerializeField] public Rigidbody2D rigidBody; // Rigidbody2D component of the projectile
         [SerializeField] public SpriteRenderer projectileSprite; // Projectile Sprite
+        [SerializeField] private Animator projectileAnimator; // Projectile Animator
         [HideInInspector]
         public ProjectileController projectileController;
+
+        // Private Variables
+        private static readonly int IDLE_HASH = Animator.StringToHash("Idle");
 
         public void Init(ProjectileController _projectileController)
         {
@@ -36,6 +40,11 @@ namespace ServiceLocator.Projectile
         public void HideView()
         {
             gameObject.SetActive(false);
+        }
+
+        public void IdleAnimation()
+        {
+            projectileAnimator.Play(IDLE_HASH, 0, 0f);
         }
 
         private void OnTriggerEnter2D(Collider2D _collider)
