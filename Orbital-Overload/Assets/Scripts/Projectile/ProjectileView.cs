@@ -1,5 +1,4 @@
 using ServiceLocator.Actor;
-using ServiceLocator.VFX;
 using UnityEngine;
 
 namespace ServiceLocator.Projectile
