@@ -22,7 +22,7 @@ MonoBehaviour:
     moveSpeed: 12
     shootSpeed: 1000
     shootCooldown: 0.2
-  enemySpawnInterval: 1
+  enemySpawnInterval: 2
   enemySpawnRadius: 5
   enemyAwayFromPlayerSpawnDistance: 10
   enemyAwayFromPlayerMinDistance: 3
