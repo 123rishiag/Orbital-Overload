@@ -18,5 +18,6 @@ namespace ServiceLocator.VFX
         public VFXType vfxType; // Type of VFX
         public Sprite vfxSprite; // Sprite of VFX
         public float vfxDuration; // Duration of the vfx
+        public float vfxScaleMultiplier; // Scale Multiplier of VFX
     }
 }

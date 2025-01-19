@@ -36,7 +36,7 @@ namespace ServiceLocator.Spawn
         public void Update()
         {
             // Using player position from ActorService for all SpawnControllers
-            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetPosition();
+            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetTransform().position;
 
             foreach (var controller in spawnControllers)
             {
