@@ -1,7 +1,6 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Event;
 using ServiceLocator.Main;
-using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
 using ServiceLocator.VFX;
