@@ -95,81 +95,81 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 ## Services and Components
 
-1. **GameService**: Centralized service for managing the game's core mechanics, including game state transitions and controller management.
-- **Game Controller**: Initializes and manages the main gameplay components, including the state machine and input systems.
-- **GameGenericStateMachine**: A generic state machine designed to manage state transitions for the `GameController`, allowing future extensions.
-  - **GameStateMachine**: A specific implementation of `GameGenericStateMachine` that governs the overall game flow.
-- **IGameState**: Interface defining common behaviors for all game states.
-    - **GameStartState**: Prepares the game and initializes resources.
-    - **GameMenuState**: Displays the main menu.
-    - **GamePlayState**: Manages active gameplay.
-    - **GamePauseState**: Freezes gameplay for a pause.
-    - **GameOverState**: Handles game-over logic.
-    - **GameRestartState**: Resets the game for replay.
+1. **GameService**: Manages and fetches the core game components and initialize the `Game Controller`.
+   - **Game Controller**: Centralized service for managing the game's core mechanics, including game state transitions and controller management.
+   - **GameGenericStateMachine**: A generic state machine designed to manage state transitions for the `GameController`, allowing future extensions.
+     - **GameStateMachine**: A specific implementation of `GameGenericStateMachine` that governs the overall game flow.
+   - **IGameState**: Interface defining common behaviors for all game states.
+     - **GameStartState**: Prepares the game.
+     - **GameMenuState**: Displays the main menu.
+     - **GamePlayState**: Manages active gameplay.
+     - **GamePauseState**: Freezes gameplay for a pause.
+     - **GameRestartState**: Resets the game for replay.
+     - **GameOverState**: Handles game-over logic.
 
 2. **EventService**: Manages event-driven communication across services.
    - **EventController**: Inherits from EventController to manage event registrations and notifications.
 
 3. **SoundService**: Manages sound effects and music for immersive gameplay.
-- **SoundType**: Enum categorizing sound effects (e.g., shooting, explosions).
-- **SoundConfig**: Stores configuration for audio playback.
+   - **SoundType**: Enum categorizing sound effects (e.g., shooting, hurt).
+   - **SoundConfig**: Stores configuration for audio playback.
 
 4. **UIService**: Manages user interface interactions and HUD updates dynamically.
-- **UIController**: Handles menu interactions and HUD logic.
-- **UIView**: Manages the visual representation of UI elements.
+   - **UIController**: Handles menu interactions and HUD logic.
+   - **UIView**: Manages the visual representation of UI elements.
 
 5. **InputService**: Processes and manages player inputs using Unity's New Input System for precise control of movement and shooting.
 
 6. **VFXService**: Controls visual effects for immersive feedback and dynamic visuals.
-- **VFXController**: Governs the logic of visual effects.
-- **VFXModel**: Stores runtime data for each effect.
-- **VFXView**: Manages the rendering of effects.
-- **VFXType**: Enum defining various effect types (e.g., explosions, screen shakes).
-- **VFXConfig**: Configures visual effect properties.
-- **VFXPool**: Optimizes performance by reusing VFX objects.
+   - **VFXType**: Enum defining various effect types (e.g., screen shakes).
+   - **VFXConfig**: Configures visual effect properties.
+   - **VFXPool**: Optimizes performance by reusing VFX objects.
+   - **VFXController**: Governs the logic of visual effects.
+   - **VFXModel**: Stores runtime data for each effect.
+   - **VFXView**: Manages the rendering of effects.
 
 7. **CameraService**: Handles camera movements and effects such as screen shakes.
-- **CameraShakeType**: Enum defining shake patterns.
-- **CameraConfig**: Stores camera-related configurations.
+   - **CameraShakeType**: Enum defining shake patterns.
+   - **CameraConfig**: Stores camera-related configurations.
 
 8. **ActorService**: Manages logic related to players and enemies.
-- **ActorType**: Enum defining types of actors (Player, Normal Enemy, Fast Enemy).
-- **ActorConfig**: Stores properties like speed and health for actors.
-- **ActorController**: Governs behavior for actors.
-  - **PlayerActorController**: Specialized logic for the player orb.
-  - **EnemyActorController**: Manages enemy actions and interactions.
-- **ActorModel**: Stores runtime data for actors.
-- **ActorView**: Handles visual representation of actors.
-- **ActorPool**: Reuses actor instances to enhance performance.
+   - **ActorType**: Enum defining types of actors (Player, Normal Enemy, Fast Enemy).
+   - **ActorConfig**: Stores properties like speed and health for actors.
+   - **ActorPool**: Reuses actor instances to enhance performance.
+   - **ActorController**: Governs behavior for actors.
+     - **PlayerActorController**: Specialized logic for the player orb.
+     - **EnemyActorController**: Manages enemy actions and interactions.
+   - **ActorModel**: Stores runtime data for actors.
+   - **ActorView**: Handles visual representation of actors.
 
 9. **ProjectileService**: Manages all logic related to bullets and other projectiles.
-- **ProjectileType**: Enum defining projectile types (Normal Bullet, Homing Bullet).
-- **ProjectileConfig**: Stores configuration for projectile behavior.
-- **ProjectileController**: Handles general projectile logic.
-  - **HomingBulletProjectileController**: Adds homing behavior to bullets.
-- **ProjectileModel**: Manages runtime data for projectiles.
-- **ProjectileView**: Manages visual representation of projectiles.
-- **ProjectilePool**: Reuses projectile instances to save resources.
+   - **ProjectileType**: Enum defining projectile types (Normal Bullet, Homing Bullet).
+   - **ProjectileConfig**: Stores configuration for projectile behavior.
+   - **ProjectilePool**: Reuses projectile instances to save resources.
+   - **ProjectileController**: Handles general projectile logic.
+     - **HomingBulletProjectileController**: Adds homing behavior to bullets.
+   - **ProjectileModel**: Manages runtime data for projectiles.
+   - **ProjectileView**: Manages visual representation of projectiles.
 
-10. **PowerUpService**: Handles spawning and management of power-ups to enhance gameplay.
-- **PowerUpType**: Enum defining types of power-ups (e.g., HealthPick, HomingOrbs).
-- **PowerUpConfig**: Configurable properties for power-ups, such as duration, effect magnitude, and spawn frequency.
-- **PowerUpController**: Governs logic for general power-up behavior, such as activation and deactivation.
-    - **HealthPickPowerUpController**: Restores the player’s health by a specified amount.
-    - **HomingOrbsPowerUpController**: Enables the player to fire homing projectiles for a limited time.
-    - **RapidFirePowerUpController**: Temporarily increases the player’s firing rate, allowing faster shooting.
-    - **SlowMotionPowerUpController**: Slows down the game’s time scale, enhancing strategic gameplay.
-    - **ShieldPowerUpController**: Provides the player with temporary invincibility, absorbing all damage.
-    - **TeleportPowerUpController**: Instantly moves the player orb to a random location on the map.
-- **PowerUpModel**: Stores runtime data for individual power-ups, such as active duration and cooldown state.
-- **PowerUpView**: Renders the visual aspects of power-ups, such as icons or particle effects.
-- **PowerUpPool**: Reuses power-up objects to reduce instantiation overhead and optimize performance.
+10. **PowerUpService**: Handles management of power-ups to enhance gameplay.
+    - **PowerUpType**: Enum defining types of power-ups (e.g., HealthPick, HomingOrbs).
+    - **PowerUpConfig**: Configurable properties for power-ups, such as duration, and effect magnitude.
+    - **PowerUpPool**: Reuses power-up objects to reduce instantiation overhead and optimize performance.
+    - **PowerUpController**: Governs logic for general power-up behavior, such as activation and deactivation.
+      - **HealthPickPowerUpController**: Restores the player’s health by a specified amount.
+      - **HomingOrbsPowerUpController**: Enables the player to fire homing projectiles for a limited time.
+      - **RapidFirePowerUpController**: Temporarily increases the player’s firing rate, allowing faster shooting.
+      - **ShieldPowerUpController**: Provides the player with temporary invincibility, absorbing all damage.
+      - **SlowMotionPowerUpController**: Slows down the game’s time scale, enhancing strategic gameplay.
+      - **TeleportPowerUpController**: Instantly moves the player orb to a random location on the map.
+    - **PowerUpModel**: Stores runtime data for individual power-ups, such as active duration and cooldown state.
+    - **PowerUpView**: Renders the visual aspects of power-ups, such as icons or particle effects.
 
 11. **SpawnService**: Manages the spawning of both enemies and power-ups.
-- **SpawnController**: Configures spawn intervals and locations dynamically.
+    - **SpawnController**: Configures spawn intervals and locations dynamically.
 
 12. **Utilities**: Provides generic, reusable utilities for better performance and scalability.
-- **GenericObjectPool**: Implements object pooling for actors, projectiles, power-ups, and VFX.
+    - **GenericObjectPool**: Manages object pooling for optimal memory usage and performance.
 
 ---
 
