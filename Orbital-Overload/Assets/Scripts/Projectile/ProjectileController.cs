@@ -1,6 +1,7 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Event;
 using ServiceLocator.Sound;
+using ServiceLocator.VFX;
 using UnityEngine;
 
 namespace ServiceLocator.Projectile
@@ -51,6 +52,12 @@ namespace ServiceLocator.Projectile
         {
             projectileView.rigidBody.velocity = _shootPoint.up * _shootSpeed * Time.fixedDeltaTime; // Set projectile velocity
             eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ProjectileShoot);
+        }
+
+        public void PlayVFX()
+        {
+            eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, projectileView.transform,
+                projectileModel.ProjectileColor);
         }
 
         public bool IsActive()

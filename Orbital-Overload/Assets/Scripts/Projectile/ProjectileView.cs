@@ -1,4 +1,5 @@
 using ServiceLocator.Actor;
+using ServiceLocator.VFX;
 using UnityEngine;
 
 namespace ServiceLocator.Projectile
@@ -59,10 +60,12 @@ namespace ServiceLocator.Projectile
                     && (projectileController.GetProjectileModel().ProjectileOwnerActor != ActorType.Player)) return;
 
                 HideView();
+                projectileController.PlayVFX();
             }
             else if (_collider.CompareTag("Projectile"))
             {
                 HideView();
+                projectileController.PlayVFX();
             }
         }
     }
