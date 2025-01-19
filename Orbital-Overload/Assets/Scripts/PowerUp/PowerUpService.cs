@@ -26,8 +26,6 @@ namespace ServiceLocator.PowerUp
             // Setting Services
             spawnService = _spawnService;
 
-            // Setting Elements
-
             // Creating Object Pool for powerups
             powerUpPool = new PowerUpPool(powerUpConfig, powerUpParentPanel, _eventService);
 
@@ -97,12 +95,6 @@ namespace ServiceLocator.PowerUp
             // Disabling All PowerUps
             for (int i = powerUpPool.pooledItems.Count - 1; i >= 0; i--)
             {
-                // Skipping if the pooled item's isUsed is false
-                if (!powerUpPool.pooledItems[i].isUsed)
-                {
-                    continue;
-                }
-
                 var powerUpController = powerUpPool.pooledItems[i].Item;
                 ReturnPowerUpToPool(powerUpController);
             }

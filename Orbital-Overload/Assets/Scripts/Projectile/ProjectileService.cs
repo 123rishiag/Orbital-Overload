@@ -21,7 +21,7 @@ namespace ServiceLocator.Projectile
 
         public void Init(EventService _eventService, ActorService _actorService)
         {
-            // Setting Elements
+            // Creating Object Pool for projectiles
             projectilePool = new ProjectilePool(projectileConfig, projectileParentPanel, _eventService, _actorService);
         }
 
@@ -73,12 +73,6 @@ namespace ServiceLocator.Projectile
             // Disabling All Projectiles
             for (int i = projectilePool.pooledItems.Count - 1; i >= 0; i--)
             {
-                // Skipping if the pooled item's isUsed is false
-                if (!projectilePool.pooledItems[i].isUsed)
-                {
-                    continue;
-                }
-
                 var projectileController = projectilePool.pooledItems[i].Item;
                 ReturnProjectileToPool(projectileController);
             }

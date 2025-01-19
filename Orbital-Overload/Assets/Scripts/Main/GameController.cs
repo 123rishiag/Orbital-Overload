@@ -88,6 +88,7 @@ namespace ServiceLocator.Main
 
         public void Reset()
         {
+            vfxService.Reset();
             uiService.Reset();
             cameraService.Reset();
             spawnService.Reset();

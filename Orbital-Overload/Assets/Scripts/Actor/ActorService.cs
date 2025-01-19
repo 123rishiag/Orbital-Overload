@@ -140,12 +140,6 @@ namespace ServiceLocator.Actor
             // Disabling All Actors
             for (int i = actorPool.pooledItems.Count - 1; i >= 0; i--)
             {
-                // Skipping if the pooled item's isUsed is false
-                if (!actorPool.pooledItems[i].isUsed)
-                {
-                    continue;
-                }
-
                 var actorController = actorPool.pooledItems[i].Item;
                 ReturnActorToPool(actorController);
             }

@@ -17,6 +17,7 @@ namespace ServiceLocator.Main
         }
         public void Update()
         {
+            Owner.GetVFXService().Update();
             Owner.GetInputService().Update();
             Owner.GetSpawnService().Update();
             Owner.GetProjectileService().Update();
