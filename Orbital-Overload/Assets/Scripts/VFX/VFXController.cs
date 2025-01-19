@@ -12,10 +12,10 @@ namespace ServiceLocator.VFX
             Transform _vfxParentPanel, Transform _vfxTransform, Color _vfxColor)
         {
             // Setting Variables
-            vfxModel = new VFXModel(_vfxData);
+            vfxModel = new VFXModel(_vfxData, _vfxTransform, _vfxColor);
             vfxView = Object.Instantiate(_vfxPrefab, _vfxTransform.position, Quaternion.identity, _vfxParentPanel).
                 GetComponent<VFXView>();
-            vfxView.Init(this, _vfxTransform, _vfxColor);
+            vfxView.Init(this);
         }
 
         // Getters

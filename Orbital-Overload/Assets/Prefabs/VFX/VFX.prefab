@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1144950665065991400}
   - component: {fileID: 1945025493517587714}
   - component: {fileID: -8722967345206656968}
+  - component: {fileID: 1081093726301920645}
   m_Layer: 9
   m_Name: VFX
   m_TagString: VFX
@@ -98,3 +99,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vfxSprite: {fileID: 1945025493517587714}
+  vfxAnimator: {fileID: 1081093726301920645}
+--- !u!95 &1081093726301920645
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679351431491935800}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e454d0867e18d1c4b8a59add255f943e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

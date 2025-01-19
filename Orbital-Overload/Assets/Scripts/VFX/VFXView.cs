@@ -5,27 +5,30 @@ namespace ServiceLocator.VFX
     public class VFXView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer vfxSprite; // VFX Sprite
+        [SerializeField] private Animator vfxAnimator; // VFX Animator
 
         // Private Variables
         private VFXController vfxController;
-        public void Init(VFXController _vfxController, Transform _vfxTransform, Color _vfxColor)
+        private static readonly int FADE_HASH = Animator.StringToHash("Fade");
+        public void Init(VFXController _vfxController)
         {
             // Setting Variables
             vfxController = _vfxController;
-            Reset(_vfxTransform, _vfxColor);
+            Reset();
         }
 
-        public void Reset(Transform _vfxTransform, Color _vfxColor)
+        public void Reset()
         {
-            SetSprite(_vfxColor);
-            SetTransform(_vfxTransform);
+            SetSprite(vfxController.GetVFXModel().VFXColor);
+            SetTransform(vfxController.GetVFXModel().VFXTransform);
+            FadeAnimation();
             Object.Destroy(gameObject, vfxController.GetVFXModel().VFXDuration);
         }
 
         private void SetSprite(Color _vfxColor)
         {
             vfxSprite.sprite = vfxController.GetVFXModel().VFXSprite;
-            vfxSprite.color = _vfxColor;
+            vfxSprite.color = new Color(_vfxColor.r, _vfxColor.g, _vfxColor.b, vfxSprite.color.a);
         }
 
         private void SetTransform(Transform _vfxTransform)
@@ -57,6 +60,13 @@ namespace ServiceLocator.VFX
             {
                 Debug.LogWarning("Renderer not found on VFX or target object.");
             }
+        }
+
+        private void FadeAnimation()
+        {
+            float animationDuration = vfxController.GetVFXModel().VFXDuration;
+            float defaultClipDuration = vfxAnimator.GetCurrentAnimatorStateInfo(0).length; // Default animation length
+            vfxAnimator.speed = defaultClipDuration / animationDuration; // Adjust speed
         }
     }
 }
