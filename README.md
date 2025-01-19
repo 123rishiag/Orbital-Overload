@@ -255,6 +255,6 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 ## Play Link
 
-[Play the Game](https://outscal.com/narishabhgarg/game/play-orbital-overload-game)
+[Play the Game](https://123rishiag.github.io/Orbital-Overload/)
 
 ---
