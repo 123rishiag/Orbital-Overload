@@ -175,8 +175,6 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 ## Development Workflow
 
-### Branches
-
 | **Branch**                  | **Feature**                                      |
 |-----------------------------|--------------------------------------------------|
 | Branch1-SettingUp           | Project setup with folders for scripts, assets, and scenes. |
@@ -218,23 +216,23 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 ## Script and Asset Hierarchy
 
 1. **Scripts**:
-- **Main**: Core game mechanics and states.
-- **Actor**: Player and enemy behaviors.
-- **Projectile**: Bullet logic and pooling.
-- **PowerUp**: Power-Up system.
-- **Camera**: Camera maintenance.
-- **UI**: Menus and in-game UI.
-- **VFX**: Visual effects management.
-- **Sound**: Audio playback.
-- **Event**: Event-based communication.
-- **Spawn**: Spawn system.
-- **Input**: Decoupled new input system.
-- **Utility**: Game utilities.
+   - **Main**: Core game mechanics and states.
+   - **Actor**: Player and enemy behaviors.
+   - **Projectile**: Bullet logic and pooling.
+   - **PowerUp**: Power-Up system.
+   - **Camera**: Camera maintenance.
+   - **UI**: Menus and in-game UI.
+   - **VFX**: Visual effects management.
+   - **Sound**: Audio playback.
+   - **Event**: Event-based communication.
+   - **Spawn**: Spawn system.
+   - **Input**: Decoupled new input system.
+   - **Utility**: Game utilities.
 
 2. **Assets**:
-- **Prefabs**: Self-created using Unity tools and ChatGPT guidance.
-- **Art**: Designed using ChatGPT-generated ideas.
-- **Sounds**: Royalty-free sources.
+   - **Prefabs**: Self-created using Unity tools and ChatGPT guidance.
+   - **Art**: Designed using ChatGPT-generated ideas.
+   - **Sounds**: Royalty-free sources.
 
 ---
 
