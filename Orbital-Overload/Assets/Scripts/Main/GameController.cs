@@ -6,6 +6,7 @@ using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.Spawn;
 using ServiceLocator.UI;
+using ServiceLocator.VFX;
 using ServiceLocator.Vision;
 using System.Collections;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace ServiceLocator.Main
         // Services
         private GameService gameService;
         private EventService eventService;
+        private VFXService vfxService;
         private SoundService soundService;
         private UIService uiService;
         private InputService inputService;
@@ -48,6 +50,7 @@ namespace ServiceLocator.Main
         public void Destroy()
         {
             // Calling Service's Destroy
+            vfxService.Destroy();
             soundService.Destroy();
             uiService.Destroy();
             cameraService.Destroy();
@@ -60,6 +63,7 @@ namespace ServiceLocator.Main
         private void CreateServices()
         {
             eventService = new EventService();
+            vfxService = new VFXService(gameService.vfxConfig, gameService.vfxParentPanel);
             soundService = new SoundService(gameService.soundConfig, gameService.sfxSource, gameService.bgSource);
             uiService = new UIService(gameService.uiCanvas);
             inputService = new InputService();
@@ -72,6 +76,7 @@ namespace ServiceLocator.Main
 
         private void InjectDependencies()
         {
+            vfxService.Init(eventService);
             soundService.Init(eventService);
             uiService.Init(eventService);
             cameraService.Init(eventService);
@@ -147,6 +152,7 @@ namespace ServiceLocator.Main
         public GameController GetGameController() => this;
         public GameService GetGameService() => gameService;
         public EventService GetEventService() => eventService;
+        public VFXService GetVFXService() => vfxService;
         public SoundService GetSoundService() => soundService;
         public UIService GetUIService() => uiService;
         public InputService GetInputService() => inputService;
