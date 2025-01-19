@@ -3,6 +3,7 @@ using ServiceLocator.PowerUp;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
+using ServiceLocator.VFX;
 using ServiceLocator.Vision;
 using UnityEngine;
 
@@ -12,7 +13,6 @@ namespace ServiceLocator.Main
     {
         // Inspector Variables
         [Header("Sound Components")]
-        [SerializeField] public SoundConfig soundConfig;
         [SerializeField] public AudioSource sfxSource;
         [SerializeField] public AudioSource bgSource;
 
@@ -23,12 +23,15 @@ namespace ServiceLocator.Main
         [SerializeField] public Camera mainCamera; // Main camera reference
 
         [Header("Game Configs")]
+        [SerializeField] public VFXConfig vfxConfig;
+        [SerializeField] public SoundConfig soundConfig;
         [SerializeField] public CameraConfig cameraConfig;
         [SerializeField] public ProjectileConfig projectileConfig;
         [SerializeField] public PowerUpConfig powerUpConfig;
         [SerializeField] public ActorConfig actorConfig;
 
         [Header("Object Pool Parent Panels")]
+        [SerializeField] public Transform vfxParentPanel;
         [SerializeField] public Transform projectileParentPanel;
         [SerializeField] public Transform powerUpParentPanel;
         [SerializeField] public Transform actorParentPanel;

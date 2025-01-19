@@ -2,6 +2,7 @@ using ServiceLocator.Control;
 using ServiceLocator.Event;
 using ServiceLocator.Projectile;
 using ServiceLocator.Spawn;
+using ServiceLocator.VFX;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -156,6 +157,7 @@ namespace ServiceLocator.Actor
 
         private void ReturnActorToPool(ActorController _actorToReturn)
         {
+            eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, _actorToReturn.GetActorView().GetPosition());
             _actorToReturn.GetActorView().HideView();
             actorPool.ReturnItem(_actorToReturn);
         }
