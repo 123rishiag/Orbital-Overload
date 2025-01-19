@@ -7,6 +7,7 @@ namespace ServiceLocator.VFX
 
     public class VFXConfig : ScriptableObject
     {
+        public VFXView vfxPrefab;
         public VFXData[] vfxData;
     }
 
@@ -15,7 +16,7 @@ namespace ServiceLocator.VFX
     {
         [Header("VFX Data")]
         public VFXType vfxType; // Type of VFX
-        public GameObject vfxPrefab;
+        public Sprite vfxSprite; // Sprite of VFX
         public float vfxDuration; // Duration of the vfx
     }
 }
