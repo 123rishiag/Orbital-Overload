@@ -54,6 +54,7 @@ namespace ServiceLocator.Main
             soundService.Destroy();
             uiService.Destroy();
             cameraService.Destroy();
+            StopAllCoroutines();
 
             // Removing Listeners
             eventService.OnGetGameControllerEvent.RemoveListener(GetGameController);
@@ -95,6 +96,7 @@ namespace ServiceLocator.Main
             projectileService.Reset();
             powerUpService.Reset();
             actorService.Reset();
+            StopAllCoroutines();
         }
 
         public void Update()
@@ -147,6 +149,11 @@ namespace ServiceLocator.Main
         public void StopManagedCoroutine(Coroutine _coroutine)
         {
             gameService.StopCoroutine(_coroutine);
+        }
+
+        private void StopAllCoroutines()
+        {
+            gameService.StopAllCoroutines();
         }
 
         // Getters
