@@ -1,5 +1,4 @@
 using ServiceLocator.Event;
-using System;
 using UnityEngine;
 
 namespace ServiceLocator.VFX
@@ -9,6 +8,7 @@ namespace ServiceLocator.VFX
         // Private Variables
         private VFXConfig vfxConfig;
         private Transform vfxParentPanel;
+        private VFXPool vfxPool;
 
         // Private Services
         private EventService eventService;
@@ -25,6 +25,9 @@ namespace ServiceLocator.VFX
             // Setting Services
             eventService = _eventService;
 
+            // Creating Object Pool for vfx
+            vfxPool = new VFXPool(vfxConfig, vfxParentPanel);
+
             // Adding Listeners
             eventService.OnCreateVFXEvent.AddListener(CreateVFX);
         }
@@ -37,10 +40,56 @@ namespace ServiceLocator.VFX
 
         private void CreateVFX(VFXType _vfxType, Transform _vfxTransform, Color _vfxColor)
         {
-            int vfxIndex = Array.FindIndex(vfxConfig.vfxData, data => data.vfxType == _vfxType);
-            VFXData vfxData = vfxConfig.vfxData[vfxIndex];
-            VFXController vfxController = 
-                new VFXController(vfxData, vfxConfig.vfxPrefab, vfxParentPanel, _vfxTransform, _vfxColor);
+            // Fetching VFX
+            switch (_vfxType)
+            {
+                case VFXType.Splatter:
+                    vfxPool.GetVFX<VFXController>(_vfxTransform, _vfxColor, _vfxType);
+                    break;
+                default:
+                    Debug.LogWarning($"Unhandled VFXType: {_vfxType}");
+                    break;
+            }
+        }
+
+        public void Update()
+        {
+            ProcessVFXUpdate();
+        }
+
+        private void ProcessVFXUpdate()
+        {
+            for (int i = vfxPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                // Skipping if the pooled item's isUsed is false
+                if (!vfxPool.pooledItems[i].isUsed)
+                {
+                    continue;
+                }
+
+                var vfxController = vfxPool.pooledItems[i].Item;
+
+                if (!vfxController.IsActive())
+                {
+                    ReturnVFXToPool(vfxController);
+                }
+            }
+        }
+
+        public void Reset()
+        {
+            // Disabling All VFX
+            for (int i = vfxPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                var powerUpController = vfxPool.pooledItems[i].Item;
+                ReturnVFXToPool(powerUpController);
+            }
+        }
+
+        private void ReturnVFXToPool(VFXController _vfxToReturn)
+        {
+            _vfxToReturn.GetVFXView().HideView();
+            vfxPool.ReturnItem(_vfxToReturn);
         }
     }
 }
