@@ -1,7 +1,6 @@
 using ServiceLocator.Event;
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace ServiceLocator.VFX
 {
@@ -40,10 +39,7 @@ namespace ServiceLocator.VFX
         {
             int vfxIndex = Array.FindIndex(vfxConfig.vfxData, data => data.vfxType == _vfxType);
             VFXData vfxData = vfxConfig.vfxData[vfxIndex];
-            GameObject vfxInstance = Object.Instantiate(
-                vfxData.vfxPrefab, _spawnPosition, Quaternion.identity, vfxParentPanel
-                );
-            Object.Destroy(vfxInstance, vfxData.vfxDuration);
+            VFXController vfxController = new VFXController(vfxData, vfxConfig.vfxPrefab, vfxParentPanel, _spawnPosition);
         }
     }
 }

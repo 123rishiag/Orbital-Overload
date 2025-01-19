@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5332010ba4a95ee4da8f3dc21b528eeb, type: 3}
   m_Name: VFXConfig
   m_EditorClassIdentifier: 
+  vfxPrefab: {fileID: -8722967345206656968, guid: 0a91b87ed64667b46abc5edabc95b101, type: 3}
   vfxData:
   - vfxType: 0
-    vfxPrefab: {fileID: 1679351431491935800, guid: 0a91b87ed64667b46abc5edabc95b101, type: 3}
+    vfxSprite: {fileID: 21300000, guid: d2dfe446b93bcdd44a6ea999980834d5, type: 3}
     vfxDuration: 2
