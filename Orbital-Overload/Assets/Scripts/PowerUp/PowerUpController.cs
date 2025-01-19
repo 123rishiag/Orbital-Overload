@@ -1,8 +1,10 @@
 using ServiceLocator.Actor;
 using ServiceLocator.Event;
 using ServiceLocator.Main;
+using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
 using ServiceLocator.UI;
+using ServiceLocator.VFX;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,6 +77,12 @@ namespace ServiceLocator.PowerUp
             activePowerUps.Remove(powerUpModel.PowerUpType);
             eventService.OnGetUIControllerEvent.Invoke<UIController>().
                 GetUIView().HidePowerUpText(); // Hide power-up text
+        }
+
+        public void PlayVFX()
+        {
+            eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, powerUpView.transform,
+                powerUpModel.PowerUpColor);
         }
 
         public bool IsActive()

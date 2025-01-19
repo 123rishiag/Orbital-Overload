@@ -54,6 +54,7 @@ namespace ServiceLocator.PowerUp
                 {
                     powerUpController.ActivatePowerUp(actorView.actorController);
                     HideView();
+                    powerUpController.PlayVFX();
                 }
             }
         }
