@@ -15,32 +15,12 @@ Below is the block diagram illustrating the architecture:
 
 ## Gameplay Elements
 
-### Controls
+### **1. Controls**
 - **Movement**: Use W/A/S/D keys for precise navigation.
 - **Shooting**: Hold the left mouse button for continuous firing.
 - **Direction**: Move the mouse to aim and shoot.
 
-### Input System
-The game uses Unity's New Input System for highly configurable and responsive controls:
-
-| **Action**         | **Key/Input**                     |
-|---------------------|-----------------------------------|
-| Move                | W, A, S, D keys                  |
-| Shoot               | Left mouse button (Hold)         |
-| Aim                 | Mouse pointer                    |
-| Pause Menu          | Escape key during gameplay       |
-
-### Power-ups
-| **Power-Up**   | **Effect**                                    |
-|-----------------|-----------------------------------------------|
-| HealthPick      | Restores health.                             |
-| HomingOrbs      | Launches orbs that home in on enemies.       |
-| RapidFire       | Temporarily increases firing speed.          |
-| Shield          | Grants temporary invincibility.             |
-| SlowMotion      | Slows down time for better maneuvering.      |
-| Teleport        | Instantly relocates the player orb.          |
-
-### Game States
+### **1. Game States**
 | **Game State**   | **Description**                          |
 |-------------------|------------------------------------------|
 | Game_Start        | Initializes the game and its resources. |
@@ -50,52 +30,72 @@ The game uses Unity's New Input System for highly configurable and responsive co
 | Game_Restart      | Resets the game to replay.              |
 | Game_Over         | Triggers when the player orb is destroyed. |
 
-### Actor Types
+### **32. Power-ups**
+| **Power-Up**   | **Effect**                                    |
+|-----------------|-----------------------------------------------|
+| HealthPick      | Restores health.                             |
+| HomingOrbs      | Launches orbs that home in on enemies.       |
+| RapidFire       | Temporarily increases firing speed.          |
+| Shield          | Grants temporary invincibility.             |
+| SlowMotion      | Slows down time for better maneuvering.      |
+| Teleport        | Instantly relocates the player orb.          |
+
+### **3. Actor Types**
 | **Actor Type**    | **Description**                          |
 |-------------------|------------------------------------------|
 | Player            | The main player-controlled orb.         |
 | Normal_Enemy      | A standard enemy with moderate speed.   |
 | Fast_Enemy        | A faster-moving enemy.                  |
 
-### Projectile Types
+### **4. Projectile Types**
 | **Projectile Type** | **Description**                           |
 |---------------------|-------------------------------------------|
 | Normal_Bullet       | A straight-firing bullet.                |
 | Homing_Bullet       | A bullet that tracks enemies.            |
 
+### **5. Input System**
+The game uses Unity's New Input System for highly configurable and responsive controls:
+
+| **Action**         | **Key/Input**                     |
+|---------------------|-----------------------------------|
+| Move                | W, A, S, D keys                  |
+| Shoot               | Left mouse button (Hold)         |
+| Aim                 | Mouse pointer                    |
+| Pause Menu          | Escape key during gameplay       |
+
 ---
 
 ## Design Patterns and Programming Principles
 
-### Service Locator
-Centralizes access to shared services such as `GameService`, `SoundService`, and `EventService`.
+### 1. **Service Locator**  
+Centralizes access to shared services such as `UIService`, `SoundService`, and `EventService`.
 
-### Dependency Injection
+### 2. **Dependency Injection**  
 Decouples services for flexibility and maintainability.
 
-### Model-View-Controller (MVC)
+### 3. **Model-View-Controller (MVC)**  
 Separates concerns for data, visuals, and interactions:
 - **Controller**: Coordinates interactions between the model and view.
 - **Model**: Handles data and game logic.
 - **View**: Manages visuals and rendering.
 
-### Observer Pattern
+### 4. **Observer Pattern**  
 Enables event-driven communication between game elements, ensuring modular design.
 
-### Object Pooling
+### 5. **Object Pooling**  
 Optimizes memory usage for actors, power-ups, projectiles, and bullets.
 
-### State Machine
+### 6. **State Machine** 
 Manages transitions between states like `Game_Start`, `Game_Play`, and `Game_Over`.
 
-### Scriptable Objects
+### 7. **Scriptable Objects**  
 Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 ---
 
 ## Services and Components
 
-**GameService**: Centralized service for managing the game's core mechanics, including game state transitions and controller management.
+1. **GameService**: Centralized service for managing the game's core mechanics, including game state transitions and controller management.
 - **Game Controller**: Initializes and manages the main gameplay components, including the state machine and input systems.
 - **GameGenericStateMachine**: A generic state machine designed to manage state transitions for the `GameController`, allowing future extensions.
   - **GameStateMachine**: A specific implementation of `GameGenericStateMachine` that governs the overall game flow.
@@ -107,20 +107,20 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
     - **GameOverState**: Handles game-over logic.
     - **GameRestartState**: Resets the game for replay.
 
-**EventService**: Manages event-driven communication across services.
+2. **EventService**: Manages event-driven communication across services.
    - **EventController**: Inherits from EventController to manage event registrations and notifications.
 
-**SoundService**: Manages sound effects and music for immersive gameplay.
+3. **SoundService**: Manages sound effects and music for immersive gameplay.
 - **SoundType**: Enum categorizing sound effects (e.g., shooting, explosions).
 - **SoundConfig**: Stores configuration for audio playback.
 
-**UIService**: Manages user interface interactions and HUD updates dynamically.
+4. **UIService**: Manages user interface interactions and HUD updates dynamically.
 - **UIController**: Handles menu interactions and HUD logic.
 - **UIView**: Manages the visual representation of UI elements.
 
-**InputService**: Processes and manages player inputs using Unity's New Input System for precise control of movement and shooting.
+5. **InputService**: Processes and manages player inputs using Unity's New Input System for precise control of movement and shooting.
 
-**VFXService**: Controls visual effects for immersive feedback and dynamic visuals.
+6. **VFXService**: Controls visual effects for immersive feedback and dynamic visuals.
 - **VFXController**: Governs the logic of visual effects.
 - **VFXModel**: Stores runtime data for each effect.
 - **VFXView**: Manages the rendering of effects.
@@ -128,11 +128,11 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 - **VFXConfig**: Configures visual effect properties.
 - **VFXPool**: Optimizes performance by reusing VFX objects.
 
-**CameraService**: Handles camera movements and effects such as screen shakes.
+7. **CameraService**: Handles camera movements and effects such as screen shakes.
 - **CameraShakeType**: Enum defining shake patterns.
 - **CameraConfig**: Stores camera-related configurations.
 
-**ActorService**: Manages logic related to players and enemies.
+8. **ActorService**: Manages logic related to players and enemies.
 - **ActorType**: Enum defining types of actors (Player, Normal Enemy, Fast Enemy).
 - **ActorConfig**: Stores properties like speed and health for actors.
 - **ActorController**: Governs behavior for actors.
@@ -142,7 +142,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 - **ActorView**: Handles visual representation of actors.
 - **ActorPool**: Reuses actor instances to enhance performance.
 
-**ProjectileService**: Manages all logic related to bullets and other projectiles.
+9. **ProjectileService**: Manages all logic related to bullets and other projectiles.
 - **ProjectileType**: Enum defining projectile types (Normal Bullet, Homing Bullet).
 - **ProjectileConfig**: Stores configuration for projectile behavior.
 - **ProjectileController**: Handles general projectile logic.
@@ -151,7 +151,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 - **ProjectileView**: Manages visual representation of projectiles.
 - **ProjectilePool**: Reuses projectile instances to save resources.
 
-**PowerUpService**: Handles spawning and management of power-ups to enhance gameplay.
+10. **PowerUpService**: Handles spawning and management of power-ups to enhance gameplay.
 - **PowerUpType**: Enum defining types of power-ups (e.g., HealthPick, HomingOrbs).
 - **PowerUpConfig**: Configurable properties for power-ups, such as duration, effect magnitude, and spawn frequency.
 - **PowerUpController**: Governs logic for general power-up behavior, such as activation and deactivation.
@@ -165,10 +165,10 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 - **PowerUpView**: Renders the visual aspects of power-ups, such as icons or particle effects.
 - **PowerUpPool**: Reuses power-up objects to reduce instantiation overhead and optimize performance.
 
-**SpawnService**: Manages the spawning of both enemies and power-ups.
+11. **SpawnService**: Manages the spawning of both enemies and power-ups.
 - **SpawnController**: Configures spawn intervals and locations dynamically.
 
-**Utilities**: Provides generic, reusable utilities for better performance and scalability.
+12. **Utilities**: Provides generic, reusable utilities for better performance and scalability.
 - **GenericObjectPool**: Implements object pooling for actors, projectiles, power-ups, and VFX.
 
 ---
@@ -217,7 +217,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 ## Script and Asset Hierarchy
 
-### Scripts
+1. **Scripts**:
 - **Main**: Core game mechanics and states.
 - **Actor**: Player and enemy behaviors.
 - **Projectile**: Bullet logic and pooling.
@@ -231,7 +231,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 - **Input**: Decoupled new input system.
 - **Utility**: Game utilities.
 
-### Assets
+2. **Assets**:
 - **Prefabs**: Self-created using Unity tools and ChatGPT guidance.
 - **Art**: Designed using ChatGPT-generated ideas.
 - **Sounds**: Royalty-free sources.
@@ -257,6 +257,6 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 ## Play Link
 
-[Play the Game](https://outscal.com/narishabhgarg/game/play-chest-system-simulator-game)
+[Play the Game](https://outscal.com/narishabhgarg/game/play-orbital-overload-game)
 
 ---
