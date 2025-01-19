@@ -14,11 +14,13 @@ namespace ServiceLocator.VFX
             VFXType = _vfxData.vfxType;
             VFXSprite = _vfxData.vfxSprite;
             VFXDuration = _vfxData.vfxDuration;
+            VFXScaleMultiplier = _vfxData.vfxScaleMultiplier;
         }
 
         // Getters & Setters
         public VFXType VFXType { get; private set; }
         public Sprite VFXSprite { get; private set; }
         public float VFXDuration { get; private set; }
+        public float VFXScaleMultiplier { get; private set; }
     }
 }

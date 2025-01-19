@@ -28,7 +28,7 @@ namespace ServiceLocator.Actor
 
         protected override void MovementInput()
         {
-            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetPosition();
+            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetTransform().position;
             float distanceToPlayer = Vector2.Distance(actorView.transform.position, playerPosition);
             if (distanceToPlayer > enemyAwayFromPlayerMinDistance)
             {
@@ -45,7 +45,7 @@ namespace ServiceLocator.Actor
         protected override void ShootInput() { }
         protected override void RotateInput()
         {
-            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetPosition();
+            Vector2 playerPosition = actorService.GetPlayerActorController().GetActorView().GetTransform().position;
             mouseDirection = (playerPosition - (Vector2)actorView.transform.position).normalized;
         }
 

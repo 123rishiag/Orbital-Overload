@@ -17,3 +17,4 @@ MonoBehaviour:
   - vfxType: 0
     vfxSprite: {fileID: 21300000, guid: d2dfe446b93bcdd44a6ea999980834d5, type: 3}
     vfxDuration: 2
+    vfxScaleMultiplier: 1.5

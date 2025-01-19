@@ -35,11 +35,12 @@ namespace ServiceLocator.VFX
             eventService.OnCreateVFXEvent.RemoveListener(CreateVFX);
         }
 
-        private void CreateVFX(VFXType _vfxType, Vector3 _spawnPosition)
+        private void CreateVFX(VFXType _vfxType, Transform _vfxTransform, Color _vfxColor)
         {
             int vfxIndex = Array.FindIndex(vfxConfig.vfxData, data => data.vfxType == _vfxType);
             VFXData vfxData = vfxConfig.vfxData[vfxIndex];
-            VFXController vfxController = new VFXController(vfxData, vfxConfig.vfxPrefab, vfxParentPanel, _spawnPosition);
+            VFXController vfxController = 
+                new VFXController(vfxData, vfxConfig.vfxPrefab, vfxParentPanel, _vfxTransform, _vfxColor);
         }
     }
 }

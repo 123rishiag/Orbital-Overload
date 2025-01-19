@@ -71,9 +71,9 @@ namespace ServiceLocator.Actor
         }
 
         // Getters
-        public Vector3 GetPosition()
+        public Transform GetTransform()
         {
-            return transform.position;
+            return transform;
         }
     }
 }

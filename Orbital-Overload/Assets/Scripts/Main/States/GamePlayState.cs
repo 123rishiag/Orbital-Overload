@@ -34,7 +34,7 @@ namespace ServiceLocator.Main
         {
             // Camera should follow player
             Owner.GetCameraService().FollowCameraTowardsPosition(
-                Owner.GetActorService().GetPlayerActorController().GetActorView().GetPosition());
+                Owner.GetActorService().GetPlayerActorController().GetActorView().GetTransform().position);
         }
         public void OnStateExit()
         {

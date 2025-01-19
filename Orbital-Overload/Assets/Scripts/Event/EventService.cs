@@ -23,7 +23,7 @@ namespace ServiceLocator.Event
         public EventController<Action<CameraShakeType>> OnDoShakeScreenEvent { get; private set; }
 
         // Method to Create a VFX - VFX Service
-        public EventController<Action<VFXType, Vector3>> OnCreateVFXEvent { get; private set; }
+        public EventController<Action<VFXType, Transform, Color>> OnCreateVFXEvent { get; private set; }
 
         public EventService()
         {
@@ -31,7 +31,7 @@ namespace ServiceLocator.Event
             OnPlaySoundEffectEvent = new EventController<Action<SoundType>>();
             OnGetUIControllerEvent = new EventController<Func<UIController>>();
             OnDoShakeScreenEvent = new EventController<Action<CameraShakeType>>();
-            OnCreateVFXEvent = new EventController<Action<VFXType, Vector3>>();
+            OnCreateVFXEvent = new EventController<Action<VFXType, Transform, Color>>();
         }
     }
 }
