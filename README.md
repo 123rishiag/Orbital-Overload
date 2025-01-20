@@ -1,8 +1,8 @@
 # Orbital Overload
 
 ## Overview
-Orbital Overload is a thrilling 2D arcade game where players command a tank, battling waves of enemy tanks to survive the relentless onslaught. 
-Collect power-ups scattered across the battlefield to gain an edge and increase your chances of survival. 
+Orbital Overload is a thrilling 2D arcade game where players command a tank, battling waves of enemy tanks to survive the battlefield 
+while collecting scattered power-ups to increase survival rate.
 The game employs several design patterns, including **Service Locator**, **Dependency Injection**, **Model-View-Controller (MVC)**, **Observer Pattern**, 
 **Object Pooling**, and **State Machine** alongside **Scriptable Objects** for modular data management and a **New Input System** 
 for seamless and precise controls.
