@@ -13,6 +13,7 @@ namespace ServiceLocator.Actor
         public void Reset(ActorData _actorData)
         {
             ActorType = _actorData.actorType;
+            ActorColor = _actorData.actorColor;
             ActorSprite = _actorData.actorSprite;
             ActorShooterSprite = _actorData.actorShooterSprite;
             MaxHealth = _actorData.maxHealth;
@@ -27,6 +28,7 @@ namespace ServiceLocator.Actor
 
         // Getters & Setters
         public ActorType ActorType { get; private set; } // Actor Type
+        public Color ActorColor { get; private set; } // Actor Color
         public Sprite ActorSprite { get; private set; } // Actor Sprite
         public Sprite ActorShooterSprite { get; private set; } // Actor's Shooter Sprite
         public int MaxHealth { get; private set; } // Maximum health

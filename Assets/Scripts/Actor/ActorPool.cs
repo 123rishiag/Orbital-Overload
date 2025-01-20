@@ -63,6 +63,13 @@ namespace ServiceLocator.Actor
             // Creating Controller
             switch (actorType)
             {
+                case ActorType.Weak_Enemy:
+                    return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
+                        actorParentPanel, spawnPosition,
+                        actorConfig.enemyAwayFromPlayerMinDistance,
+                        eventService, inputService,
+                        projectileService, actorService
+                        );
                 case ActorType.Normal_Enemy:
                     return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
                         actorParentPanel, spawnPosition,
@@ -71,6 +78,13 @@ namespace ServiceLocator.Actor
                         projectileService, actorService
                         );
                 case ActorType.Fast_Enemy:
+                    return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
+                        actorParentPanel, spawnPosition,
+                        actorConfig.enemyAwayFromPlayerMinDistance,
+                        eventService, inputService,
+                        projectileService, actorService
+                        );
+                case ActorType.Boss_Enemy:
                     return new EnemyActorController(actorConfig.enemyData[actorIndex], actorConfig.actorPrefab,
                         actorParentPanel, spawnPosition,
                         actorConfig.enemyAwayFromPlayerMinDistance,

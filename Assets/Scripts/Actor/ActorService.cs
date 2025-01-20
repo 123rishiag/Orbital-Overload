@@ -65,17 +65,23 @@ namespace ServiceLocator.Actor
         }
         private void CreateEnemy(Vector2 _spawnPosition)
         {
-            // Fetching Random Index
+            // Fetching Weighted Random Index
             int enemyIndex = Random.Range(0, actorConfig.enemyData.Length);
             ActorType actorType = actorConfig.enemyData[enemyIndex].actorType;
 
             // Fetching Actor
             switch (actorType)
             {
-                case ActorType.Normal_Enemy:
+                case ActorType.Weak_Enemy:
                     actorPool.GetActor<EnemyActorController>(_spawnPosition, actorType);
                     break;
                 case ActorType.Fast_Enemy:
+                    actorPool.GetActor<EnemyActorController>(_spawnPosition, actorType);
+                    break;
+                case ActorType.Normal_Enemy:
+                    actorPool.GetActor<EnemyActorController>(_spawnPosition, actorType);
+                    break;
+                case ActorType.Boss_Enemy:
                     actorPool.GetActor<EnemyActorController>(_spawnPosition, actorType);
                     break;
                 default:
@@ -152,7 +158,7 @@ namespace ServiceLocator.Actor
         private void ReturnActorToPool(ActorController _actorToReturn)
         {
             eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, _actorToReturn.GetActorView().GetTransform(),
-                Color.white);
+                _actorToReturn.GetActorModel().ActorColor);
             _actorToReturn.GetActorView().HideView();
             actorPool.ReturnItem(_actorToReturn);
         }
