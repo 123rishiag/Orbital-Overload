@@ -21,7 +21,7 @@ namespace ServiceLocator.PowerUp
 
         public void Reset()
         {
-            powerUpSprite.color = powerUpController.GetPowerUpModel().PowerUpColor;
+            powerUpSprite.sprite = powerUpController.GetPowerUpModel().PowerUpSprite;
             Invoke(nameof(HideView), powerUpController.GetPowerUpModel().PowerUpLifetime); // HideView after the lifetime
         }
 

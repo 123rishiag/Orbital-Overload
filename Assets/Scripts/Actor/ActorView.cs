@@ -27,8 +27,8 @@ namespace ServiceLocator.Actor
 
         public void Reset()
         {
-            actorSprite.color = actorController.GetActorModel().ActorColor;
-            actorShooterSprite.color = actorController.GetActorModel().ActorShooterColor;
+            actorSprite.sprite = actorController.GetActorModel().ActorSprite;
+            actorShooterSprite.sprite = actorController.GetActorModel().ActorShooterSprite;
         }
 
         public void SetPosition(Vector2 _position)

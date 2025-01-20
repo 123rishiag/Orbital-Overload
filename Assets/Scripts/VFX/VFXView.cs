@@ -5,24 +5,20 @@ namespace ServiceLocator.VFX
     public class VFXView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer vfxSprite; // VFX Sprite
-        [SerializeField] private Animator vfxAnimator; // VFX Animator
 
         // Private Variables
         private VFXController vfxController;
-        private static readonly int FADE_HASH = Animator.StringToHash("Fade");
-        private float defaultAnimatorSpeed;
+
         public void Init(VFXController _vfxController)
         {
             // Setting Variables
             vfxController = _vfxController;
-            defaultAnimatorSpeed = vfxAnimator.speed;
             Reset();
         }
 
         public void Reset()
         {
             SetSprite(vfxController.GetVFXModel().VFXColor);
-            FadeAnimation();
             Invoke(nameof(HideView), vfxController.GetVFXModel().VFXDuration); // HideView after the duration
         }
 
@@ -70,15 +66,7 @@ namespace ServiceLocator.VFX
 
         public void HideView()
         {
-            vfxAnimator.speed = defaultAnimatorSpeed;
             gameObject.SetActive(false);
-        }
-
-        private void FadeAnimation()
-        {
-            float animationDuration = vfxController.GetVFXModel().VFXDuration;
-            float defaultClipDuration = vfxAnimator.GetCurrentAnimatorStateInfo(0).length; // Default animation length
-            vfxAnimator.speed = defaultClipDuration / animationDuration; // Adjust speed
         }
     }
 }

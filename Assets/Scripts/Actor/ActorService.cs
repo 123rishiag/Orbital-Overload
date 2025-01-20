@@ -152,7 +152,7 @@ namespace ServiceLocator.Actor
         private void ReturnActorToPool(ActorController _actorToReturn)
         {
             eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, _actorToReturn.GetActorView().GetTransform(),
-                _actorToReturn.GetActorModel().ActorColor);
+                Color.white);
             _actorToReturn.GetActorView().HideView();
             actorPool.ReturnItem(_actorToReturn);
         }
