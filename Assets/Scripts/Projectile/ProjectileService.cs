@@ -78,18 +78,19 @@ namespace ServiceLocator.Projectile
         }
 
         public void Shoot(
-            ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint, ProjectileType _projectileType)
+            ActorType _projectileOwnerActor, float _shootSpeed,
+            Transform _shootPoint, ProjectileType _projectileType, Color _projectileColor)
         {
             // Fetching Projectile
             switch (_projectileType)
             {
                 case ProjectileType.Normal_Bullet:
                     projectilePool.GetProjectile<ProjectileController>(_projectileOwnerActor, _shootSpeed,
-            _shootPoint, _projectileType);
+            _shootPoint, _projectileType, _projectileColor);
                     break;
                 case ProjectileType.Homing_Bullet:
                     projectilePool.GetProjectile<HomingBulletProjectileController>(_projectileOwnerActor, _shootSpeed,
-            _shootPoint, _projectileType);
+            _shootPoint, _projectileType, _projectileColor);
                     break;
                 default:
                     Debug.LogWarning($"Unhandled ProjectileType: {_projectileType}");

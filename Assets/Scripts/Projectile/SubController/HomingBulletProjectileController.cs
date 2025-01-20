@@ -8,11 +8,13 @@ namespace ServiceLocator.Projectile
     {
         private ActorView nearestEnemy; // Target enemy for homing projectiles
         public HomingBulletProjectileController(ProjectileData _projectileData, ProjectileView _projectilePrefab,
-            Transform _projectileParentPanel, ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint,
+            Transform _projectileParentPanel, ActorType _projectileOwnerActor, float _shootSpeed,
+            Color _projectileColor, Transform _shootPoint,
             EventService _eventService, ActorService _actorService) :
 
             base(_projectileData, _projectilePrefab,
-                _projectileParentPanel, _projectileOwnerActor, _shootSpeed, _shootPoint,
+                _projectileParentPanel, _projectileOwnerActor, _shootSpeed,
+                 _projectileColor, _shootPoint,
             _eventService, _actorService)
         { }
 

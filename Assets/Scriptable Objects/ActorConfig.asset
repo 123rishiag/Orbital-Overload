@@ -16,7 +16,7 @@ MonoBehaviour:
   playerCasualMoveSpeed: 0.1
   playerData:
     actorType: 0
-    actorColor: {r: 0.3137255, g: 0.627451, b: 0.36862746, a: 0}
+    actorColor: {r: 0.3137255, g: 0.627451, b: 0.36862746, a: 1}
     actorSprite: {fileID: 21300000, guid: 94f611bab0eacae409c076b7ee1b0d7b, type: 3}
     actorShooterSprite: {fileID: 21300000, guid: 03a88bee68a8ffa42a71b8425ceb09dc, type: 3}
     maxHealth: 10
@@ -29,7 +29,7 @@ MonoBehaviour:
   enemyAwayFromPlayerMinDistance: 3
   enemyData:
   - actorType: 1
-    actorColor: {r: 0.7294118, g: 0.70980394, b: 0.6392157, a: 0}
+    actorColor: {r: 0.7294118, g: 0.70980394, b: 0.6392157, a: 1}
     actorSprite: {fileID: 21300000, guid: 0894b5fb3c9d29c41b4af2b3c7662522, type: 3}
     actorShooterSprite: {fileID: 21300000, guid: ee5af2366e19d6f4c8fe56f714010b86, type: 3}
     maxHealth: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
     shootSpeed: 300
     shootCooldown: 0.7
   - actorType: 2
-    actorColor: {r: 0.909804, g: 0.4156863, b: 0.09019608, a: 0}
+    actorColor: {r: 0.909804, g: 0.4156863, b: 0.09019608, a: 1}
     actorSprite: {fileID: 21300000, guid: 9f6729e57f70a6248b17805fc4bd0605, type: 3}
     actorShooterSprite: {fileID: 21300000, guid: 675e67b9ce8d7054ab5db17931fe98e5, type: 3}
     maxHealth: 1
@@ -45,7 +45,7 @@ MonoBehaviour:
     shootSpeed: 400
     shootCooldown: 0.6
   - actorType: 3
-    actorColor: {r: 0.11764707, g: 0.654902, b: 0.882353, a: 0}
+    actorColor: {r: 0.11764707, g: 0.654902, b: 0.882353, a: 1}
     actorSprite: {fileID: 21300000, guid: a33611d9d80a628429f518abd90c9481, type: 3}
     actorShooterSprite: {fileID: 21300000, guid: b982256f17eb4b444b9468fbfc3176a9, type: 3}
     maxHealth: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
     shootSpeed: 500
     shootCooldown: 0.5
   - actorType: 4
-    actorColor: {r: 0.31764707, g: 0.30980393, b: 0.28235295, a: 0}
+    actorColor: {r: 0.31764707, g: 0.30980393, b: 0.28235295, a: 1}
     actorSprite: {fileID: 21300000, guid: af9c274515fb0f840ae52759f53aa671, type: 3}
     actorShooterSprite: {fileID: 21300000, guid: eb2903a717476f945918999e232dbb17, type: 3}
     maxHealth: 1

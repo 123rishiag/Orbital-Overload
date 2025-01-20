@@ -16,7 +16,6 @@ namespace ServiceLocator.Projectile
     {
         [Header("Projectile Data")]
         public ProjectileType projectileType; // Type of Projectile
-        public Sprite projectileSprite; // Sprite of Projectile
 
         [Header("Score Data")]
         public int hitScore; // Score increment value
