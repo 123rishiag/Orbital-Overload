@@ -24,7 +24,7 @@ namespace ServiceLocator.Projectile
 
         public void Reset()
         {
-            projectileSprite.color = projectileController.GetProjectileModel().ProjectileColor;
+            projectileSprite.sprite = projectileController.GetProjectileModel().ProjectileSprite;
         }
 
         public void SetPosition(Vector2 _position)

@@ -18,32 +18,32 @@ MonoBehaviour:
   powerUpAwayFromPlayerSpawnDistance: 1
   powerUpData:
   - powerUpType: 0
-    powerUpColor: {r: 0.59607846, g: 1, b: 0.59607846, a: 1}
+    powerUpSprite: {fileID: 21300000, guid: b1ad007e62951d941aba21782c2edcad, type: 3}
     powerUpDuration: 2
     powerUpValue: 5
     powerUpLifetime: 10
   - powerUpType: 1
-    powerUpColor: {r: 0.7793699, g: 0.7793699, b: 0.990566, a: 1}
+    powerUpSprite: {fileID: 21300000, guid: 382d2ad85b7908a4791f8dc6aff877ee, type: 3}
     powerUpDuration: 10
     powerUpValue: 0
     powerUpLifetime: 10
   - powerUpType: 2
-    powerUpColor: {r: 1, g: 0.98039216, b: 0.8039216, a: 1}
+    powerUpSprite: {fileID: 21300000, guid: 91dc1d695464e0d42a46faf0ad58e257, type: 3}
     powerUpDuration: 10
     powerUpValue: 2
     powerUpLifetime: 10
   - powerUpType: 3
-    powerUpColor: {r: 0.59607846, g: 0.9843137, b: 0.59607846, a: 1}
+    powerUpSprite: {fileID: 21300000, guid: 5b49336e18d632c468f77e78b4d113ca, type: 3}
     powerUpDuration: 10
     powerUpValue: 0
     powerUpLifetime: 10
   - powerUpType: 4
-    powerUpColor: {r: 1, g: 0.8980392, b: 0.7058824, a: 1}
+    powerUpSprite: {fileID: 21300000, guid: 92a1b372d59ce674e8f754f2ecef7ee3, type: 3}
     powerUpDuration: 10
     powerUpValue: 0.8
     powerUpLifetime: 10
   - powerUpType: 5
-    powerUpColor: {r: 0.9411765, g: 0.5019608, b: 0.5019608, a: 1}
+    powerUpSprite: {fileID: 21300000, guid: 5bcceca8a02a09144b87f435ad802aa0, type: 3}
     powerUpDuration: 2
     powerUpValue: 5
     powerUpLifetime: 10

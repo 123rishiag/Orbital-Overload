@@ -27,8 +27,8 @@ namespace ServiceLocator.Actor
     {
         [Header("Actor Data")]
         public ActorType actorType; // Actor Type
-        public Color actorColor; // Color of Actor
-        public Color actorShooterColor; // Actor's Shooter Color
+        public Sprite actorSprite; // Sprite of Actor
+        public Sprite actorShooterSprite; // Actor's Shooter Sprite
 
         [Header("Health Data")]
         public int maxHealth; // Maximum health

@@ -81,7 +81,7 @@ namespace ServiceLocator.PowerUp
         public void PlayVFX()
         {
             eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, powerUpView.transform,
-                powerUpModel.PowerUpColor);
+                Color.white);
         }
 
         public bool IsActive()

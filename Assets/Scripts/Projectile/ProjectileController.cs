@@ -57,7 +57,7 @@ namespace ServiceLocator.Projectile
         public void PlayVFX()
         {
             eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, projectileView.transform,
-                projectileModel.ProjectileColor);
+                Color.white);
         }
 
         public bool IsActive()
