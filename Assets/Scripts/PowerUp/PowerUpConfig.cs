@@ -19,6 +19,7 @@ namespace ServiceLocator.PowerUp
     public class PowerUpData
     {
         public PowerUpType powerUpType; // Type of power-up
+        public Color powerUpColor; // Color of power-up
         public Sprite powerUpSprite; // Sprite of power-up
         public float powerUpDuration; // Duration of the power-up effect
         public float powerUpValue; // Value of the power-up effect
