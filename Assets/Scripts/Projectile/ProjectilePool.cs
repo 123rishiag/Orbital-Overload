@@ -16,6 +16,7 @@ namespace ServiceLocator.Projectile
         private float shootSpeed;
         private Transform shootPoint;
         private ProjectileType projectileType;
+        private Color projectileColor;
 
         // Private Services
         private EventService eventService;
@@ -34,13 +35,14 @@ namespace ServiceLocator.Projectile
         }
 
         public ProjectileController GetProjectile<T>(ActorType _projectileOwnerActor, float _shootSpeed,
-            Transform _shootPoint, ProjectileType _projectileType) where T : ProjectileController
+            Transform _shootPoint, ProjectileType _projectileType, Color _projectileColor) where T : ProjectileController
         {
             // Setting Variables
             projectileOwnerActor = _projectileOwnerActor;
             shootSpeed = _shootSpeed;
             shootPoint = _shootPoint;
             projectileType = _projectileType;
+            projectileColor = _projectileColor;
 
             // Fetching Item
             var item = GetItem<T>();
@@ -50,7 +52,7 @@ namespace ServiceLocator.Projectile
 
             // Resetting Item Properties
             item.Reset(projectileConfig.projectileData[projectileIndex], projectileOwnerActor, shootSpeed,
-            shootPoint);
+            projectileColor, shootPoint);
 
             return item;
         }
@@ -65,11 +67,13 @@ namespace ServiceLocator.Projectile
             {
                 case ProjectileType.Normal_Bullet:
                     return new ProjectileController(projectileConfig.projectileData[projectileIndex],
-                        projectileConfig.projectilePrefab, projectileParentPanel, projectileOwnerActor, shootSpeed, shootPoint,
+                        projectileConfig.projectilePrefab, projectileParentPanel, projectileOwnerActor, shootSpeed,
+                        projectileColor, shootPoint,
                         eventService, actorService);
                 case ProjectileType.Homing_Bullet:
                     return new HomingBulletProjectileController(projectileConfig.projectileData[projectileIndex],
-                        projectileConfig.projectilePrefab, projectileParentPanel, projectileOwnerActor, shootSpeed, shootPoint,
+                        projectileConfig.projectilePrefab, projectileParentPanel, projectileOwnerActor, shootSpeed,
+                        projectileColor, shootPoint,
                         eventService, actorService);
                 default:
                     Debug.LogWarning($"Unhandled ProjectileType: {projectileType}");

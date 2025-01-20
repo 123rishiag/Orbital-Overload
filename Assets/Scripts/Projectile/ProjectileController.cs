@@ -17,11 +17,12 @@ namespace ServiceLocator.Projectile
         protected ActorService actorService;
 
         public ProjectileController(ProjectileData _projectileData, ProjectileView _projectilePrefab,
-            Transform _projectileParentPanel, ActorType _projectileOwnerActor, float _shootSpeed, Transform _shootPoint,
+            Transform _projectileParentPanel, ActorType _projectileOwnerActor, float _shootSpeed,
+            Color _projectileColor, Transform _shootPoint,
             EventService _eventService, ActorService _actorService)
         {
             projectileModel =
-                new ProjectileModel(_projectileData, _projectileOwnerActor, _shootSpeed);
+                new ProjectileModel(_projectileData, _projectileOwnerActor, _shootSpeed, _projectileColor);
             projectileView = Object.Instantiate(_projectilePrefab, _shootPoint.position, _shootPoint.rotation,
                 _projectileParentPanel).GetComponent<ProjectileView>();
             projectileView.Init(this);
@@ -35,9 +36,9 @@ namespace ServiceLocator.Projectile
         }
 
         public void Reset(ProjectileData _projectileData, ActorType _projectileOwnerActor, float _shootSpeed,
-            Transform _shootPoint)
+            Color _projectileColor, Transform _shootPoint)
         {
-            projectileModel.Reset(_projectileData, _projectileOwnerActor, _shootSpeed);
+            projectileModel.Reset(_projectileData, _projectileOwnerActor, _shootSpeed, _projectileColor);
             projectileView.Reset();
             projectileView.SetPosition(_shootPoint.position);
             projectileView.ShowView();
@@ -57,7 +58,7 @@ namespace ServiceLocator.Projectile
         public void PlayVFX()
         {
             eventService.OnCreateVFXEvent.Invoke(VFXType.Splatter, projectileView.transform,
-                Color.white);
+                projectileModel.ProjectileColor);
         }
 
         public bool IsActive()
