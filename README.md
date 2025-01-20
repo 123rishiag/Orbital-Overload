@@ -1,15 +1,11 @@
 # Orbital Overload
 
 ## Overview
-An engaging 2D arcade game where players control a central orb, shooting smaller orbs to destroy waves of enemies. The game employs several design patterns, including **Service Locator**, **Dependency Injection**, **Model-View-Controller (MVC)**, **Observer Pattern**, **Object Pooling**, and **State Machine** alongside **Scriptable Objects** for modular data management and a **New Input System** for seamless and precise controls.
-
----
-
-## Architectural Overview
-
-Below is the block diagram illustrating the architecture:
-
-![Architectural Overview](Documents/block_diagram.png)
+Orbital Overload is a thrilling 2D arcade game where players command a tank, battling waves of enemy tanks to survive the relentless onslaught. 
+Collect power-ups scattered across the battlefield to gain an edge and increase your chances of survival. 
+The game employs several design patterns, including **Service Locator**, **Dependency Injection**, **Model-View-Controller (MVC)**, **Observer Pattern**, 
+**Object Pooling**, and **State Machine** alongside **Scriptable Objects** for modular data management and a **New Input System** 
+for seamless and precise controls.
 
 ---
 
@@ -28,7 +24,7 @@ Below is the block diagram illustrating the architecture:
 | Game_Play         | Active gameplay state.                  |
 | Game_Pause        | Halts gameplay when paused.             |
 | Game_Restart      | Resets the game to replay.              |
-| Game_Over         | Triggers when the player orb is destroyed. |
+| Game_Over         | Triggers when the player is destroyed.  |
 
 ### **32. Power-ups**
 | **Power-Up**   | **Effect**                                    |
@@ -38,14 +34,16 @@ Below is the block diagram illustrating the architecture:
 | RapidFire       | Temporarily increases firing speed.          |
 | Shield          | Grants temporary invincibility.             |
 | SlowMotion      | Slows down time for better maneuvering.      |
-| Teleport        | Instantly relocates the player orb.          |
+| Teleport        | Instantly relocates the player.             |
 
 ### **3. Actor Types**
 | **Actor Type**    | **Description**                          |
 |-------------------|------------------------------------------|
-| Player            | The main player-controlled orb.         |
-| Normal_Enemy      | A standard enemy with moderate speed.   |
-| Fast_Enemy        | A faster-moving enemy.                  |
+| Player            | The main player-controller.             |
+| Weak_Enemy        | A slow-moving enemy with low shooting speed. |
+| Normal_Enemy      | An enemy with balanced movement and shooting speed. |
+| Fast_Enemy        | A quick-moving enemy with high shooting speed.      |
+| Boss_Enemy        | The fastest-moving enemy with the highest shooting speed.|
 
 ### **4. Projectile Types**
 | **Projectile Type** | **Description**                           |
@@ -137,7 +135,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
    - **ActorConfig**: Stores properties like speed and health for actors.
    - **ActorPool**: Reuses actor instances to enhance performance.
    - **ActorController**: Governs behavior for actors.
-     - **PlayerActorController**: Specialized logic for the player orb.
+     - **PlayerActorController**: Specialized logic for the player.
      - **EnemyActorController**: Manages enemy actions and interactions.
    - **ActorModel**: Stores runtime data for actors.
    - **ActorView**: Handles visual representation of actors.
@@ -161,7 +159,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
       - **RapidFirePowerUpController**: Temporarily increases the player’s firing rate, allowing faster shooting.
       - **ShieldPowerUpController**: Provides the player with temporary invincibility, absorbing all damage.
       - **SlowMotionPowerUpController**: Slows down the game’s time scale, enhancing strategic gameplay.
-      - **TeleportPowerUpController**: Instantly moves the player orb to a random location on the map.
+      - **TeleportPowerUpController**: Instantly moves the player to a random location on the map.
     - **PowerUpModel**: Stores runtime data for individual power-ups, such as active duration and cooldown state.
     - **PowerUpView**: Renders the visual aspects of power-ups, such as icons or particle effects.
 
@@ -231,7 +229,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 2. **Assets**:
    - **Prefabs**: Self-created using Unity tools and ChatGPT guidance.
-   - **Art**: Designed using ChatGPT-generated ideas.
+   - **Art**: Art is downloaded from www.kenney.nl.
    - **Sounds**: Royalty-free sources.
 
 ---
