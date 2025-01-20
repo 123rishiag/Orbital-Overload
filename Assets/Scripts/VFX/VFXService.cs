@@ -1,4 +1,5 @@
 using ServiceLocator.Event;
+using ServiceLocator.Main;
 using UnityEngine;
 
 namespace ServiceLocator.VFX
