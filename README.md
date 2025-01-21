@@ -13,7 +13,7 @@ for seamless and precise controls.
 
 Below is the block diagram illustrating the architecture:
 
-![Architectural Overview](Documents/block_diagram.png)
+![Architectural Overview](docs/block_diagram.png)
 
 ---
 
