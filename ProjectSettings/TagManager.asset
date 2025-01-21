@@ -10,6 +10,7 @@ TagManager:
   - VFX
   - Environment
   - Obstacle
+  - UI
   layers:
   - Default
   - TransparentFX
