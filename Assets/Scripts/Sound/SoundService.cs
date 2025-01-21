@@ -1,5 +1,4 @@
 using ServiceLocator.Event;
-using System;
 using UnityEngine;
 
 namespace ServiceLocator.Sound
@@ -8,26 +7,23 @@ namespace ServiceLocator.Sound
     {
         // Private Variables
         private SoundConfig soundConfig;
-        private AudioSource sfxSource;
-        private AudioSource bgSource;
+        private Transform soundParentPanel;
+
+        private SoundPool soundPool;
 
         private bool isMute = false;
-        private float sfxVolume;
-        private float bgVolume;
 
         // Private Services
         private EventService eventService;
 
-        public SoundService(SoundConfig _soundConfig, AudioSource _sfxSource, AudioSource _bgSource)
+        public SoundService(SoundConfig _soundConfig, Transform _soundParentPanel)
         {
             // Setting Variables
             soundConfig = _soundConfig;
-            sfxSource = _sfxSource;
-            bgSource = _bgSource;
+            soundParentPanel = _soundParentPanel;
 
-            PlayBackgroundMusic(SoundType.BackgroundMusic, true);
-            sfxVolume = sfxSource.volume;
-            bgVolume = bgSource.volume;
+            // Creating Object Pool for sound
+            soundPool = new SoundPool(soundConfig, soundParentPanel);
         }
 
         public void Init(EventService _eventService)
@@ -36,62 +32,76 @@ namespace ServiceLocator.Sound
             eventService = _eventService;
 
             // Adding Listeners
-            eventService.OnPlaySoundEffectEvent.AddListener(PlaySoundEffect);
+            eventService.OnPlaySoundEvent.AddListener(PlaySound);
+
+            // Setting Elements
+            PlaySound(SoundType.BackgroundMusic);
+        }
+
+        public void Update()
+        {
+            ProcessSoundUpdate();
+        }
+
+        private void ProcessSoundUpdate()
+        {
+            // For Sounds
+            for (int i = soundPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                // Skipping if the pooled item's isUsed is false
+                if (!soundPool.pooledItems[i].isUsed)
+                {
+                    continue;
+                }
+
+                var soundController = soundPool.pooledItems[i].Item;
+                if (!soundController.IsActive()) ReturnSoundToPool(soundController);
+            }
+        }
+
+        public void Reset()
+        {
+            // Disabling All Sounds
+            for (int i = soundPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                var soundController = soundPool.pooledItems[i].Item;
+                ReturnSoundToPool(soundController);
+            }
+
+            // Playing Background Music
+            PlaySound(SoundType.BackgroundMusic);
         }
 
         public void Destroy()
         {
             // Removing Listeners
-            eventService.OnPlaySoundEffectEvent.RemoveListener(PlaySoundEffect);
+            eventService.OnPlaySoundEvent.RemoveListener(PlaySound);
         }
 
         public void MuteGame()
         {
-            isMute = !isMute; // Toggle mute
-            SetVolume();
+            // Toggle mute
+            isMute = !isMute;
+            for (int i = soundPool.pooledItems.Count - 1; i >= 0; i--)
+            {
+                var soundController = soundPool.pooledItems[i].Item;
+                soundController.SetMute(isMute);
+            }
         }
 
-        public void SetVolume()
-        {
-            sfxSource.volume = isMute ? 0.0f : sfxVolume;
-            bgSource.volume = isMute ? 0.0f : bgVolume;
-        }
-
-        public void PlaySoundEffect(SoundType _soundType)
+        public void PlaySound(SoundType _soundType)
         {
             if (isMute) return;
 
-            AudioClip clip = GetSoundClip(_soundType);
-            if (clip != null)
-            {
-                sfxSource.clip = clip;
-                sfxSource.PlayOneShot(clip);
-            }
-            else
-                Debug.LogError("No Audio Clip selected.");
+            float volume = _soundType == SoundType.BackgroundMusic ? soundConfig.bgVolume : soundConfig.soundVolume;
+            bool isLoop = _soundType == SoundType.BackgroundMusic ? true : false;
+            soundPool.GetItem<SoundController>(volume, isLoop, _soundType);
         }
 
-        private void PlayBackgroundMusic(SoundType _soundType, bool _loopSound = true)
+        private void ReturnSoundToPool(SoundController _soundToReturn)
         {
-            if (isMute) return;
-
-            AudioClip clip = GetSoundClip(_soundType);
-            if (clip != null)
-            {
-                bgSource.loop = _loopSound;
-                bgSource.clip = clip;
-                bgSource.Play();
-            }
-            else
-                Debug.LogError("No Audio Clip selected.");
-        }
-
-        private AudioClip GetSoundClip(SoundType _soundType)
-        {
-            SoundData sound = Array.Find(soundConfig.soundList, item => item.soundType == _soundType);
-            if (sound.soundClip != null)
-                return sound.soundClip;
-            return null;
+            _soundToReturn.GetSoundView().HideView();
+            soundPool.ReturnItem(_soundToReturn);
         }
 
         // Getters

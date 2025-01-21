@@ -67,7 +67,7 @@ namespace ServiceLocator.PowerUp
 
         private IEnumerator PowerUp(ActorController _actorController)
         {
-            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.PowerUpPickup);
+            eventService.OnPlaySoundEvent.Invoke(SoundType.PowerUpPickup);
             eventService.OnGetUIControllerEvent.Invoke<UIController>().
                 GetUIView().UpdatePowerUpText(powerUpModel.PowerUpType, powerUpModel.PowerUpDuration); // Show power-up text
             EnablePowerUp(_actorController);

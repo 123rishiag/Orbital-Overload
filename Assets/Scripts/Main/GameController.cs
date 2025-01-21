@@ -65,7 +65,7 @@ namespace ServiceLocator.Main
         {
             eventService = new EventService();
             vfxService = new VFXService(gameService.vfxConfig, gameService.vfxParentPanel);
-            soundService = new SoundService(gameService.soundConfig, gameService.sfxSource, gameService.bgSource);
+            soundService = new SoundService(gameService.soundConfig, gameService.soundParentPanel);
             uiService = new UIService(gameService.uiCanvas);
             inputService = new InputService();
             cameraService = new CameraService(gameService.cameraConfig, gameService.virtualCamera);
@@ -90,6 +90,7 @@ namespace ServiceLocator.Main
         public void Reset()
         {
             vfxService.Reset();
+            soundService.Reset();
             uiService.Reset();
             cameraService.Reset();
             spawnService.Reset();
@@ -107,38 +108,33 @@ namespace ServiceLocator.Main
         {
             gameStateMachine.FixedUpdate();
         }
-        public void LateUpdate()
-        {
-            gameStateMachine.LateUpdate();
-        }
+
         public void PlayGame()
         {
-            soundService.PlaySoundEffect(SoundType.ButtonClick);
+            soundService.PlaySound(SoundType.ButtonClick);
             gameStateMachine.ChangeState(GameState.Game_Play);
         }
         public void RestartGame()
         {
-            soundService.PlaySoundEffect(SoundType.ButtonClick);
+            soundService.PlaySound(SoundType.ButtonClick);
             gameStateMachine.ChangeState(GameState.Game_Restart);
         }
         public void MainMenu()
         {
-            soundService.PlaySoundEffect(SoundType.ButtonQuit);
+            soundService.PlaySound(SoundType.ButtonQuit);
             SceneManager.LoadScene(0); // Reload 0th scene
         }
 
         public void QuitGame()
         {
-            soundService.PlaySoundEffect(SoundType.ButtonQuit);
+            soundService.PlaySound(SoundType.ButtonQuit);
             Application.Quit();
         }
 
         public void MuteGame()
         {
-            soundService.PlaySoundEffect(SoundType.ButtonClick);
             uiService.GetUIController().GetUIView().SetMuteButtonText(soundService.IsMute());
             soundService.MuteGame(); // Mute/unmute the game
-            soundService.PlaySoundEffect(SoundType.ButtonClick); // Play button click sound effect
         }
 
         public Coroutine StartManagedCoroutine(IEnumerator _coroutine)

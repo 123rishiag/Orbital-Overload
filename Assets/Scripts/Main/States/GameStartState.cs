@@ -13,7 +13,6 @@ namespace ServiceLocator.Main
         }
         public void Update() { }
         public void FixedUpdate() { }
-        public void LateUpdate() { }
         public void OnStateExit() { }
     }
 }

@@ -132,7 +132,7 @@ namespace ServiceLocator.Actor
                     actorModel.CurrentHealth = 0;
                 }
             }
-            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHurt);
+            eventService.OnPlaySoundEvent.Invoke(SoundType.ActorHurt);
         }
 
         public virtual void IncreaseHealth(int _increaseHealth)
@@ -144,7 +144,7 @@ namespace ServiceLocator.Actor
             }
             else
             {
-                eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ActorHeal); // Play heal sound effect
+                eventService.OnPlaySoundEvent.Invoke(SoundType.ActorHeal); // Play heal sound effect
             }
         }
         protected void UpdateUI()
