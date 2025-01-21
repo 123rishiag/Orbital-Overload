@@ -15,6 +15,6 @@ MonoBehaviour:
   vfxPrefab: {fileID: -8722967345206656968, guid: 0a91b87ed64667b46abc5edabc95b101, type: 3}
   vfxData:
   - vfxType: 0
-    vfxSprite: {fileID: 21300000, guid: d2dfe446b93bcdd44a6ea999980834d5, type: 3}
+    vfxSprite: {fileID: 21300000, guid: 1acd59837b19e6c40b85ede332d8be38, type: 3}
     vfxDuration: 2
     vfxScaleMultiplier: 1.5
