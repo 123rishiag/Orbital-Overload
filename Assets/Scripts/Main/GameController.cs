@@ -68,7 +68,7 @@ namespace ServiceLocator.Main
             soundService = new SoundService(gameService.soundConfig, gameService.sfxSource, gameService.bgSource);
             uiService = new UIService(gameService.uiCanvas);
             inputService = new InputService();
-            cameraService = new CameraService(gameService.cameraConfig, gameService.mainCamera);
+            cameraService = new CameraService(gameService.cameraConfig, gameService.virtualCamera);
             spawnService = new SpawnService();
             projectileService = new ProjectileService(gameService.projectileConfig, gameService.projectileParentPanel);
             powerUpService = new PowerUpService(gameService.powerUpConfig, gameService.powerUpParentPanel);

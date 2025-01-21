@@ -2,7 +2,6 @@ using ServiceLocator.Control;
 using ServiceLocator.Event;
 using ServiceLocator.Projectile;
 using ServiceLocator.Sound;
-using ServiceLocator.Vision;
 using UnityEngine;
 
 namespace ServiceLocator.Actor
@@ -96,7 +95,6 @@ namespace ServiceLocator.Actor
         private void ShootAnimation()
         {
             actorView.ShootAnimation();
-            eventService.OnDoShakeScreenEvent.Invoke(CameraShakeType.Weak);
         }
 
         private void Rotate()

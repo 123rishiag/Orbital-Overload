@@ -9,6 +9,8 @@ namespace ServiceLocator.Vision
     {
         [Header("Camera Data")]
         public float cameraFollowSpeed; // Speed at which the camera follows the player
+        public Vector2 minBoundaries; // Minimum boundaries
+        public Vector2 maxBoundaries; // Maximum boundaries
         public CameraShakeData[] cameraShakeData; // All Camera Shakes
     }
 
