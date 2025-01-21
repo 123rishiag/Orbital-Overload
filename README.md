@@ -9,6 +9,14 @@ for seamless and precise controls.
 
 ---
 
+## Architectural Overview
+
+Below is the block diagram illustrating the architecture:
+
+![Architectural Overview](Documents/block_diagram.png)
+
+---
+
 ## Gameplay Elements
 
 ### **1. Controls**
