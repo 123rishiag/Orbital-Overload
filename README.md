@@ -16,7 +16,7 @@ for seamless and precise controls.
 - **Shooting**: Hold the left mouse button for continuous firing.
 - **Direction**: Move the mouse to aim and shoot.
 
-### **1. Game States**
+### **2. Game States**
 | **Game State**   | **Description**                          |
 |-------------------|------------------------------------------|
 | Game_Start        | Initializes the game and its resources. |
@@ -26,7 +26,7 @@ for seamless and precise controls.
 | Game_Restart      | Resets the game to replay.              |
 | Game_Over         | Triggers when the player is destroyed.  |
 
-### **32. Power-ups**
+### **3. Power-ups**
 | **Power-Up**   | **Effect**                                    |
 |-----------------|-----------------------------------------------|
 | HealthPick      | Restores health.                             |
@@ -36,7 +36,7 @@ for seamless and precise controls.
 | SlowMotion      | Slows down time for better maneuvering.      |
 | Teleport        | Instantly relocates the player.             |
 
-### **3. Actor Types**
+### **4. Actor Types**
 | **Actor Type**    | **Description**                          |
 |-------------------|------------------------------------------|
 | Player            | The main player-controller.             |
@@ -45,13 +45,13 @@ for seamless and precise controls.
 | Fast_Enemy        | A quick-moving enemy with high shooting speed.      |
 | Boss_Enemy        | The fastest-moving enemy with the highest shooting speed.|
 
-### **4. Projectile Types**
+### **5. Projectile Types**
 | **Projectile Type** | **Description**                           |
 |---------------------|-------------------------------------------|
 | Normal_Bullet       | A straight-firing bullet.                |
 | Homing_Bullet       | A bullet that tracks enemies.            |
 
-### **5. Input System**
+### **6. Input System**
 The game uses Unity's New Input System for highly configurable and responsive controls:
 
 | **Action**         | **Key/Input**                     |
@@ -110,7 +110,11 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 3. **SoundService**: Manages sound effects and music for immersive gameplay.
    - **SoundType**: Enum categorizing sound effects (e.g., shooting, hurt).
-   - **SoundConfig**: Stores configuration for audio playback.
+   - **SoundConfig**: Stores configuration for audio playback, such as volume, and looping settings.
+   - **SoundPool**: A pool of audio sources to efficiently manage and reuse sound objects, reducing overhead when playing multiple sounds simultaneously.
+   - **SoundController**: Handles sound-related logic, such as playing, pausing sounds based on game events.
+   - **SoundModel**: Stores the metadata for individual sounds, like Sound Type, volume, and clip properties.
+   - **SoundView**: Responsible for interacting with Unity's audio components (e.g., AudioSource and AudioClip) to render the audio in the game environment.
 
 4. **UIService**: Manages user interface interactions and HUD updates dynamically.
    - **UIController**: Handles menu interactions and HUD logic.
@@ -204,7 +208,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 | **Event**                   | **Description**                                   |
 |-----------------------------|---------------------------------------------------|
 | OnGetGameControllerEvent    | Returns the `GameController` instance.            |
-| OnPlaySoundEffectEvent      | Plays a specific sound effect.                    |
+| OnPlaySoundEvent            | Plays a specific sound.                           |
 | OnGetUIControllerEvent      | Retrieves the active `UIController`.              |
 | OnDoShakeScreenEvent        | Triggers a screen shake effect.                   |
 | OnCreateVFXEvent            | Creates visual effects at specified locations.    |
@@ -246,7 +250,7 @@ Stores reusable configurations for power-ups, projectiles, and actors etc.
 
 ## Video Demo
 
-[Watch the Gameplay Demo](https://www.loom.com/share/6e274a2d289749569f48b74d7e95af3d?sid=e2eb7715-5eb0-41ec-8bd2-5f8cf835a3f0)  
+[Watch the Gameplay Demo](https://www.loom.com/share/e8714fc825e1496d8441aa05ab8b203a?sid=4ebda7df-a3f2-441b-8cf9-c914794b5fdd)  
 [Watch the Architecture Explanation](https://www.loom.com/share/eac8c7cdcbd34a48b9aa3e2cda2dc04d?sid=1e0ced44-a7f9-4aa3-a219-8c99d92679e8)
 
 ---
