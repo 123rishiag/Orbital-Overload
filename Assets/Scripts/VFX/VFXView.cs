@@ -24,8 +24,8 @@ namespace ServiceLocator.VFX
 
         private void SetSprite(Color _vfxColor)
         {
+            vfxSprite.material.color = vfxController.GetVFXModel().VFXColor;
             vfxSprite.sprite = vfxController.GetVFXModel().VFXSprite;
-            vfxSprite.color = new Color(_vfxColor.r, _vfxColor.g, _vfxColor.b, vfxSprite.color.a);
         }
 
         public void SetTransform(Transform _vfxTransform)
