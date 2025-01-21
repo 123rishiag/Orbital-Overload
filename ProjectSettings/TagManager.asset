@@ -8,6 +8,8 @@ TagManager:
   - Projectile
   - PowerUp
   - VFX
+  - Environment
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,8 @@ TagManager:
   - Projectile
   - PowerUp
   - VFX
-  - 
-  - 
+  - Environment
+  - Obstacle
   - 
   - 
   - 
@@ -44,4 +46,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Environment
+    uniqueID: 573043271
+    locked: 0
+  - name: VFX
+    uniqueID: 3765749805
+    locked: 0
+  - name: Projectile
+    uniqueID: 3611472415
+    locked: 0
+  - name: PowerUp
+    uniqueID: 3403131997
+    locked: 0
+  - name: Actor
+    uniqueID: 2409104995
+    locked: 0
+  - name: Obstacle
+    uniqueID: 3467319355
     locked: 0
