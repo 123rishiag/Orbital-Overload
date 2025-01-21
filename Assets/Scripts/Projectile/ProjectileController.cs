@@ -52,7 +52,7 @@ namespace ServiceLocator.Projectile
         private void ShootProjectile(Transform _shootPoint, float _shootSpeed)
         {
             projectileView.rigidBody.velocity = _shootPoint.up * _shootSpeed * Time.fixedDeltaTime; // Set projectile velocity
-            eventService.OnPlaySoundEffectEvent.Invoke(SoundType.ProjectileShoot);
+            eventService.OnPlaySoundEvent.Invoke(SoundType.ProjectileShoot);
         }
 
         public void PlayVFX()

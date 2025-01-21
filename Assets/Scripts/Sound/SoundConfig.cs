@@ -6,7 +6,10 @@ namespace ServiceLocator.Sound
     [CreateAssetMenu(fileName = "SoundConfig", menuName = "ScriptableObjects/SoundConfig")]
     public class SoundConfig : ScriptableObject
     {
-        public SoundData[] soundList;
+        public SoundView soundPrefab;
+        public float soundVolume;
+        public float bgVolume;
+        public SoundData[] soundData;
     }
 
     [Serializable]

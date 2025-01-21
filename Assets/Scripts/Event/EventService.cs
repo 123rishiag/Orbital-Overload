@@ -14,7 +14,7 @@ namespace ServiceLocator.Event
         public EventController<Func<GameController>> OnGetGameControllerEvent { get; private set; }
 
         // Method to Play a particular Sound Effect - Sound Service
-        public EventController<Action<SoundType>> OnPlaySoundEffectEvent { get; private set; }
+        public EventController<Action<SoundType>> OnPlaySoundEvent { get; private set; }
 
         // Function to return UIController - UI Service
         public EventController<Func<UIController>> OnGetUIControllerEvent { get; private set; }
@@ -28,7 +28,7 @@ namespace ServiceLocator.Event
         public EventService()
         {
             OnGetGameControllerEvent = new EventController<Func<GameController>>();
-            OnPlaySoundEffectEvent = new EventController<Action<SoundType>>();
+            OnPlaySoundEvent = new EventController<Action<SoundType>>();
             OnGetUIControllerEvent = new EventController<Func<UIController>>();
             OnDoShakeScreenEvent = new EventController<Action<CameraShakeType>>();
             OnCreateVFXEvent = new EventController<Action<VFXType, Transform, Color>>();

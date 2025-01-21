@@ -12,11 +12,10 @@ namespace ServiceLocator.Main
         public void OnStateEnter()
         {
             Owner.GetUIService().GetUIController().GetUIView().gameOverMenuPanel.SetActive(true); // Show Game Over Menu
-            Owner.GetSoundService().PlaySoundEffect(SoundType.GameOver);
+            Owner.GetSoundService().PlaySound(SoundType.GameOver);
         }
         public void Update() { }
         public void FixedUpdate() { }
-        public void LateUpdate() { }
         public void OnStateExit()
         {
             Owner.GetUIService().GetUIController().GetUIView().gameOverMenuPanel.SetActive(false); // Hide Game Over Menu

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40bf84e090edbad4f88ef5768edb039a, type: 3}
   m_Name: SoundConfig
   m_EditorClassIdentifier: 
-  soundList:
+  soundPrefab: {fileID: 6872472915849188312, guid: 6e6911ac09d31c84f8938d0694f8d6d1, type: 3}
+  soundVolume: 1
+  bgVolume: 0.3
+  soundData:
   - soundType: 0
     soundClip: {fileID: 8300000, guid: 3b31928557c72cc4392eb9b27493476c, type: 3}
   - soundType: 1

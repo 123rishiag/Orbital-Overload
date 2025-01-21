@@ -13,10 +13,6 @@ namespace ServiceLocator.Main
     public class GameService : MonoBehaviour
     {
         // Inspector Variables
-        [Header("Sound Components")]
-        [SerializeField] public AudioSource sfxSource;
-        [SerializeField] public AudioSource bgSource;
-
         [Header("UI Components")]
         [SerializeField] public UIView uiCanvas;
 
@@ -36,6 +32,7 @@ namespace ServiceLocator.Main
         [SerializeField] public Transform projectileParentPanel;
         [SerializeField] public Transform powerUpParentPanel;
         [SerializeField] public Transform actorParentPanel;
+        [SerializeField] public Transform soundParentPanel;
 
         // Private Variables
 
@@ -53,10 +50,6 @@ namespace ServiceLocator.Main
         private void FixedUpdate()
         {
             gameController.FixedUpdate();
-        }
-        private void LateUpdate()
-        {
-            gameController.LateUpdate();
         }
 
         public void OnDestroy()

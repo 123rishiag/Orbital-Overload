@@ -12,11 +12,10 @@ namespace ServiceLocator.Main
         public void OnStateEnter()
         {
             Owner.GetUIService().GetUIController().GetUIView().pauseMenuPanel.SetActive(true); // Show Pause Menu
-            Owner.GetSoundService().PlaySoundEffect(SoundType.GamePause);
+            Owner.GetSoundService().PlaySound(SoundType.GamePause);
         }
         public void Update() { }
         public void FixedUpdate() { }
-        public void LateUpdate() { }
         public void OnStateExit()
         {
             Owner.GetUIService().GetUIController().GetUIView().pauseMenuPanel.SetActive(false); // Hide Pause Menu

@@ -16,11 +16,12 @@ namespace ServiceLocator.Main
             // Camera should follow player
             Owner.GetCameraService().SetFollowTarget(
                 Owner.GetActorService().GetPlayerActorController().GetActorView().GetTransform());
-            Owner.GetSoundService().PlaySoundEffect(SoundType.GamePlay);
+            Owner.GetSoundService().PlaySound(SoundType.GamePlay);
         }
         public void Update()
         {
             Owner.GetVFXService().Update();
+            Owner.GetSoundService().Update();
             Owner.GetInputService().Update();
             Owner.GetSpawnService().Update();
             Owner.GetProjectileService().Update();
@@ -33,10 +34,6 @@ namespace ServiceLocator.Main
         {
             Owner.GetProjectileService().FixedUpdate();
             Owner.GetActorService().FixedUpdate();
-        }
-        public void LateUpdate()
-        {
-
         }
         public void OnStateExit()
         {

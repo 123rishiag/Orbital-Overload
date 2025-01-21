@@ -14,7 +14,6 @@ namespace ServiceLocator.Main
 
         public void Update() => currentState?.Update();
         public void FixedUpdate() => currentState?.FixedUpdate();
-        public void LateUpdate() => currentState?.LateUpdate();
 
         public GameState GetCurrentState()
         {
