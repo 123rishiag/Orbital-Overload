@@ -1,3 +1,4 @@
+using Cinemachine;
 using ServiceLocator.Actor;
 using ServiceLocator.PowerUp;
 using ServiceLocator.Projectile;
@@ -20,7 +21,7 @@ namespace ServiceLocator.Main
         [SerializeField] public UIView uiCanvas;
 
         [Header("Camera Components")]
-        [SerializeField] public Camera mainCamera; // Main camera reference
+        [SerializeField] public CinemachineVirtualCamera virtualCamera;
 
         [Header("Game Configs")]
         [SerializeField] public VFXConfig vfxConfig;

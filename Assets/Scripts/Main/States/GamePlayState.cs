@@ -13,6 +13,9 @@ namespace ServiceLocator.Main
         public void OnStateEnter()
         {
             Time.timeScale = 1f; // Resume the game
+            // Camera should follow player
+            Owner.GetCameraService().SetFollowTarget(
+                Owner.GetActorService().GetPlayerActorController().GetActorView().GetTransform());
             Owner.GetSoundService().PlaySoundEffect(SoundType.GamePlay);
         }
         public void Update()
@@ -33,9 +36,7 @@ namespace ServiceLocator.Main
         }
         public void LateUpdate()
         {
-            // Camera should follow player
-            Owner.GetCameraService().FollowCameraTowardsPosition(
-                Owner.GetActorService().GetPlayerActorController().GetActorView().GetTransform().position);
+
         }
         public void OnStateExit()
         {

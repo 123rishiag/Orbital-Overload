@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e36e293f765a3409a538b1643226ef, type: 3}
   m_Name: CameraConfig
   m_EditorClassIdentifier: 
-  cameraFollowSpeed: 2
+  cameraFollowSpeed: 10
+  minBoundaries: {x: 0, y: 0}
+  maxBoundaries: {x: 20, y: 20}
   cameraShakeData:
   - cameraShakeType: 0
     duration: 0.1
