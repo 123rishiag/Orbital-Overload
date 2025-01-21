@@ -66,6 +66,11 @@ namespace ServiceLocator.Projectile
                 HideView();
                 projectileController.PlayVFX();
             }
+            else if (_collider.CompareTag("Obstacle"))
+            {
+                HideView();
+                projectileController.PlayVFX();
+            }
         }
     }
 }
